@@ -2,40 +2,74 @@
 #include <sys/time.h>
 #include <sys/queue.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
 
 #include <err.h>
 #include <event.h>
-#include <evhttp.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
-void generic_handler(struct evhttp_request *req, void *arg)
+#include <fcntl.h>
+
+using namespace std;
+
+void diep(char *s)
 {
-        struct evbuffer *buf;
-        buf = evbuffer_new();
+  cout << s << endl;
+  exit(1);
+}
 
-        if (buf == NULL)
-            err(1, "failed to create response buffer");
+void got_packet(int fd, short event, void* arg) 
+{
+  int len;
+ 	char *buf = (char*)malloc(255);
+  socklen_t l = sizeof(struct sockaddr);
+  struct sockaddr_in cAddr;
 
-        evbuffer_add_printf(buf, "Requested: %s\n", evhttp_request_uri(req));
-        evhttp_send_reply(req, HTTP_OK, "OK", buf);
+  printf("DNS_read called with %s fd: %d, event: %d\n", event_get_method(), fd, event);
+
+  len = recvfrom(fd, buf, 254, 0, (struct sockaddr*)&cAddr, &l);
+
+  if (len == -1)
+  {
+    cout << "recvfrom()" << endl;
+    return;
+  } else if (len == 0) {
+    cout << "Connection Closed" << endl;
+    return;
+  }
+  buf[len] = '\0';
+
+  printf("READ: %s\n", buf);
 }
 
 int main(int argc, char **argv)
 {
-    struct evhttp *httpd;
+  struct sockaddr_in si_me;
+  int s;
 
-    event_init();
-    httpd = evhttp_start("0.0.0.0", 8080);
+  if ((s=socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1)
+    diep("socket");
 
-    /* Set a callback for requests to "/specific". */
-    /* evhttp_set_cb(httpd, "/specific", another_handler, NULL); */
+  fcntl(s, F_SETFL, O_NONBLOCK);
+  
+  memset((char *) &si_me, 0, sizeof(si_me));
+  si_me.sin_family = AF_INET;
+  si_me.sin_port = htons(9080);
+  si_me.sin_addr.s_addr = htonl(INADDR_ANY);
+  if (bind(s, (const sockaddr*)&si_me, sizeof(si_me))==-1)
+    diep("bind");
 
-    /* Set a callback for all other requests. */
-    evhttp_set_gencb(httpd, generic_handler, NULL);
 
-    event_dispatch();
 
-    /* Not reached in this code as it is now. */
-    evhttp_free(httpd);
-
-    return 0;
+  event_init();
+  struct event ev;
+  event_set(&ev, s, EV_READ|EV_PERSIST, got_packet, &ev);
+  event_add(&ev, NULL);
+  event_dispatch();
+  cout << "Exiting..." << endl;
+  return 0;
 }
