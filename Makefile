@@ -1,6 +1,6 @@
 CC=g++
-CFLAGS=-c -Wall
-LDFLAGS=-levent
+CFLAGS=-c -Wall -DUSE_LUA51_PATH
+LDFLAGS=-levent -llua5.1
 SOURCES=src/main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=sikozu

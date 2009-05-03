@@ -14,9 +14,15 @@
 
 #include <fcntl.h>
 extern "C" {
-#include <lua.h>
-#include <lualib.h>
-#include <lauxlib.h>
+#ifdef USE_LUA51_PATH
+# include <lua5.1/lua.h>
+# include <lua5.1/lualib.h>
+# include <lua5.1/lauxlib.h>
+#else
+# include <lua.h>
+# include <lualib.h>
+# include <lauxlib.h>
+#endif
 }
 
 using namespace std;
