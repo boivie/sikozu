@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-
+#include <string.h>
 #include <err.h>
 #include <event.h>
 #include <sys/types.h>
