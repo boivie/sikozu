@@ -14,6 +14,7 @@
 #include "serviceregistry.h"
 #include <stdint.h>
 #include <vector>
+#include <event.h>
 
 namespace Sikozu {
   class Server {
@@ -30,6 +31,7 @@ namespace Sikozu {
       ServiceRegistry m_serviceregistry;
       int m_udp_socket;
       NodeId nid;
+      struct event m_ev;
   };
 }
 #endif

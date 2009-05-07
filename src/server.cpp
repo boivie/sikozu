@@ -8,7 +8,6 @@
  */
 
 #include "server.h"
-#include "packet.h"
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 
 #include <sys/socket.h>
@@ -84,7 +83,7 @@ int Server::listen_udp(uint16_t port)
   if (bind(m_udp_socket, (const sockaddr*)&si_me, sizeof(si_me))==-1)
     return 0;
   
-  struct event ev;
-  event_set(&ev, m_udp_socket, EV_READ|EV_PERSIST, got_packet, &ev);
-  event_add(&ev, NULL);
+  event_set(&m_ev, m_udp_socket, EV_READ|EV_PERSIST, got_packet, &m_ev);
+  event_add(&m_ev, NULL);
+  return 1;
 }
