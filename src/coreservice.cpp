@@ -9,10 +9,12 @@
 
 #include "coreservice.h"
 #include "server.h"
+#include <iostream>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 
 namespace Sikozu {
 
+using namespace std;
 using namespace google::protobuf::io;
 
 enum CommandIdentifier {
@@ -23,23 +25,33 @@ enum CommandIdentifier {
   LAST
 };
 
-void CoreService::handle_request(Client* client_p, Packet* packet_p)
+void CoreService::handle_request(Client* client_p, PacketHeader* header_p, vector<char>* buffer_p)
 {
-  vector<char> out_buffer(65536);
-  ArrayOutputStream outstream(&out_buffer[0], out_buffer.size());
-  PacketHeader* ph = packet_p->get_header();
+  cout << "Got command: " << header_p->get_command() << ", ";
   
-  switch (ph->get_command())
+  switch (header_p->get_command())
   {
   case PING_REQUEST:
-    ph->set_command(PING_RESPONSE);
-    ph->set_nid(Server::get_instance()->get_nid());
-    ph->serialize(&outstream);
+  {
+    cout << "PING";
+    header_p->set_command(PING_RESPONSE);
+    header_p->set_nid(Server::get_instance()->get_nid());
+    buffer_p->resize(40);
+    ArrayOutputStream out(&(*buffer_p)[0], buffer_p->size());
+    header_p->serialize(&out);
+    buffer_p->resize(out.ByteCount());
+    Server::get_instance()->send_udp(client_p, buffer_p);
     break;
   }
+  default:
+    cout << "<unknown>";
+    break;
+  }
+  cout << endl;
   
   delete client_p;
-  delete packet_p;
+  delete header_p;
+  delete buffer_p;
 }
 
 }

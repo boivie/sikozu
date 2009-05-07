@@ -12,6 +12,7 @@ namespace Sikozu {
 
   class CoreService : public Service {
   public:
-    void handle_request(Client* client_p, Packet* packet_p);
+    const char* get_name() { return "Core"; };
+    void handle_request(Client* client_p, PacketHeader* header_p, std::vector<char>* buffer_p);
   };
 }

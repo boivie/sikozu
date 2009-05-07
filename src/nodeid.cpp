@@ -11,9 +11,9 @@
 
 using namespace Sikozu;
 
-NodeId::NodeId()
+NodeId::NodeId() 
+ : nid(20)
 {
-  nid.reserve(NID_SIZE_BYTES);
 }
 
 void NodeId::set_bytes(vector<char> &bytes)

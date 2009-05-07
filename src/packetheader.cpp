@@ -21,20 +21,22 @@ namespace Sikozu {
   
   bool PacketHeader::parse(ZeroCopyInputStream* input)
   {
-    CodedInputStream cis(input);
+    {
+      CodedInputStream cis(input);
     
-    if (!cis.ReadVarint32(&m_channel))
-      return false;
+      if (!cis.ReadVarint32(&m_channel))
+        return false;
       
-    if (!cis.ReadVarint32(&m_command))
-      return false;
+      if (!cis.ReadVarint32(&m_command))
+        return false;
     
-    if (!cis.ReadRaw(&m_sid[0], m_sid.size()))
-      return false;
+      if (!cis.ReadRaw(&m_sid[0], m_sid.size()))
+        return false;
 
-    if (!cis.ReadRaw(m_nid.get_ptr(), m_nid.size()))
-      return false;
-      
+      if (!cis.ReadRaw(m_nid.get_ptr(), m_nid.size()))
+        return false;
+    }
+    m_size = input->ByteCount();
     return true;
   }
   

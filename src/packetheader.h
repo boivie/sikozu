@@ -31,11 +31,14 @@ namespace Sikozu {
     void set_nid(NodeId &nid) { m_nid = nid; };
     void get_sid(std::vector<char> &sid) { sid = m_sid; };
     void set_sid(std::vector<char> &sid) { m_sid = sid; };
+    
+    size_t get_size() { return m_size; };
    private:
     uint32_t m_channel; 
     uint32_t m_command;
     NodeId m_nid;
     std::vector<char> m_sid;
+    size_t m_size;
   };
 }
 

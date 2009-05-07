@@ -10,12 +10,14 @@
 #define SERVICE_H_INCLUSION_GUARD
  
 #include "client.h"
-#include "packet.h"
+#include "packetheader.h"
+#include <vector>
 
 namespace Sikozu {
   class Service {
    public:
-    virtual void handle_request(Client* client_p, Packet* packet_p);
+    virtual const char* get_name() { return "default"; };
+    virtual void handle_request(Client* client_p, PacketHeader* header_p, std::vector<char>* buffer_p);
   };
 }
 

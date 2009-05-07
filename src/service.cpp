@@ -12,11 +12,12 @@
 namespace Sikozu 
 {
 
-void Service::handle_request(Client* client_p, Packet* packet_p)
+void Service::handle_request(Client* client_p, PacketHeader* header_p, vector<char>* buffer_p)
 {
   // Do nothing. Just clean up.
   delete client_p;
-  delete packet_p;
+  delete header_p;
+  delete buffer_p;
 }
 
 }
