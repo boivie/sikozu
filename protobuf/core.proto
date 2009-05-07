@@ -1,0 +1,52 @@
+// Header:
+// uint8 Channel
+// uint8 Command
+// uint8 SID[18]
+// uint8 NID[20]
+// -> header size = 40 bytes
+
+
+message Contact {
+  required bytes nid= 1;
+  optional uint32 ipv4 = 2;
+  optional bytes ipv6 = 3;
+  required uint32 port = 4;
+}
+
+message PingRequest {
+}
+
+message PingResponse {
+}
+
+message FindNodeRequest {
+  required bytes nid = 1;
+  optional string service = 2;
+}
+
+message FindNodeResponse {
+  repeated Contact contacts = 1;
+}
+
+message QueryServicesRequest {
+  repeated string service = 1;
+}
+
+message QueryServicesResponse {
+  repeated uint32 present = 1;
+}
+
+message GetServicesRequest {
+}
+
+message GetServicesResponse {
+  repeated string services = 1;
+}
+
+
+service BaseService {
+  rpc Ping (PingRequest) returns (PingResponse);
+  rpc FindNode (FindNodeRequest) returns (FindNodeResponse);
+  rpc QueryServices (QueryServicesRequest) returns (QueryServicesResponse);
+  rpc GetServices (GetServicesRequest) returns (GetServicesResponse);
+}
