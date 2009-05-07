@@ -16,7 +16,8 @@
 namespace Sikozu {
   class Service {
    public:
-    virtual const char* get_name() { return "default"; };
+    virtual const char* get_short_name() { return "default"; };
+    virtual const char* get_long_name() { return "default"; };
     virtual void handle_request(Client* client_p, PacketHeader* header_p, std::vector<char>* buffer_p);
   };
 }

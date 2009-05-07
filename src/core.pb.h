@@ -21,7 +21,9 @@
 #include <google/protobuf/generated_message_reflection.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
-#include <google/protobuf/service.h>
+
+namespace Sikozu {
+namespace Messages {
 
 // Internal implementation detail -- do not call these.
 void  protobuf_BuildDesc_core_2eproto();
@@ -36,6 +38,7 @@ class FindNodeResponse;
 class QueryServicesRequest;
 class QueryServicesResponse;
 class GetServicesRequest;
+class ServiceInfo;
 class GetServicesResponse;
 
 // ===================================================================
@@ -388,20 +391,20 @@ class FindNodeResponse : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // repeated .Contact contacts = 1;
+  // repeated .Sikozu.Messages.Contact contacts = 1;
   inline int contacts_size() const;
   inline void clear_contacts();
-  inline const ::google::protobuf::RepeatedPtrField< ::Contact >& contacts() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Contact >* mutable_contacts();
-  inline const ::Contact& contacts(int index) const;
-  inline ::Contact* mutable_contacts(int index);
-  inline ::Contact* add_contacts();
+  inline const ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::Contact >& contacts() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::Contact >* mutable_contacts();
+  inline const ::Sikozu::Messages::Contact& contacts(int index) const;
+  inline ::Sikozu::Messages::Contact* mutable_contacts(int index);
+  inline ::Sikozu::Messages::Contact* add_contacts();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::RepeatedPtrField< ::Contact > contacts_;
+  ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::Contact > contacts_;
   friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
       const ::google::protobuf::FileDescriptor* file);
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -635,6 +638,86 @@ class GetServicesRequest : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class ServiceInfo : public ::google::protobuf::Message {
+ public:
+  ServiceInfo();
+  virtual ~ServiceInfo();
+  
+  ServiceInfo(const ServiceInfo& from);
+  
+  inline ServiceInfo& operator=(const ServiceInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const ServiceInfo& default_instance();
+  void Swap(ServiceInfo* other);
+  
+  // implements Message ----------------------------------------------
+  
+  ServiceInfo* New() const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  const ::google::protobuf::Descriptor* GetDescriptor() const;
+  const ::google::protobuf::Reflection* GetReflection() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required uint32 channel = 1;
+  inline bool has_channel() const;
+  inline void clear_channel();
+  inline ::google::protobuf::uint32 channel() const;
+  inline void set_channel(::google::protobuf::uint32 value);
+  
+  // required string name = 2;
+  inline bool has_name() const;
+  inline void clear_name();
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline ::std::string* mutable_name();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::uint32 channel_;
+  ::std::string* name_;
+  static const ::std::string _default_name_;
+  friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
+      const ::google::protobuf::FileDescriptor* file);
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static ServiceInfo* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class GetServicesResponse : public ::google::protobuf::Message {
  public:
   GetServicesResponse();
@@ -674,24 +757,20 @@ class GetServicesResponse : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // repeated string services = 1;
+  // repeated .Sikozu.Messages.ServiceInfo services = 1;
   inline int services_size() const;
   inline void clear_services();
-  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& services() const;
-  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_services();
-  inline const ::std::string& services(int index) const;
-  inline ::std::string* mutable_services(int index);
-  inline void set_services(int index, const ::std::string& value);
-  inline void set_services(int index, const char* value);
-  inline ::std::string* add_services();
-  inline void add_services(const ::std::string& value);
-  inline void add_services(const char* value);
+  inline const ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::ServiceInfo >& services() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::ServiceInfo >* mutable_services();
+  inline const ::Sikozu::Messages::ServiceInfo& services(int index) const;
+  inline ::Sikozu::Messages::ServiceInfo* mutable_services(int index);
+  inline ::Sikozu::Messages::ServiceInfo* add_services();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::RepeatedPtrField< ::std::string> services_;
+  ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::ServiceInfo > services_;
   friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
       const ::google::protobuf::FileDescriptor* file);
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -711,86 +790,6 @@ class GetServicesResponse : public ::google::protobuf::Message {
   static GetServicesResponse* default_instance_;
 };
 // ===================================================================
-
-class BaseService_Stub;
-
-class BaseService : public ::google::protobuf::Service {
- protected:
-  // This class should be treated as an abstract interface.
-  inline BaseService() {};
- public:
-  virtual ~BaseService();
-  
-  typedef BaseService_Stub Stub;
-  
-  static const ::google::protobuf::ServiceDescriptor* descriptor();
-  
-  virtual void Ping(::google::protobuf::RpcController* controller,
-                       const ::PingRequest* request,
-                       ::PingResponse* response,
-                       ::google::protobuf::Closure* done);
-  virtual void FindNode(::google::protobuf::RpcController* controller,
-                       const ::FindNodeRequest* request,
-                       ::FindNodeResponse* response,
-                       ::google::protobuf::Closure* done);
-  virtual void QueryServices(::google::protobuf::RpcController* controller,
-                       const ::QueryServicesRequest* request,
-                       ::QueryServicesResponse* response,
-                       ::google::protobuf::Closure* done);
-  virtual void GetServices(::google::protobuf::RpcController* controller,
-                       const ::GetServicesRequest* request,
-                       ::GetServicesResponse* response,
-                       ::google::protobuf::Closure* done);
-  
-  // implements Service ----------------------------------------------
-  
-  const ::google::protobuf::ServiceDescriptor* GetDescriptor();
-  void CallMethod(const ::google::protobuf::MethodDescriptor* method,
-                  ::google::protobuf::RpcController* controller,
-                  const ::google::protobuf::Message* request,
-                  ::google::protobuf::Message* response,
-                  ::google::protobuf::Closure* done);
-  const ::google::protobuf::Message& GetRequestPrototype(
-    const ::google::protobuf::MethodDescriptor* method) const;
-  const ::google::protobuf::Message& GetResponsePrototype(
-    const ::google::protobuf::MethodDescriptor* method) const;
-
- private:
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(BaseService);
-};
-
-class BaseService_Stub : public BaseService {
- public:
-  BaseService_Stub(::google::protobuf::RpcChannel* channel);
-  BaseService_Stub(::google::protobuf::RpcChannel* channel,
-                   ::google::protobuf::Service::ChannelOwnership ownership);
-  ~BaseService_Stub();
-  
-  inline ::google::protobuf::RpcChannel* channel() { return channel_; }
-  
-  // implements BaseService ------------------------------------------
-  
-  void Ping(::google::protobuf::RpcController* controller,
-                       const ::PingRequest* request,
-                       ::PingResponse* response,
-                       ::google::protobuf::Closure* done);
-  void FindNode(::google::protobuf::RpcController* controller,
-                       const ::FindNodeRequest* request,
-                       ::FindNodeResponse* response,
-                       ::google::protobuf::Closure* done);
-  void QueryServices(::google::protobuf::RpcController* controller,
-                       const ::QueryServicesRequest* request,
-                       ::QueryServicesResponse* response,
-                       ::google::protobuf::Closure* done);
-  void GetServices(::google::protobuf::RpcController* controller,
-                       const ::GetServicesRequest* request,
-                       ::GetServicesResponse* response,
-                       ::google::protobuf::Closure* done);
- private:
-  ::google::protobuf::RpcChannel* channel_;
-  bool owns_channel_;
-  GOOGLE_DISALLOW_EVIL_CONSTRUCTORS(BaseService_Stub);
-};
 
 
 // ===================================================================
@@ -1009,28 +1008,28 @@ inline ::std::string* FindNodeRequest::mutable_service() {
 
 // FindNodeResponse
 
-// repeated .Contact contacts = 1;
+// repeated .Sikozu.Messages.Contact contacts = 1;
 inline int FindNodeResponse::contacts_size() const {
   return contacts_.size();
 }
 inline void FindNodeResponse::clear_contacts() {
   contacts_.Clear();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::Contact >&
+inline const ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::Contact >&
 FindNodeResponse::contacts() const {
   return contacts_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::Contact >*
+inline ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::Contact >*
 FindNodeResponse::mutable_contacts() {
   return &contacts_;
 }
-inline const ::Contact& FindNodeResponse::contacts(int index) const {
+inline const ::Sikozu::Messages::Contact& FindNodeResponse::contacts(int index) const {
   return contacts_.Get(index);
 }
-inline ::Contact* FindNodeResponse::mutable_contacts(int index) {
+inline ::Sikozu::Messages::Contact* FindNodeResponse::mutable_contacts(int index) {
   return contacts_.Mutable(index);
 }
-inline ::Contact* FindNodeResponse::add_contacts() {
+inline ::Sikozu::Messages::Contact* FindNodeResponse::add_contacts() {
   return contacts_.Add();
 }
 
@@ -1110,43 +1109,89 @@ inline void QueryServicesResponse::add_present(::google::protobuf::uint32 value)
 
 // -------------------------------------------------------------------
 
+// ServiceInfo
+
+// required uint32 channel = 1;
+inline bool ServiceInfo::has_channel() const {
+  return _has_bit(0);
+}
+inline void ServiceInfo::clear_channel() {
+  channel_ = 0u;
+  _clear_bit(0);
+}
+inline ::google::protobuf::uint32 ServiceInfo::channel() const {
+  return channel_;
+}
+inline void ServiceInfo::set_channel(::google::protobuf::uint32 value) {
+  _set_bit(0);
+  channel_ = value;
+}
+
+// required string name = 2;
+inline bool ServiceInfo::has_name() const {
+  return _has_bit(1);
+}
+inline void ServiceInfo::clear_name() {
+  if (name_ != &_default_name_) {
+    name_->clear();
+  }
+  _clear_bit(1);
+}
+inline const ::std::string& ServiceInfo::name() const {
+  return *name_;
+}
+inline void ServiceInfo::set_name(const ::std::string& value) {
+  _set_bit(1);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void ServiceInfo::set_name(const char* value) {
+  _set_bit(1);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline ::std::string* ServiceInfo::mutable_name() {
+  _set_bit(1);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+
+// -------------------------------------------------------------------
+
 // GetServicesResponse
 
-// repeated string services = 1;
+// repeated .Sikozu.Messages.ServiceInfo services = 1;
 inline int GetServicesResponse::services_size() const {
   return services_.size();
 }
 inline void GetServicesResponse::clear_services() {
   services_.Clear();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+inline const ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::ServiceInfo >&
 GetServicesResponse::services() const {
   return services_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+inline ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::ServiceInfo >*
 GetServicesResponse::mutable_services() {
   return &services_;
 }
-inline const ::std::string& GetServicesResponse::services(int index) const {
+inline const ::Sikozu::Messages::ServiceInfo& GetServicesResponse::services(int index) const {
   return services_.Get(index);
 }
-inline ::std::string* GetServicesResponse::mutable_services(int index) {
+inline ::Sikozu::Messages::ServiceInfo* GetServicesResponse::mutable_services(int index) {
   return services_.Mutable(index);
 }
-inline void GetServicesResponse::set_services(int index, const ::std::string& value) {
-  services_.Mutable(index)->assign(value);
-}
-inline void GetServicesResponse::set_services(int index, const char* value) {
-  services_.Mutable(index)->assign(value);
-}
-inline ::std::string* GetServicesResponse::add_services() {
+inline ::Sikozu::Messages::ServiceInfo* GetServicesResponse::add_services() {
   return services_.Add();
 }
-inline void GetServicesResponse::add_services(const ::std::string& value) {
-  services_.Add()->assign(value);
-}
-inline void GetServicesResponse::add_services(const char* value) {
-  services_.Add()->assign(value);
-}
 
+
+}  // namespace Messages
+}  // namespace Sikozu
 #endif  // PROTOBUF_core_2eproto__INCLUDED

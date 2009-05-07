@@ -9,15 +9,17 @@
  
 #include "service.h"
 #include <stdint.h>
+#include <map>
 
 namespace Sikozu {
   class ServiceRegistry {
    public:
     Service* get_service(uint32_t channel);
     void register_service(uint32_t channel, Service* service_p);
+    std::map<uint32_t, Service*>* get_all_services() { return &m_services; };
     
    private:
-    std::vector<Service*> m_services;
+    std::map<uint32_t, Service*> m_services;
     Service m_default_service;
   };
 }

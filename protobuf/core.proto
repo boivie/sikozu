@@ -1,3 +1,4 @@
+package Sikozu.Messages;
 // Header:
 // uint8 Channel
 // uint8 Command
@@ -39,14 +40,12 @@ message QueryServicesResponse {
 message GetServicesRequest {
 }
 
+message ServiceInfo {
+  required uint32 channel = 1;
+  required string name = 2;
+}
+
 message GetServicesResponse {
-  repeated string services = 1;
+  repeated ServiceInfo services = 1;
 }
 
-
-service BaseService {
-  rpc Ping (PingRequest) returns (PingResponse);
-  rpc FindNode (FindNodeRequest) returns (FindNodeResponse);
-  rpc QueryServices (QueryServicesRequest) returns (QueryServicesResponse);
-  rpc GetServices (GetServicesRequest) returns (GetServicesResponse);
-}

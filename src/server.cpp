@@ -38,8 +38,6 @@ void got_packet(int fd, short event, void* arg)
   struct sockaddr_in6 from;
   socklen_t l = sizeof(from);
 
-  printf("DNS_read called with %s fd: %d, event: %d\n", event_get_method(), fd, event);
-
   len = recvfrom(fd, &(*buffer_p)[0], buffer_p->size(), 0, (struct sockaddr*)&from, &l);
   if (len == -1)
   {
@@ -53,8 +51,7 @@ void got_packet(int fd, short event, void* arg)
   buffer_p->resize(len);
   
   PacketHeader* header_p = new PacketHeader();
-  ArrayInputStream instream(&(*buffer_p)[0], buffer_p->size());
-  if (!header_p->parse(&instream))
+  if (!header_p->parse(buffer_p))
     return;
    
   Client* client_p = new Client();
@@ -63,8 +60,9 @@ void got_packet(int fd, short event, void* arg)
   Server* server_p = Server::get_instance();
   ServiceRegistry& sr = server_p->get_service_registry();
   Service* service_p = sr.get_service(header_p->get_channel());
-  cout << "Using service: " << service_p->get_name() << endl;
+  cout << "Using service: " << service_p->get_long_name() << endl;
   service_p->handle_request(client_p, header_p, buffer_p);
+  cout << "Done." << endl;
 }
 
 int Server::listen_udp(uint16_t port)

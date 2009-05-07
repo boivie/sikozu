@@ -6,6 +6,9 @@
 #include <google/protobuf/reflection_ops.h>
 #include <google/protobuf/wire_format_inl.h>
 
+namespace Sikozu {
+namespace Messages {
+
 namespace {
 
 const ::google::protobuf::Descriptor* Contact_descriptor_ = NULL;
@@ -32,10 +35,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* GetServicesRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GetServicesRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* ServiceInfo_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  ServiceInfo_reflection_ = NULL;
 const ::google::protobuf::Descriptor* GetServicesResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GetServicesResponse_reflection_ = NULL;
-const ::google::protobuf::ServiceDescriptor* BaseService_descriptor_ = NULL;
 
 }  // namespace
 
@@ -178,7 +183,25 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
       sizeof(GetServicesRequest));
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GetServicesRequest_descriptor_, GetServicesRequest::default_instance_);
-  GetServicesResponse_descriptor_ = file->message_type(8);
+  ServiceInfo_descriptor_ = file->message_type(8);
+  ServiceInfo::default_instance_ = new ServiceInfo();
+  static const int ServiceInfo_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServiceInfo, channel_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServiceInfo, name_),
+  };
+  ServiceInfo_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      ServiceInfo_descriptor_,
+      ServiceInfo::default_instance_,
+      ServiceInfo_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServiceInfo, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServiceInfo, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      sizeof(ServiceInfo));
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    ServiceInfo_descriptor_, ServiceInfo::default_instance_);
+  GetServicesResponse_descriptor_ = file->message_type(9);
   GetServicesResponse::default_instance_ = new GetServicesResponse();
   static const int GetServicesResponse_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetServicesResponse, services_),
@@ -195,7 +218,6 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
       sizeof(GetServicesResponse));
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GetServicesResponse_descriptor_, GetServicesResponse::default_instance_);
-  BaseService_descriptor_ = file->service(0);
   Contact::default_instance_->InitAsDefaultInstance();
   PingRequest::default_instance_->InitAsDefaultInstance();
   PingResponse::default_instance_->InitAsDefaultInstance();
@@ -204,6 +226,7 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
   QueryServicesRequest::default_instance_->InitAsDefaultInstance();
   QueryServicesResponse::default_instance_->InitAsDefaultInstance();
   GetServicesRequest::default_instance_->InitAsDefaultInstance();
+  ServiceInfo::default_instance_->InitAsDefaultInstance();
   GetServicesResponse::default_instance_->InitAsDefaultInstance();
 }
 
@@ -216,21 +239,18 @@ void protobuf_BuildDesc_core_2eproto() {
     ::google::protobuf::DescriptorPool::internal_generated_pool();
 
   pool->InternalBuildGeneratedFile(
-    "\n\ncore.proto\"@\n\007Contact\022\013\n\003nid\030\001 \002(\014\022\014\n\004"
-    "ipv4\030\002 \001(\r\022\014\n\004ipv6\030\003 \001(\014\022\014\n\004port\030\004 \002(\r\"\r"
-    "\n\013PingRequest\"\016\n\014PingResponse\"/\n\017FindNod"
-    "eRequest\022\013\n\003nid\030\001 \002(\014\022\017\n\007service\030\002 \001(\t\"."
-    "\n\020FindNodeResponse\022\032\n\010contacts\030\001 \003(\0132\010.C"
-    "ontact\"\'\n\024QueryServicesRequest\022\017\n\007servic"
-    "e\030\001 \003(\t\"(\n\025QueryServicesResponse\022\017\n\007pres"
-    "ent\030\001 \003(\r\"\024\n\022GetServicesRequest\"\'\n\023GetSe"
-    "rvicesResponse\022\020\n\010services\030\001 \003(\t2\335\001\n\013Bas"
-    "eService\022#\n\004Ping\022\014.PingRequest\032\r.PingRes"
-    "ponse\022/\n\010FindNode\022\020.FindNodeRequest\032\021.Fi"
-    "ndNodeResponse\022>\n\rQueryServices\022\025.QueryS"
-    "ervicesRequest\032\026.QueryServicesResponse\0228"
-    "\n\013GetServices\022\023.GetServicesRequest\032\024.Get"
-    "ServicesResponse", 576,
+    "\n\ncore.proto\022\017Sikozu.Messages\"@\n\007Contact"
+    "\022\013\n\003nid\030\001 \002(\014\022\014\n\004ipv4\030\002 \001(\r\022\014\n\004ipv6\030\003 \001("
+    "\014\022\014\n\004port\030\004 \002(\r\"\r\n\013PingRequest\"\016\n\014PingRe"
+    "sponse\"/\n\017FindNodeRequest\022\013\n\003nid\030\001 \002(\014\022\017"
+    "\n\007service\030\002 \001(\t\">\n\020FindNodeResponse\022*\n\010c"
+    "ontacts\030\001 \003(\0132\030.Sikozu.Messages.Contact\""
+    "\'\n\024QueryServicesRequest\022\017\n\007service\030\001 \003(\t"
+    "\"(\n\025QueryServicesResponse\022\017\n\007present\030\001 \003"
+    "(\r\"\024\n\022GetServicesRequest\",\n\013ServiceInfo\022"
+    "\017\n\007channel\030\001 \002(\r\022\014\n\004name\030\002 \002(\t\"E\n\023GetSer"
+    "vicesResponse\022.\n\010services\030\001 \003(\0132\034.Sikozu"
+    ".Messages.ServiceInfo", 461,
   &protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors);
 }
 
@@ -654,6 +674,62 @@ const ::google::protobuf::Reflection* GetServicesRequest::GetReflection() const 
 // ===================================================================
 
 
+const ::std::string ServiceInfo::_default_name_;
+ServiceInfo::ServiceInfo()
+  : ::google::protobuf::Message(),
+    _cached_size_(0),
+    channel_(0u),
+    name_(const_cast< ::std::string*>(&_default_name_)) {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+void ServiceInfo::InitAsDefaultInstance() {}
+
+ServiceInfo::ServiceInfo(const ServiceInfo& from)
+  : ::google::protobuf::Message(),
+    _cached_size_(0),
+    channel_(0u),
+    name_(const_cast< ::std::string*>(&_default_name_)) {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  MergeFrom(from);
+}
+
+ServiceInfo::~ServiceInfo() {
+  if (name_ != &_default_name_) {
+    delete name_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* ServiceInfo::descriptor() {
+  if (ServiceInfo_descriptor_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return ServiceInfo_descriptor_;
+}
+
+const ServiceInfo& ServiceInfo::default_instance() {
+  if (default_instance_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return *default_instance_;
+}
+
+ServiceInfo* ServiceInfo::default_instance_ = NULL;
+
+ServiceInfo* ServiceInfo::New() const {
+  return new ServiceInfo;
+}
+
+const ::google::protobuf::Descriptor* ServiceInfo::GetDescriptor() const {
+  return descriptor();
+}
+
+const ::google::protobuf::Reflection* ServiceInfo::GetReflection() const {
+  if (ServiceInfo_reflection_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return ServiceInfo_reflection_;
+}
+
+// ===================================================================
+
+
 GetServicesResponse::GetServicesResponse()
   : ::google::protobuf::Message(),
     _cached_size_(0) {
@@ -699,159 +775,5 @@ const ::google::protobuf::Reflection* GetServicesResponse::GetReflection() const
   return GetServicesResponse_reflection_;
 }
 
-// ===================================================================
-
-BaseService::~BaseService() {}
-
-const ::google::protobuf::ServiceDescriptor* BaseService::descriptor() {
-  return BaseService_descriptor_;
-}
-
-const ::google::protobuf::ServiceDescriptor* BaseService::GetDescriptor() {
-  return BaseService_descriptor_;
-}
-
-void BaseService::Ping(::google::protobuf::RpcController* controller,
-                         const ::PingRequest*,
-                         ::PingResponse*,
-                         ::google::protobuf::Closure* done) {
-  controller->SetFailed("Method Ping() not implemented.");
-  done->Run();
-}
-
-void BaseService::FindNode(::google::protobuf::RpcController* controller,
-                         const ::FindNodeRequest*,
-                         ::FindNodeResponse*,
-                         ::google::protobuf::Closure* done) {
-  controller->SetFailed("Method FindNode() not implemented.");
-  done->Run();
-}
-
-void BaseService::QueryServices(::google::protobuf::RpcController* controller,
-                         const ::QueryServicesRequest*,
-                         ::QueryServicesResponse*,
-                         ::google::protobuf::Closure* done) {
-  controller->SetFailed("Method QueryServices() not implemented.");
-  done->Run();
-}
-
-void BaseService::GetServices(::google::protobuf::RpcController* controller,
-                         const ::GetServicesRequest*,
-                         ::GetServicesResponse*,
-                         ::google::protobuf::Closure* done) {
-  controller->SetFailed("Method GetServices() not implemented.");
-  done->Run();
-}
-
-void BaseService::CallMethod(const ::google::protobuf::MethodDescriptor* method,
-                             ::google::protobuf::RpcController* controller,
-                             const ::google::protobuf::Message* request,
-                             ::google::protobuf::Message* response,
-                             ::google::protobuf::Closure* done) {
-  GOOGLE_DCHECK_EQ(method->service(), BaseService_descriptor_);
-  switch(method->index()) {
-    case 0:
-      Ping(controller,
-             ::google::protobuf::down_cast<const ::PingRequest*>(request),
-             ::google::protobuf::down_cast< ::PingResponse*>(response),
-             done);
-      break;
-    case 1:
-      FindNode(controller,
-             ::google::protobuf::down_cast<const ::FindNodeRequest*>(request),
-             ::google::protobuf::down_cast< ::FindNodeResponse*>(response),
-             done);
-      break;
-    case 2:
-      QueryServices(controller,
-             ::google::protobuf::down_cast<const ::QueryServicesRequest*>(request),
-             ::google::protobuf::down_cast< ::QueryServicesResponse*>(response),
-             done);
-      break;
-    case 3:
-      GetServices(controller,
-             ::google::protobuf::down_cast<const ::GetServicesRequest*>(request),
-             ::google::protobuf::down_cast< ::GetServicesResponse*>(response),
-             done);
-      break;
-    default:
-      GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
-      break;
-  }
-}
-
-const ::google::protobuf::Message& BaseService::GetRequestPrototype(
-    const ::google::protobuf::MethodDescriptor* method) const {
-  GOOGLE_DCHECK_EQ(method->service(), BaseService_descriptor_);
-  switch(method->index()) {
-    case 0:
-      return ::PingRequest::default_instance();
-    case 1:
-      return ::FindNodeRequest::default_instance();
-    case 2:
-      return ::QueryServicesRequest::default_instance();
-    case 3:
-      return ::GetServicesRequest::default_instance();
-    default:
-      GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
-      return *reinterpret_cast< ::google::protobuf::Message*>(NULL);
-  }
-}
-
-const ::google::protobuf::Message& BaseService::GetResponsePrototype(
-    const ::google::protobuf::MethodDescriptor* method) const {
-  GOOGLE_DCHECK_EQ(method->service(), BaseService_descriptor_);
-  switch(method->index()) {
-    case 0:
-      return ::PingResponse::default_instance();
-    case 1:
-      return ::FindNodeResponse::default_instance();
-    case 2:
-      return ::QueryServicesResponse::default_instance();
-    case 3:
-      return ::GetServicesResponse::default_instance();
-    default:
-      GOOGLE_LOG(FATAL) << "Bad method index; this should never happen.";
-      return *reinterpret_cast< ::google::protobuf::Message*>(NULL);
-  }
-}
-
-BaseService_Stub::BaseService_Stub(::google::protobuf::RpcChannel* channel)
-  : channel_(channel), owns_channel_(false) {}
-BaseService_Stub::BaseService_Stub(
-    ::google::protobuf::RpcChannel* channel,
-    ::google::protobuf::Service::ChannelOwnership ownership)
-  : channel_(channel),
-    owns_channel_(ownership == ::google::protobuf::Service::STUB_OWNS_CHANNEL) {}
-BaseService_Stub::~BaseService_Stub() {
-  if (owns_channel_) delete channel_;
-}
-
-void BaseService_Stub::Ping(::google::protobuf::RpcController* controller,
-                              const ::PingRequest* request,
-                              ::PingResponse* response,
-                              ::google::protobuf::Closure* done) {
-  channel_->CallMethod(BaseService_descriptor_->method(0),
-                       controller, request, response, done);
-}
-void BaseService_Stub::FindNode(::google::protobuf::RpcController* controller,
-                              const ::FindNodeRequest* request,
-                              ::FindNodeResponse* response,
-                              ::google::protobuf::Closure* done) {
-  channel_->CallMethod(BaseService_descriptor_->method(1),
-                       controller, request, response, done);
-}
-void BaseService_Stub::QueryServices(::google::protobuf::RpcController* controller,
-                              const ::QueryServicesRequest* request,
-                              ::QueryServicesResponse* response,
-                              ::google::protobuf::Closure* done) {
-  channel_->CallMethod(BaseService_descriptor_->method(2),
-                       controller, request, response, done);
-}
-void BaseService_Stub::GetServices(::google::protobuf::RpcController* controller,
-                              const ::GetServicesRequest* request,
-                              ::GetServicesResponse* response,
-                              ::google::protobuf::Closure* done) {
-  channel_->CallMethod(BaseService_descriptor_->method(3),
-                       controller, request, response, done);
-}
+}  // namespace Messages
+}  // namespace Sikozu

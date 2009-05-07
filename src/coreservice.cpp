@@ -11,11 +11,14 @@
 #include "server.h"
 #include <iostream>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
-
-namespace Sikozu {
+#include "core.pb.h"
 
 using namespace std;
 using namespace google::protobuf::io;
+using namespace Sikozu;
+using namespace Sikozu::Messages;
+
+#include "core.pb.h"
 
 enum CommandIdentifier {
   PING_REQUEST, PING_RESPONSE,
@@ -25,33 +28,62 @@ enum CommandIdentifier {
   LAST
 };
 
+void CoreService::handle_get_services(Client* client_p, PacketHeader* header_p, vector<char>* buffer_p)
+{
+  ServiceRegistry& sr = Server::get_instance()->get_service_registry();
+  map<uint32_t, Service*>* map_p = sr.get_all_services();
+  
+  cout << "GET_SERVICES" << endl;
+  
+  GetServicesResponse msg;
+  for (map<uint32_t, Service*>::iterator i = map_p->begin();
+       i != map_p->end();
+       i++)
+  {
+    ServiceInfo* info_p = msg.add_services();
+    info_p->set_channel(i->first);
+    info_p->set_name(i->second->get_short_name());
+  }
+  
+  // Serialize to output
+  buffer_p->resize(65536);
+  header_p->set_command(GET_SERVICES_RESPONSE);
+  header_p->set_nid(Server::get_instance()->get_nid());
+
+  ArrayOutputStream outstream(&(*buffer_p)[0], buffer_p->size());
+  header_p->serialize(&outstream);
+  msg.SerializeToZeroCopyStream(&outstream);
+  buffer_p->resize(outstream.ByteCount());
+  Server::get_instance()->send_udp(client_p, buffer_p);
+}
+
+void CoreService::handle_ping(Client* client_p, PacketHeader* header_p, vector<char>* buffer_p)
+{
+  cout << "PING, PONG" << endl;
+  // Here we will re-use the buffer, since the ping response signal will be exactly the same size as the 
+  // ping request signal. Otherwise, we would have had to resize the buffer first.
+  header_p->set_command(PING_RESPONSE);
+  header_p->set_nid(Server::get_instance()->get_nid());
+  header_p->serialize(buffer_p);
+  Server::get_instance()->send_udp(client_p, buffer_p);
+}
+
 void CoreService::handle_request(Client* client_p, PacketHeader* header_p, vector<char>* buffer_p)
 {
-  cout << "Got command: " << header_p->get_command() << ", ";
-  
   switch (header_p->get_command())
   {
   case PING_REQUEST:
-  {
-    cout << "PING";
-    header_p->set_command(PING_RESPONSE);
-    header_p->set_nid(Server::get_instance()->get_nid());
-    buffer_p->resize(40);
-    ArrayOutputStream out(&(*buffer_p)[0], buffer_p->size());
-    header_p->serialize(&out);
-    buffer_p->resize(out.ByteCount());
-    Server::get_instance()->send_udp(client_p, buffer_p);
+    handle_ping(client_p, header_p, buffer_p);
     break;
-  }
+  case GET_SERVICES_REQUEST:
+    handle_get_services(client_p, header_p, buffer_p);
+    break;
   default:
-    cout << "<unknown>";
+    cout << "Got an unknown command: " << header_p->get_command() << endl; 
     break;
   }
-  cout << endl;
   
   delete client_p;
   delete header_p;
   delete buffer_p;
-}
-
 }

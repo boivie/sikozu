@@ -11,15 +11,20 @@
 
 #include <vector>
 #include <stdint.h>
-#include <google/protobuf/io/zero_copy_stream.h>
 #include "nodeid.h"
 
+#include <google/protobuf/io/zero_copy_stream.h>
+
 namespace Sikozu {
+
+#define PACKET_HEADER_MINIMUM_SIZE 40
+
   class PacketHeader {
    public:
     PacketHeader();
-    bool parse(google::protobuf::io::ZeroCopyInputStream* input);
-    bool serialize(google::protobuf::io::ZeroCopyOutputStream* output);
+    size_t parse(std::vector<char>* input_p);
+    size_t serialize(std::vector<char>* output_p);
+    bool serialize(google::protobuf::io::ZeroCopyOutputStream* output_p);
 
     int get_channel() { return m_channel; };
     void set_channel(int channel) { m_channel = channel; };
