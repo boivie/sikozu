@@ -40,9 +40,13 @@ void CoreService::handle_get_services(Client* client_p, PacketHeader* header_p, 
        i != map_p->end();
        i++)
   {
-    ServiceInfo* info_p = msg.add_services();
-    info_p->set_channel(i->first);
-    info_p->set_name(i->second->get_short_name());
+    // Don't include the core service - it's always there. 
+    if (i->first != 0)
+    {
+      ServiceInfo* info_p = msg.add_services();
+      info_p->set_channel(i->first);
+      info_p->set_name(i->second->get_short_name());
+    }
   }
   
   // Serialize to output
