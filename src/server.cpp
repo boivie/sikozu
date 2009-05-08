@@ -27,7 +27,8 @@ Server* Server::m_instance = NULL;
 
 void Server::send_udp(Client* client_p, vector<char>* buffer_p)
 {
-  sendto(m_udp_socket, &(*buffer_p)[0], buffer_p->size(), 0, (struct sockaddr*)client_p->get_client_address(), sizeof(struct in6_addr));  
+  sockaddr_in6 from = *client_p->get_client_address();
+  sendto(m_udp_socket, &(*buffer_p)[0], buffer_p->size(), 0, (struct sockaddr*)client_p->get_client_address(), sizeof(struct sockaddr_in6));  
 }
 
 
@@ -39,6 +40,7 @@ void got_packet(int fd, short event, void* arg)
   socklen_t l = sizeof(from);
 
   len = recvfrom(fd, &(*buffer_p)[0], buffer_p->size(), 0, (struct sockaddr*)&from, &l);
+
   if (len == -1)
   {
     cout << "recvfrom()" << endl;
@@ -67,17 +69,20 @@ void got_packet(int fd, short event, void* arg)
 
 int Server::listen_udp(uint16_t port)
 {
-  struct sockaddr_in si_me;
+  struct sockaddr_in6 si_me;
   
-  if ((m_udp_socket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP))==-1)
+  if ((m_udp_socket = socket(AF_INET6, SOCK_DGRAM, IPPROTO_UDP))==-1)
     return 0;
 
   fcntl(m_udp_socket, F_SETFL, O_NONBLOCK);
   
   memset((char *) &si_me, 0, sizeof(si_me));
-  si_me.sin_family = AF_INET;
-  si_me.sin_port = htons(port);
-  si_me.sin_addr.s_addr = htonl(INADDR_ANY);
+  si_me.sin6_len = sizeof(si_me);
+  si_me.sin6_family = AF_INET6;
+  si_me.sin6_flowinfo = 0;
+  si_me.sin6_addr = in6addr_any;
+  si_me.sin6_port = htons(port);
+
   if (bind(m_udp_socket, (const sockaddr*)&si_me, sizeof(si_me))==-1)
     return 0;
   
