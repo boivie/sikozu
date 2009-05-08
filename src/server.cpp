@@ -27,7 +27,6 @@ Server* Server::m_instance = NULL;
 
 void Server::send_udp(Client* client_p, vector<char>* buffer_p)
 {
-  sockaddr_in6 from = *client_p->get_client_address();
   sendto(m_udp_socket, &(*buffer_p)[0], buffer_p->size(), 0, (struct sockaddr*)client_p->get_client_address(), sizeof(struct sockaddr_in6));  
 }
 
