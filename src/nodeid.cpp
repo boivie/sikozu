@@ -20,11 +20,18 @@ ostream& operator << (ostream& os, NodeId& N)
 
 int NodeId::get_log_distance(NodeId& other)
 {
-  vector<uint8_t> nid_copy = m_nid;
-  vector<uint8_t>& other_nid = other.m_nid;
-  for (int i = 0; i < nid_copy.size(); i++)
+  int distance = NID_SIZE_BITS;
+  
+  for (int i = 0; i < m_nid.size(); i++)
   {
-    nid_copy[i] ^= other_nid[i];
+    uint8_t diff = m_nid[i] ^= other.m_nid[i];
+    for (int j = 7; j >= 0; j--)
+    {
+      if (diff & (1 << j)) 
+        return distance;
+      distance--;
+    }
   }
-  return 1;
+  assert(distance == 0);
+  return distance;
 }
