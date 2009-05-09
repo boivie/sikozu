@@ -1,0 +1,285 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 44;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		57251F280FAE18180052F18F /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57251F270FAE18180052F18F /* main.cpp */; };
+		572520420FAF876C0052F18F /* nodeid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5725203D0FAF876C0052F18F /* nodeid.cpp */; };
+		572520430FAF876C0052F18F /* packetheader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5725203F0FAF876C0052F18F /* packetheader.cpp */; };
+		572520E80FB0AD830052F18F /* service.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 572520E70FB0AD830052F18F /* service.cpp */; };
+		572520EB0FB0B29A0052F18F /* coreservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 572520EA0FB0B29A0052F18F /* coreservice.cpp */; };
+		572521380FB0B59C0052F18F /* server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 572521370FB0B59C0052F18F /* server.cpp */; };
+		572521EA0FB0E1180052F18F /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 572521E90FB0E1180052F18F /* client.cpp */; };
+		5725228B0FB33C190052F18F /* serviceregistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5725228A0FB33C190052F18F /* serviceregistry.cpp */; };
+		572523210FB3521A0052F18F /* core.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5725231F0FB3521A0052F18F /* core.pb.cc */; };
+		57295A2E0FB591D90028DA4B /* bucketstore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57295A2D0FB591D90028DA4B /* bucketstore.cpp */; };
+		8DD76F6A0486A84900D96B5E /* sikozu.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* sikozu.1 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8DD76F690486A84900D96B5E /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				8DD76F6A0486A84900D96B5E /* sikozu.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		57251F270FAE18180052F18F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = SOURCE_ROOT; };
+		5725203D0FAF876C0052F18F /* nodeid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nodeid.cpp; path = ../src/nodeid.cpp; sourceTree = SOURCE_ROOT; };
+		5725203E0FAF876C0052F18F /* nodeid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nodeid.h; path = ../src/nodeid.h; sourceTree = SOURCE_ROOT; };
+		5725203F0FAF876C0052F18F /* packetheader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = packetheader.cpp; path = ../src/packetheader.cpp; sourceTree = SOURCE_ROOT; };
+		572520400FAF876C0052F18F /* packetheader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = packetheader.h; path = ../src/packetheader.h; sourceTree = SOURCE_ROOT; };
+		572520E60FB0AD830052F18F /* service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = service.h; path = ../src/service.h; sourceTree = SOURCE_ROOT; };
+		572520E70FB0AD830052F18F /* service.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = service.cpp; path = ../src/service.cpp; sourceTree = SOURCE_ROOT; };
+		572520E90FB0B29A0052F18F /* coreservice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = coreservice.h; path = ../src/coreservice.h; sourceTree = SOURCE_ROOT; };
+		572520EA0FB0B29A0052F18F /* coreservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = coreservice.cpp; path = ../src/coreservice.cpp; sourceTree = SOURCE_ROOT; };
+		572521360FB0B59C0052F18F /* server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = server.h; path = ../src/server.h; sourceTree = SOURCE_ROOT; };
+		572521370FB0B59C0052F18F /* server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = server.cpp; path = ../src/server.cpp; sourceTree = SOURCE_ROOT; };
+		572521E80FB0E1180052F18F /* client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = client.h; path = ../src/client.h; sourceTree = SOURCE_ROOT; };
+		572521E90FB0E1180052F18F /* client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = client.cpp; path = ../src/client.cpp; sourceTree = SOURCE_ROOT; };
+		572522890FB33C190052F18F /* serviceregistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = serviceregistry.h; path = ../src/serviceregistry.h; sourceTree = SOURCE_ROOT; };
+		5725228A0FB33C190052F18F /* serviceregistry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = serviceregistry.cpp; path = ../src/serviceregistry.cpp; sourceTree = SOURCE_ROOT; };
+		5725231F0FB3521A0052F18F /* core.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = core.pb.cc; path = ../src/core.pb.cc; sourceTree = SOURCE_ROOT; };
+		572523200FB3521A0052F18F /* core.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = core.pb.h; path = ../src/core.pb.h; sourceTree = SOURCE_ROOT; };
+		57295A2C0FB591D90028DA4B /* bucketstore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bucketstore.h; path = ../src/bucketstore.h; sourceTree = SOURCE_ROOT; };
+		57295A2D0FB591D90028DA4B /* bucketstore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bucketstore.cpp; path = ../src/bucketstore.cpp; sourceTree = SOURCE_ROOT; };
+		8DD76F6C0486A84900D96B5E /* sikozu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sikozu; sourceTree = BUILT_PRODUCTS_DIR; };
+		C6859E8B029090EE04C91782 /* sikozu.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = sikozu.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DD76F660486A84900D96B5E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08FB7794FE84155DC02AAC07 /* sikozu */ = {
+			isa = PBXGroup;
+			children = (
+				08FB7795FE84155DC02AAC07 /* Source */,
+				C6859E8C029090F304C91782 /* Documentation */,
+				1AB674ADFE9D54B511CA2CBB /* Products */,
+			);
+			name = sikozu;
+			sourceTree = "<group>";
+		};
+		08FB7795FE84155DC02AAC07 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				5725231F0FB3521A0052F18F /* core.pb.cc */,
+				572523200FB3521A0052F18F /* core.pb.h */,
+				5725203D0FAF876C0052F18F /* nodeid.cpp */,
+				5725203E0FAF876C0052F18F /* nodeid.h */,
+				5725203F0FAF876C0052F18F /* packetheader.cpp */,
+				572520400FAF876C0052F18F /* packetheader.h */,
+				57251F270FAE18180052F18F /* main.cpp */,
+				572520E60FB0AD830052F18F /* service.h */,
+				572520E70FB0AD830052F18F /* service.cpp */,
+				572520E90FB0B29A0052F18F /* coreservice.h */,
+				572520EA0FB0B29A0052F18F /* coreservice.cpp */,
+				572521360FB0B59C0052F18F /* server.h */,
+				572521370FB0B59C0052F18F /* server.cpp */,
+				572521E80FB0E1180052F18F /* client.h */,
+				572521E90FB0E1180052F18F /* client.cpp */,
+				572522890FB33C190052F18F /* serviceregistry.h */,
+				5725228A0FB33C190052F18F /* serviceregistry.cpp */,
+				57295A2C0FB591D90028DA4B /* bucketstore.h */,
+				57295A2D0FB591D90028DA4B /* bucketstore.cpp */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		1AB674ADFE9D54B511CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DD76F6C0486A84900D96B5E /* sikozu */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C6859E8C029090F304C91782 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				C6859E8B029090EE04C91782 /* sikozu.1 */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8DD76F620486A84900D96B5E /* sikozu */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "sikozu" */;
+			buildPhases = (
+				8DD76F640486A84900D96B5E /* Sources */,
+				8DD76F660486A84900D96B5E /* Frameworks */,
+				8DD76F690486A84900D96B5E /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = sikozu;
+			productInstallPath = "$(HOME)/bin";
+			productName = sikozu;
+			productReference = 8DD76F6C0486A84900D96B5E /* sikozu */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		08FB7793FE84155DC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "sikozu" */;
+			compatibilityVersion = "Xcode 3.0";
+			hasScannedForEncodings = 1;
+			mainGroup = 08FB7794FE84155DC02AAC07 /* sikozu */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DD76F620486A84900D96B5E /* sikozu */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DD76F640486A84900D96B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57251F280FAE18180052F18F /* main.cpp in Sources */,
+				572520420FAF876C0052F18F /* nodeid.cpp in Sources */,
+				572520430FAF876C0052F18F /* packetheader.cpp in Sources */,
+				572520E80FB0AD830052F18F /* service.cpp in Sources */,
+				572520EB0FB0B29A0052F18F /* coreservice.cpp in Sources */,
+				572521380FB0B59C0052F18F /* server.cpp in Sources */,
+				572521EA0FB0E1180052F18F /* client.cpp in Sources */,
+				5725228B0FB33C190052F18F /* serviceregistry.cpp in Sources */,
+				572523210FB3521A0052F18F /* core.pb.cc in Sources */,
+				57295A2E0FB591D90028DA4B /* bucketstore.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB923208733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_GLIBCXX_DEBUG=1",
+					"_GLIBCXX_DEBUG_PEDANTIC=1",
+				);
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = sikozu;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		1DEB923308733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = sikozu;
+			};
+			name = Release;
+		};
+		1DEB923608733DC60010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include/,
+					/opt/local/include/,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib/,
+					/opt/local/lib/,
+				);
+				OTHER_LDFLAGS = (
+					"-levent",
+					"-llua",
+					"-lprotobuf",
+				);
+				PREBINDING = NO;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+			};
+			name = Debug;
+		};
+		1DEB923708733DC60010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include/,
+					/opt/local/include/,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib/,
+					/opt/local/lib/,
+				);
+				OTHER_LDFLAGS = (
+					"-levent",
+					"-llua",
+					"-lprotobuf",
+				);
+				PREBINDING = NO;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB923108733DC60010E9CD /* Build configuration list for PBXNativeTarget "sikozu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923208733DC60010E9CD /* Debug */,
+				1DEB923308733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "sikozu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB923608733DC60010E9CD /* Debug */,
+				1DEB923708733DC60010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 08FB7793FE84155DC02AAC07 /* Project object */;
+}
