@@ -35,12 +35,18 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* GetServicesRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GetServicesRequest_reflection_ = NULL;
-const ::google::protobuf::Descriptor* ServiceInfo_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  ServiceInfo_reflection_ = NULL;
 const ::google::protobuf::Descriptor* GetServicesResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   GetServicesResponse_reflection_ = NULL;
+const ::google::protobuf::Descriptor* GetServicesResponse_Result_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  GetServicesResponse_Result_reflection_ = NULL;
+const ::google::protobuf::Descriptor* AnnounceService_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  AnnounceService_reflection_ = NULL;
+const ::google::protobuf::Descriptor* AnnounceService_Info_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  AnnounceService_Info_reflection_ = NULL;
 
 }  // namespace
 
@@ -183,25 +189,7 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
       sizeof(GetServicesRequest));
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GetServicesRequest_descriptor_, GetServicesRequest::default_instance_);
-  ServiceInfo_descriptor_ = file->message_type(8);
-  ServiceInfo::default_instance_ = new ServiceInfo();
-  static const int ServiceInfo_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServiceInfo, channel_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServiceInfo, name_),
-  };
-  ServiceInfo_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      ServiceInfo_descriptor_,
-      ServiceInfo::default_instance_,
-      ServiceInfo_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServiceInfo, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ServiceInfo, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      sizeof(ServiceInfo));
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    ServiceInfo_descriptor_, ServiceInfo::default_instance_);
-  GetServicesResponse_descriptor_ = file->message_type(9);
+  GetServicesResponse_descriptor_ = file->message_type(8);
   GetServicesResponse::default_instance_ = new GetServicesResponse();
   static const int GetServicesResponse_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetServicesResponse, services_),
@@ -216,8 +204,62 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       sizeof(GetServicesResponse));
+  GetServicesResponse_Result_descriptor_ = GetServicesResponse_descriptor_->nested_type(0);
+  GetServicesResponse_Result::default_instance_ = new GetServicesResponse_Result();
+  static const int GetServicesResponse_Result_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetServicesResponse_Result, channel_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetServicesResponse_Result, name_),
+  };
+  GetServicesResponse_Result_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      GetServicesResponse_Result_descriptor_,
+      GetServicesResponse_Result::default_instance_,
+      GetServicesResponse_Result_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetServicesResponse_Result, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetServicesResponse_Result, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      sizeof(GetServicesResponse_Result));
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    GetServicesResponse_Result_descriptor_, GetServicesResponse_Result::default_instance_);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GetServicesResponse_descriptor_, GetServicesResponse::default_instance_);
+  AnnounceService_descriptor_ = file->message_type(9);
+  AnnounceService::default_instance_ = new AnnounceService();
+  static const int AnnounceService_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnnounceService, info_),
+  };
+  AnnounceService_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      AnnounceService_descriptor_,
+      AnnounceService::default_instance_,
+      AnnounceService_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnnounceService, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnnounceService, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      sizeof(AnnounceService));
+  AnnounceService_Info_descriptor_ = AnnounceService_descriptor_->nested_type(0);
+  AnnounceService_Info::default_instance_ = new AnnounceService_Info();
+  static const int AnnounceService_Info_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnnounceService_Info, name_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnnounceService_Info, provides_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnnounceService_Info, tracks_),
+  };
+  AnnounceService_Info_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      AnnounceService_Info_descriptor_,
+      AnnounceService_Info::default_instance_,
+      AnnounceService_Info_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnnounceService_Info, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnnounceService_Info, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      sizeof(AnnounceService_Info));
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    AnnounceService_Info_descriptor_, AnnounceService_Info::default_instance_);
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    AnnounceService_descriptor_, AnnounceService::default_instance_);
   Contact::default_instance_->InitAsDefaultInstance();
   PingRequest::default_instance_->InitAsDefaultInstance();
   PingResponse::default_instance_->InitAsDefaultInstance();
@@ -226,8 +268,10 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
   QueryServicesRequest::default_instance_->InitAsDefaultInstance();
   QueryServicesResponse::default_instance_->InitAsDefaultInstance();
   GetServicesRequest::default_instance_->InitAsDefaultInstance();
-  ServiceInfo::default_instance_->InitAsDefaultInstance();
   GetServicesResponse::default_instance_->InitAsDefaultInstance();
+  GetServicesResponse_Result::default_instance_->InitAsDefaultInstance();
+  AnnounceService::default_instance_->InitAsDefaultInstance();
+  AnnounceService_Info::default_instance_->InitAsDefaultInstance();
 }
 
 void protobuf_BuildDesc_core_2eproto() {
@@ -247,10 +291,13 @@ void protobuf_BuildDesc_core_2eproto() {
     "ontacts\030\001 \003(\0132\030.Sikozu.Messages.Contact\""
     "\'\n\024QueryServicesRequest\022\017\n\007service\030\001 \003(\t"
     "\"(\n\025QueryServicesResponse\022\017\n\007present\030\001 \003"
-    "(\r\"\024\n\022GetServicesRequest\",\n\013ServiceInfo\022"
-    "\017\n\007channel\030\001 \002(\r\022\014\n\004name\030\002 \002(\t\"E\n\023GetSer"
-    "vicesResponse\022.\n\010services\030\001 \003(\0132\034.Sikozu"
-    ".Messages.ServiceInfo", 461,
+    "(\r\"\024\n\022GetServicesRequest\"}\n\023GetServicesR"
+    "esponse\022=\n\010services\030\001 \003(\0132+.Sikozu.Messa"
+    "ges.GetServicesResponse.Result\032\'\n\006Result"
+    "\022\017\n\007channel\030\001 \002(\r\022\014\n\004name\030\002 \002(\t\"~\n\017Annou"
+    "nceService\0223\n\004info\030\001 \003(\0132%.Sikozu.Messag"
+    "es.AnnounceService.Info\0326\n\004Info\022\014\n\004name\030"
+    "\001 \002(\t\022\020\n\010provides\030\002 \001(\010\022\016\n\006tracks\030\003 \001(\010", 599,
   &protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors);
 }
 
@@ -674,8 +721,8 @@ const ::google::protobuf::Reflection* GetServicesRequest::GetReflection() const 
 // ===================================================================
 
 
-const ::std::string ServiceInfo::_default_name_;
-ServiceInfo::ServiceInfo()
+const ::std::string GetServicesResponse_Result::_default_name_;
+GetServicesResponse_Result::GetServicesResponse_Result()
   : ::google::protobuf::Message(),
     _cached_size_(0),
     channel_(0u),
@@ -683,9 +730,9 @@ ServiceInfo::ServiceInfo()
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-void ServiceInfo::InitAsDefaultInstance() {}
+void GetServicesResponse_Result::InitAsDefaultInstance() {}
 
-ServiceInfo::ServiceInfo(const ServiceInfo& from)
+GetServicesResponse_Result::GetServicesResponse_Result(const GetServicesResponse_Result& from)
   : ::google::protobuf::Message(),
     _cached_size_(0),
     channel_(0u),
@@ -694,7 +741,7 @@ ServiceInfo::ServiceInfo(const ServiceInfo& from)
   MergeFrom(from);
 }
 
-ServiceInfo::~ServiceInfo() {
+GetServicesResponse_Result::~GetServicesResponse_Result() {
   if (name_ != &_default_name_) {
     delete name_;
   }
@@ -702,32 +749,32 @@ ServiceInfo::~ServiceInfo() {
   }
 }
 
-const ::google::protobuf::Descriptor* ServiceInfo::descriptor() {
-  if (ServiceInfo_descriptor_ == NULL) protobuf_BuildDesc_core_2eproto();
-  return ServiceInfo_descriptor_;
+const ::google::protobuf::Descriptor* GetServicesResponse_Result::descriptor() {
+  if (GetServicesResponse_Result_descriptor_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return GetServicesResponse_Result_descriptor_;
 }
 
-const ServiceInfo& ServiceInfo::default_instance() {
+const GetServicesResponse_Result& GetServicesResponse_Result::default_instance() {
   if (default_instance_ == NULL) protobuf_BuildDesc_core_2eproto();
   return *default_instance_;
 }
 
-ServiceInfo* ServiceInfo::default_instance_ = NULL;
+GetServicesResponse_Result* GetServicesResponse_Result::default_instance_ = NULL;
 
-ServiceInfo* ServiceInfo::New() const {
-  return new ServiceInfo;
+GetServicesResponse_Result* GetServicesResponse_Result::New() const {
+  return new GetServicesResponse_Result;
 }
 
-const ::google::protobuf::Descriptor* ServiceInfo::GetDescriptor() const {
+const ::google::protobuf::Descriptor* GetServicesResponse_Result::GetDescriptor() const {
   return descriptor();
 }
 
-const ::google::protobuf::Reflection* ServiceInfo::GetReflection() const {
-  if (ServiceInfo_reflection_ == NULL) protobuf_BuildDesc_core_2eproto();
-  return ServiceInfo_reflection_;
+const ::google::protobuf::Reflection* GetServicesResponse_Result::GetReflection() const {
+  if (GetServicesResponse_Result_reflection_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return GetServicesResponse_Result_reflection_;
 }
 
-// ===================================================================
+// -------------------------------------------------------------------
 
 
 GetServicesResponse::GetServicesResponse()
@@ -773,6 +820,113 @@ const ::google::protobuf::Descriptor* GetServicesResponse::GetDescriptor() const
 const ::google::protobuf::Reflection* GetServicesResponse::GetReflection() const {
   if (GetServicesResponse_reflection_ == NULL) protobuf_BuildDesc_core_2eproto();
   return GetServicesResponse_reflection_;
+}
+
+// ===================================================================
+
+const ::std::string AnnounceService_Info::_default_name_;
+
+
+AnnounceService_Info::AnnounceService_Info()
+  : ::google::protobuf::Message(),
+    _cached_size_(0),
+    name_(const_cast< ::std::string*>(&_default_name_)),
+    provides_(false),
+    tracks_(false) {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+void AnnounceService_Info::InitAsDefaultInstance() {}
+
+AnnounceService_Info::AnnounceService_Info(const AnnounceService_Info& from)
+  : ::google::protobuf::Message(),
+    _cached_size_(0),
+    name_(const_cast< ::std::string*>(&_default_name_)),
+    provides_(false),
+    tracks_(false) {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  MergeFrom(from);
+}
+
+AnnounceService_Info::~AnnounceService_Info() {
+  if (name_ != &_default_name_) {
+    delete name_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* AnnounceService_Info::descriptor() {
+  if (AnnounceService_Info_descriptor_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return AnnounceService_Info_descriptor_;
+}
+
+const AnnounceService_Info& AnnounceService_Info::default_instance() {
+  if (default_instance_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return *default_instance_;
+}
+
+AnnounceService_Info* AnnounceService_Info::default_instance_ = NULL;
+
+AnnounceService_Info* AnnounceService_Info::New() const {
+  return new AnnounceService_Info;
+}
+
+const ::google::protobuf::Descriptor* AnnounceService_Info::GetDescriptor() const {
+  return descriptor();
+}
+
+const ::google::protobuf::Reflection* AnnounceService_Info::GetReflection() const {
+  if (AnnounceService_Info_reflection_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return AnnounceService_Info_reflection_;
+}
+
+// -------------------------------------------------------------------
+
+
+AnnounceService::AnnounceService()
+  : ::google::protobuf::Message(),
+    _cached_size_(0) {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+void AnnounceService::InitAsDefaultInstance() {}
+
+AnnounceService::AnnounceService(const AnnounceService& from)
+  : ::google::protobuf::Message(),
+    _cached_size_(0) {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  MergeFrom(from);
+}
+
+AnnounceService::~AnnounceService() {
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* AnnounceService::descriptor() {
+  if (AnnounceService_descriptor_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return AnnounceService_descriptor_;
+}
+
+const AnnounceService& AnnounceService::default_instance() {
+  if (default_instance_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return *default_instance_;
+}
+
+AnnounceService* AnnounceService::default_instance_ = NULL;
+
+AnnounceService* AnnounceService::New() const {
+  return new AnnounceService;
+}
+
+const ::google::protobuf::Descriptor* AnnounceService::GetDescriptor() const {
+  return descriptor();
+}
+
+const ::google::protobuf::Reflection* AnnounceService::GetReflection() const {
+  if (AnnounceService_reflection_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return AnnounceService_reflection_;
 }
 
 }  // namespace Messages

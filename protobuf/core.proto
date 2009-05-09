@@ -40,12 +40,21 @@ message QueryServicesResponse {
 message GetServicesRequest {
 }
 
-message ServiceInfo {
-  required uint32 channel = 1;
-  required string name = 2;
+message GetServicesResponse {
+	message Result {
+	  required uint32 channel = 1;
+	  required string name = 2;
+	}
+  repeated Result services = 1;
 }
 
-message GetServicesResponse {
-  repeated ServiceInfo services = 1;
+// There is no response to this message.
+message AnnounceService {
+	message Info {
+		required string name = 1;
+	  optional bool provides = 2;
+	  optional bool tracks = 3;
+	}
+	repeated Info info = 1;
 }
 

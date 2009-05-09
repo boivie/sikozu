@@ -9,6 +9,7 @@
 
 #include "service.h"
 
+using namespace std;
 namespace Sikozu 
 {
 
@@ -18,6 +19,21 @@ void Service::handle_request(Client* client_p, PacketHeader* header_p, vector<ch
   delete client_p;
   delete header_p;
   delete buffer_p;
+}
+
+void Service::add_provider(Client* client_p)
+{
+  m_bucket_store.insert(client_p);
+}
+
+void Service::add_tracker(Client* client_p)
+{
+
+}
+
+bool Service::handle_find_node_request(Client* client_p, PacketHeader* header_p)
+{
+  return true;
 }
 
 }

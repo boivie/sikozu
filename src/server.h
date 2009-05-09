@@ -10,11 +10,11 @@
 #ifndef SERVER_H_INCLUSION_GUARD
 #define SERVER_H_INCLUSION_GUARD
 
-#include "nodeid.h"
-#include "serviceregistry.h"
 #include <stdint.h>
 #include <vector>
 #include <event.h>
+#include "nodeid.h"
+#include "serviceregistry.h"
 
 namespace Sikozu {
   class Server {

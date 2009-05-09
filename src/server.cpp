@@ -27,7 +27,7 @@ Server* Server::m_instance = NULL;
 
 void Server::send_udp(Client* client_p, vector<char>* buffer_p)
 {
-  sendto(m_udp_socket, &(*buffer_p)[0], buffer_p->size(), 0, (struct sockaddr*)client_p->get_client_address(), sizeof(struct sockaddr_in6));  
+  sendto(m_udp_socket, &(*buffer_p)[0], buffer_p->size(), 0, (struct sockaddr*)&client_p->get_address(), sizeof(struct sockaddr_in6));  
 }
 
 
@@ -56,11 +56,11 @@ void got_packet(int fd, short event, void* arg)
     return;
    
   Client* client_p = new Client();
-  client_p->set_client_address(&from);
+  client_p->get_address() = from;
 
   Server* server_p = Server::get_instance();
   ServiceRegistry& sr = server_p->get_service_registry();
-  Service* service_p = sr.get_service(header_p->get_channel());
+  Service* service_p = sr.get_service(header_p->get_channel(), true);
   cout << "Using service: " << service_p->get_long_name() << endl;
   service_p->handle_request(client_p, header_p, buffer_p);
   cout << "Done." << endl;

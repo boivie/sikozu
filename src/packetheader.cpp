@@ -36,8 +36,9 @@ namespace Sikozu {
     
       if (!cis.ReadRaw(&m_sid[0], m_sid.size()))
         return 0;
-
-      if (!cis.ReadRaw(m_nid.get_ptr(), m_nid.size()))
+        
+      vector<uint8_t>& nid = m_nid.get_nid();
+      if (!cis.ReadRaw(&nid[0], nid.size()))
         return 0;
     }
     m_size = instream.ByteCount();
@@ -53,7 +54,8 @@ namespace Sikozu {
       return false;
     if (!cos.WriteRaw(&m_sid[0], m_sid.size()))
       return false;
-    if (!cos.WriteRaw(m_nid.get_ptr(), m_nid.size()))
+    vector<uint8_t>& nid = m_nid.get_nid();
+    if (!cos.WriteRaw(&nid[0], nid.size()))
       return false;
     return true;
   }

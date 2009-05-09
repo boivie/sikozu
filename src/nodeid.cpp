@@ -10,20 +10,21 @@
 #include "nodeid.h"
 
 using namespace Sikozu;
-
-NodeId::NodeId() 
- : nid(20)
-{
-}
-
-void NodeId::set_bytes(vector<char> &bytes)
-{
-  if (bytes.size() == NID_SIZE_BYTES)
-    nid = bytes;
-}
+using namespace std;
     
 ostream& operator << (ostream& os, NodeId& N)
 {
   os << "<NodeId: 'xxxxxxxx'>";
   return os;
+}
+
+int NodeId::get_log_distance(NodeId& other)
+{
+  vector<uint8_t> nid_copy = m_nid;
+  vector<uint8_t>& other_nid = other.m_nid;
+  for (int i = 0; i < nid_copy.size(); i++)
+  {
+    nid_copy[i] ^= other_nid[i];
+  }
+  return 1;
 }
