@@ -15,7 +15,7 @@ namespace Sikozu {
 
   class CoreService : public Service {
   public:
-    const char* get_short_name() { return "Core"; };
+    const char* get_short_name() { return "core"; };
     const char* get_long_name() { return "Sikozu Core"; };
     void handle_request(Client* client_p, PacketHeader* header_p, std::vector<char>* buffer_p);
   protected:

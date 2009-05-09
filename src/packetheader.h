@@ -32,12 +32,10 @@ namespace Sikozu {
     int get_command() { return m_command; };
     void set_command(int command) { m_command = command; };
     
-    void get_nid(NodeId &nid) { nid = m_nid; };
-    void set_nid(NodeId &nid) { m_nid = nid; };
-    void get_sid(std::vector<char> &sid) { sid = m_sid; };
-    void set_sid(std::vector<char> &sid) { m_sid = sid; };
-    
+    NodeId& get_nid() { return m_nid; }
+    std::vector<char>& get_sid() { return m_sid; }
     size_t get_size() { return m_size; };
+    
    private:
     uint32_t m_channel; 
     uint32_t m_command;

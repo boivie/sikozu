@@ -52,7 +52,7 @@ void CoreService::handle_get_services(Client* client_p, PacketHeader* header_p, 
   // Serialize to output
   buffer_p->resize(65536);
   header_p->set_command(GET_SERVICES_RESPONSE);
-  header_p->set_nid(Server::get_instance()->get_nid());
+  header_p->get_nid() = Server::get_instance()->get_nid();
 
   ArrayOutputStream outstream(&(*buffer_p)[0], buffer_p->size());
   header_p->serialize(&outstream);
@@ -67,7 +67,7 @@ void CoreService::handle_ping(Client* client_p, PacketHeader* header_p, vector<c
   // Here we will re-use the buffer, since the ping response signal will be exactly the same size as the 
   // ping request signal. Otherwise, we would have had to resize the buffer first.
   header_p->set_command(PING_RESPONSE);
-  header_p->set_nid(Server::get_instance()->get_nid());
+  header_p->get_nid() = Server::get_instance()->get_nid();
   header_p->serialize(buffer_p);
   Server::get_instance()->send_udp(client_p, buffer_p);
 }
