@@ -26,7 +26,6 @@ namespace Sikozu {
     virtual void add_tracker(Client* client_p);
    protected:
     BucketStore m_bucket_store;
-    std::list<BucketContact> m_trackers;
   };
 }
 

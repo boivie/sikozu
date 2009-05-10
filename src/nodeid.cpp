@@ -18,19 +18,34 @@ ostream& operator << (ostream& os, NodeId& N)
   return os;
 }
 
-int NodeId::get_log_distance(NodeId& other)
+const static uint8_t lookup[256] = {
+  8, 
+  7, 
+  6, 6, 
+  5, 5, 5, 5, 
+  4, 4, 4, 4, 4, 4, 4, 4,
+	3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+  2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+  
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,	1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+};
+
+int NodeId::get_log_distance(NodeId& other) const
 {
   int distance = NID_SIZE_BITS;
   
   for (int i = 0; i < m_nid.size(); i++)
   {
-    uint8_t diff = m_nid[i] ^= other.m_nid[i];
-    for (int j = 7; j >= 0; j--)
-    {
-      if (diff & (1 << j)) 
-        return distance;
-      distance--;
-    }
+    uint8_t diff = m_nid[i] ^ other.m_nid[i];
+    if (diff != 0)
+      return distance - lookup[diff];
+    distance -= 8;
   }
   assert(distance == 0);
   return distance;

@@ -16,7 +16,8 @@ namespace Sikozu {
 class Client {
  public:
   Client() {};
-  NodeId& get_nodeid() { return m_nodeid; }
+  void set_nodedid(NodeId& nid) { m_nodeid = nid; };
+  const NodeId& get_nodeid() const { return m_nodeid; };
   struct sockaddr_in6& get_address() { return m_caddr; };
  private:
   NodeId m_nodeid;

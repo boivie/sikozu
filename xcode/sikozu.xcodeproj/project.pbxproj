@@ -17,6 +17,7 @@
 		5725228B0FB33C190052F18F /* serviceregistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5725228A0FB33C190052F18F /* serviceregistry.cpp */; };
 		572523210FB3521A0052F18F /* core.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5725231F0FB3521A0052F18F /* core.pb.cc */; };
 		57295A2E0FB591D90028DA4B /* bucketstore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57295A2D0FB591D90028DA4B /* bucketstore.cpp */; };
+		57295B4F0FB6DE5A0028DA4B /* bucket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57295B4E0FB6DE5A0028DA4B /* bucket.cpp */; };
 		8DD76F6A0486A84900D96B5E /* sikozu.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* sikozu.1 */; };
 /* End PBXBuildFile section */
 
@@ -53,6 +54,8 @@
 		572523200FB3521A0052F18F /* core.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = core.pb.h; path = ../src/core.pb.h; sourceTree = SOURCE_ROOT; };
 		57295A2C0FB591D90028DA4B /* bucketstore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bucketstore.h; path = ../src/bucketstore.h; sourceTree = SOURCE_ROOT; };
 		57295A2D0FB591D90028DA4B /* bucketstore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bucketstore.cpp; path = ../src/bucketstore.cpp; sourceTree = SOURCE_ROOT; };
+		57295B4D0FB6DE5A0028DA4B /* bucket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bucket.h; path = ../src/bucket.h; sourceTree = SOURCE_ROOT; };
+		57295B4E0FB6DE5A0028DA4B /* bucket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bucket.cpp; path = ../src/bucket.cpp; sourceTree = SOURCE_ROOT; };
 		8DD76F6C0486A84900D96B5E /* sikozu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sikozu; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859E8B029090EE04C91782 /* sikozu.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = sikozu.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +103,8 @@
 				5725228A0FB33C190052F18F /* serviceregistry.cpp */,
 				57295A2C0FB591D90028DA4B /* bucketstore.h */,
 				57295A2D0FB591D90028DA4B /* bucketstore.cpp */,
+				57295B4D0FB6DE5A0028DA4B /* bucket.h */,
+				57295B4E0FB6DE5A0028DA4B /* bucket.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 				5725228B0FB33C190052F18F /* serviceregistry.cpp in Sources */,
 				572523210FB3521A0052F18F /* core.pb.cc in Sources */,
 				57295A2E0FB591D90028DA4B /* bucketstore.cpp in Sources */,
+				57295B4F0FB6DE5A0028DA4B /* bucket.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

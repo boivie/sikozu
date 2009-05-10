@@ -19,7 +19,8 @@ void BucketStore::insert(Client* contact_p)
   NodeId& my_nid = Server::get_instance()->get_nid();
   int bucket_idx = contact_p->get_nodeid().get_log_distance(my_nid);
   assert((bucket_idx >= 0) && (bucket_idx < NID_SIZE_BITS));
-  list<BucketContact>& bucket = m_buckets[bucket_idx];
+  Bucket& bucket = m_buckets[bucket_idx];
   BucketContact contact;
-  bucket.push_back(contact);
+  contact.get_client() = *contact_p;
+  bucket.insert(contact);
 }

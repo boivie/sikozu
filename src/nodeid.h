@@ -23,9 +23,10 @@ namespace Sikozu {
   public:
     NodeId() : m_nid(NID_SIZE_BYTES) {}
     std::vector<uint8_t>& get_nid() { return m_nid; }
-    size_t size() { return NID_SIZE_BYTES; }
-    int get_log_distance(NodeId& other);
+    size_t size() const { return NID_SIZE_BYTES; }
+    int get_log_distance(NodeId& other) const;
     friend std::ostream& operator << (std::ostream& os, NodeId& N);
+    friend bool operator < (const NodeId& n2, const NodeId& n1) { return n2.m_nid < n1.m_nid; }
   private:
     std::vector<uint8_t> m_nid;
   };
