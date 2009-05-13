@@ -92,7 +92,9 @@ int Server::listen_udp(uint16_t port)
   fcntl(m_udp_socket, F_SETFL, O_NONBLOCK);
   
   memset((char *) &si_me, 0, sizeof(si_me));
+#ifdef SIN6_LEN
   si_me.sin6_len = sizeof(si_me);
+#endif
   si_me.sin6_family = AF_INET6;
   si_me.sin6_flowinfo = 0;
   si_me.sin6_addr = in6addr_any;
