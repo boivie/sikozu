@@ -14,25 +14,21 @@ using namespace std;
 
 namespace Sikozu {
 
-Service* ServiceRegistry::get_service(uint32_t channel, bool default_if_missing)
+Service* ServiceRegistry::get_service(uint32_t channel)
 {
   map<uint32_t, Service*>::iterator iter = m_services.find(channel);
   if (iter == m_services.end())
   {
-    if (default_if_missing)
-      return &m_default_service;
     return NULL;
   }
   return iter->second;
 }
 
-Service* ServiceRegistry::get_service(string name, bool default_if_missing)
+Service* ServiceRegistry::get_service(string name)
 {
   map<string, Service*>::iterator iter = m_services_by_name.find(name);
   if (iter == m_services_by_name.end())
   {
-    if (default_if_missing)
-      return &m_default_service;
     return NULL;
   }
   return iter->second;

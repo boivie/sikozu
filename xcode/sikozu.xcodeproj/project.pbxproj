@@ -13,11 +13,12 @@
 		572520E80FB0AD830052F18F /* service.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 572520E70FB0AD830052F18F /* service.cpp */; };
 		572520EB0FB0B29A0052F18F /* coreservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 572520EA0FB0B29A0052F18F /* coreservice.cpp */; };
 		572521380FB0B59C0052F18F /* server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 572521370FB0B59C0052F18F /* server.cpp */; };
-		572521EA0FB0E1180052F18F /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 572521E90FB0E1180052F18F /* client.cpp */; };
 		5725228B0FB33C190052F18F /* serviceregistry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5725228A0FB33C190052F18F /* serviceregistry.cpp */; };
 		572523210FB3521A0052F18F /* core.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5725231F0FB3521A0052F18F /* core.pb.cc */; };
 		57295A2E0FB591D90028DA4B /* bucketstore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57295A2D0FB591D90028DA4B /* bucketstore.cpp */; };
-		57295B4F0FB6DE5A0028DA4B /* bucket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57295B4E0FB6DE5A0028DA4B /* bucket.cpp */; };
+		57295C3D0FB759930028DA4B /* contact.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57295C3C0FB759930028DA4B /* contact.cpp */; };
+		57295C830FB7770E0028DA4B /* session.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57295C820FB7770E0028DA4B /* session.cpp */; };
+		57295C8E0FB88BBC0028DA4B /* request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57295C8D0FB88BBC0028DA4B /* request.cpp */; };
 		8DD76F6A0486A84900D96B5E /* sikozu.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* sikozu.1 */; };
 /* End PBXBuildFile section */
 
@@ -46,16 +47,18 @@
 		572520EA0FB0B29A0052F18F /* coreservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = coreservice.cpp; path = ../src/coreservice.cpp; sourceTree = SOURCE_ROOT; };
 		572521360FB0B59C0052F18F /* server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = server.h; path = ../src/server.h; sourceTree = SOURCE_ROOT; };
 		572521370FB0B59C0052F18F /* server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = server.cpp; path = ../src/server.cpp; sourceTree = SOURCE_ROOT; };
-		572521E80FB0E1180052F18F /* client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = client.h; path = ../src/client.h; sourceTree = SOURCE_ROOT; };
-		572521E90FB0E1180052F18F /* client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = client.cpp; path = ../src/client.cpp; sourceTree = SOURCE_ROOT; };
 		572522890FB33C190052F18F /* serviceregistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = serviceregistry.h; path = ../src/serviceregistry.h; sourceTree = SOURCE_ROOT; };
 		5725228A0FB33C190052F18F /* serviceregistry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = serviceregistry.cpp; path = ../src/serviceregistry.cpp; sourceTree = SOURCE_ROOT; };
 		5725231F0FB3521A0052F18F /* core.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = core.pb.cc; path = ../src/core.pb.cc; sourceTree = SOURCE_ROOT; };
 		572523200FB3521A0052F18F /* core.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = core.pb.h; path = ../src/core.pb.h; sourceTree = SOURCE_ROOT; };
 		57295A2C0FB591D90028DA4B /* bucketstore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bucketstore.h; path = ../src/bucketstore.h; sourceTree = SOURCE_ROOT; };
 		57295A2D0FB591D90028DA4B /* bucketstore.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bucketstore.cpp; path = ../src/bucketstore.cpp; sourceTree = SOURCE_ROOT; };
-		57295B4D0FB6DE5A0028DA4B /* bucket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bucket.h; path = ../src/bucket.h; sourceTree = SOURCE_ROOT; };
-		57295B4E0FB6DE5A0028DA4B /* bucket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bucket.cpp; path = ../src/bucket.cpp; sourceTree = SOURCE_ROOT; };
+		57295C3B0FB759930028DA4B /* contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = contact.h; path = ../src/contact.h; sourceTree = SOURCE_ROOT; };
+		57295C3C0FB759930028DA4B /* contact.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = contact.cpp; path = ../src/contact.cpp; sourceTree = SOURCE_ROOT; };
+		57295C810FB7770E0028DA4B /* session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = session.h; path = ../src/session.h; sourceTree = SOURCE_ROOT; };
+		57295C820FB7770E0028DA4B /* session.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = session.cpp; path = ../src/session.cpp; sourceTree = SOURCE_ROOT; };
+		57295C8C0FB88BBC0028DA4B /* request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = request.h; path = ../src/request.h; sourceTree = SOURCE_ROOT; };
+		57295C8D0FB88BBC0028DA4B /* request.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = request.cpp; path = ../src/request.cpp; sourceTree = SOURCE_ROOT; };
 		8DD76F6C0486A84900D96B5E /* sikozu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sikozu; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859E8B029090EE04C91782 /* sikozu.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = sikozu.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,14 +100,16 @@
 				572520EA0FB0B29A0052F18F /* coreservice.cpp */,
 				572521360FB0B59C0052F18F /* server.h */,
 				572521370FB0B59C0052F18F /* server.cpp */,
-				572521E80FB0E1180052F18F /* client.h */,
-				572521E90FB0E1180052F18F /* client.cpp */,
 				572522890FB33C190052F18F /* serviceregistry.h */,
 				5725228A0FB33C190052F18F /* serviceregistry.cpp */,
 				57295A2C0FB591D90028DA4B /* bucketstore.h */,
 				57295A2D0FB591D90028DA4B /* bucketstore.cpp */,
-				57295B4D0FB6DE5A0028DA4B /* bucket.h */,
-				57295B4E0FB6DE5A0028DA4B /* bucket.cpp */,
+				57295C3B0FB759930028DA4B /* contact.h */,
+				57295C3C0FB759930028DA4B /* contact.cpp */,
+				57295C810FB7770E0028DA4B /* session.h */,
+				57295C820FB7770E0028DA4B /* session.cpp */,
+				57295C8C0FB88BBC0028DA4B /* request.h */,
+				57295C8D0FB88BBC0028DA4B /* request.cpp */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -174,11 +179,12 @@
 				572520E80FB0AD830052F18F /* service.cpp in Sources */,
 				572520EB0FB0B29A0052F18F /* coreservice.cpp in Sources */,
 				572521380FB0B59C0052F18F /* server.cpp in Sources */,
-				572521EA0FB0E1180052F18F /* client.cpp in Sources */,
 				5725228B0FB33C190052F18F /* serviceregistry.cpp in Sources */,
 				572523210FB3521A0052F18F /* core.pb.cc in Sources */,
 				57295A2E0FB591D90028DA4B /* bucketstore.cpp in Sources */,
-				57295B4F0FB6DE5A0028DA4B /* bucket.cpp in Sources */,
+				57295C3D0FB759930028DA4B /* contact.cpp in Sources */,
+				57295C830FB7770E0028DA4B /* session.cpp in Sources */,
+				57295C8E0FB88BBC0028DA4B /* request.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

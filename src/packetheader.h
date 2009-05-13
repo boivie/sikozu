@@ -15,32 +15,43 @@
 
 #include <google/protobuf/io/zero_copy_stream.h>
 
+/*
+ HeaderNr (1) (highest bit set means "more headers coming")
+ Len(1) -- number of 32-bit words, including this one
+ CRC16 (2)
+ Channel (2)
+ Command (2)
+ Sid  # (4)
+ total= min 4+4+4+20 = 12 = 3 words
+*/
+
 namespace Sikozu {
 
-#define PACKET_HEADER_MINIMUM_SIZE 40
+#define PACKET_HEADER_SIZE 12
 
   class PacketHeader {
    public:
-    PacketHeader();
-    size_t parse(std::vector<char>* input_p);
-    size_t serialize(std::vector<char>* output_p);
-    bool serialize(google::protobuf::io::ZeroCopyOutputStream* output_p);
+    PacketHeader() {};
+    size_t parse(char* ptr_p, size_t size);
+    size_t serialize(char* ptr_p, size_t size);
 
     int get_channel() { return m_channel; };
-    void set_channel(int channel) { m_channel = channel; };
+    void set_channel(int channel) { m_channel = channel; }
     
     int get_command() { return m_command; };
-    void set_command(int command) { m_command = command; };
+    void set_command(int command) { m_command = command; }
     
-    NodeId& get_nid() { return m_nid; }
-    std::vector<char>& get_sid() { return m_sid; }
-    size_t get_size() { return m_size; };
+    uint32_t get_sid() const { return m_sid; }
+    void set_sid(uint32_t sid) { m_sid = sid; }
+    size_t size() const { return m_size; }
+    
+    bool valid() const { return m_valid; }
     
    private:
+    bool m_valid;
     uint32_t m_channel; 
     uint32_t m_command;
-    NodeId m_nid;
-    std::vector<char> m_sid;
+    uint32_t m_sid;
     size_t m_size;
   };
 }

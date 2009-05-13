@@ -13,25 +13,17 @@ using namespace std;
 namespace Sikozu 
 {
 
-void Service::handle_request(Client* client_p, PacketHeader* header_p, vector<char>* buffer_p)
+void Service::add_provider(ContactPtr contact_p)
 {
-  // Do nothing. Just clean up.
-  delete client_p;
-  delete header_p;
-  delete buffer_p;
+  m_bucket_store.insert(contact_p);
 }
 
-void Service::add_provider(Client* client_p)
-{
-  m_bucket_store.insert(client_p);
-}
-
-void Service::add_tracker(Client* client_p)
+void Service::add_tracker(ContactPtr contact_p)
 {
 
 }
 
-bool Service::handle_find_node_request(Client* client_p, PacketHeader* header_p)
+bool Service::handle_find_node_request(auto_ptr<Request> request_p)
 {
   return true;
 }

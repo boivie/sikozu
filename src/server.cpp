@@ -8,6 +8,7 @@
  */
 
 #include "server.h"
+#include "request.h"
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 
 #include <sys/socket.h>
@@ -25,20 +26,21 @@ using namespace std;
 
 Server* Server::m_instance = NULL;
 
-void Server::send_udp(Client* client_p, vector<char>* buffer_p)
+void Server::send_udp(const struct sockaddr_in6& addr, vector<char>& buffer)
 {
-  sendto(m_udp_socket, &(*buffer_p)[0], buffer_p->size(), 0, (struct sockaddr*)&client_p->get_address(), sizeof(struct sockaddr_in6));  
+  sendto(m_udp_socket, &buffer[0], buffer.size(), 0, (struct sockaddr*)&addr, sizeof(struct sockaddr_in6));  
 }
 
 
 void got_packet(int fd, short event, void* arg) 
 {
   int len;
-  vector<char>* buffer_p = new vector<char>(65536);
+  vector<char> buffer(8192);
   struct sockaddr_in6 from;
   socklen_t l = sizeof(from);
+  PacketHeader ph;
 
-  len = recvfrom(fd, &(*buffer_p)[0], buffer_p->size(), 0, (struct sockaddr*)&from, &l);
+  len = recvfrom(fd, &buffer[0], buffer.size(), 0, (struct sockaddr*)&from, &l);
 
   if (len == -1)
   {
@@ -48,21 +50,35 @@ void got_packet(int fd, short event, void* arg)
     cout << "Connection Closed" << endl;
     return;
   }
-
-  buffer_p->resize(len);
   
-  PacketHeader* header_p = new PacketHeader();
-  if (!header_p->parse(buffer_p))
+  // Parse header, and copy the payload to another buffer that we keep.
+  ph.parse(&buffer[0], buffer.size());
+  if (!ph.valid())
+  {
+    // Bad packet, drop.
+    cout << "Bad packet - dropping." << endl;
     return;
-   
-  Client* client_p = new Client();
-  client_p->get_address() = from;
+  }
+  
+  ContactPtr contact_p = Contact::get(from);
 
+  auto_ptr<vector<char> > payload_p(new vector<char>(buffer.size() - ph.size()));
+  memcpy(&(*payload_p)[0], &buffer[ph.size()], payload_p->size());
+
+  auto_ptr<Request> request_p(new Request(ph, contact_p, payload_p));
+  
   Server* server_p = Server::get_instance();
   ServiceRegistry& sr = server_p->get_service_registry();
-  Service* service_p = sr.get_service(header_p->get_channel(), true);
-  cout << "Using service: " << service_p->get_long_name() << endl;
-  service_p->handle_request(client_p, header_p, buffer_p);
+  Service* service_p = sr.get_service(ph.get_channel());
+  if (service_p != NULL)
+  {
+    cout << "Using service: " << service_p->get_long_name() << endl;
+    service_p->handle_request(request_p);
+  }
+  else
+  {
+    cout << "No service found." << endl;
+  } 
   cout << "Done." << endl;
 }
 

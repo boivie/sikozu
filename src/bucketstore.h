@@ -11,17 +11,20 @@
 #define BUCKET_STORE_H_INCLUSION_GUARD
 
 #include <vector>
-#include "client.h"
-#include "bucket.h"
+#include <list>
+#include <set>
+
+#include "contact.h"
 
 namespace Sikozu {
 
 class BucketStore {
   public:
     BucketStore() : m_buckets(NID_SIZE_BITS) {}
-    void insert(Client* contact_p);
+    void insert(ContactPtr contact_p);
   protected:
-    std::vector< Bucket > m_buckets;
+    std::vector< std::list< ContactPtr > > m_buckets;
+    std::map< NodeId, ContactPtr > m_all_contacts; 
 };
 
 }

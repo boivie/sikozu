@@ -22,7 +22,8 @@ namespace Sikozu {
       static Server* get_instance() { if (m_instance == 0) m_instance = new Server(); return m_instance; };
       NodeId& get_nid() { return nid; }
       ServiceRegistry& get_service_registry() { return m_serviceregistry; };
-      void send_udp(Client* client_p, std::vector<char>* data_p);
+      void send_udp(const struct sockaddr_in6& addr, std::vector<char>& buffer);
+
       int listen_udp(uint16_t port);
       
     protected:

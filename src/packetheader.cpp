@@ -15,57 +15,40 @@
 using namespace std;
 using namespace google::protobuf::io;
 namespace Sikozu {
-  PacketHeader::PacketHeader()
-  {
-    m_sid.resize(SID_SIZE_BYTES);
-  }
   
-  size_t PacketHeader::parse(vector<char>* input_p)
+  size_t PacketHeader::parse(char* ptr_p, size_t size)
   {
-    if (input_p->size() < PACKET_HEADER_MINIMUM_SIZE) 
+    m_valid = false;
+
+    if (size < PACKET_HEADER_SIZE) 
       return 0;
-    ArrayInputStream instream(&(*input_p)[0], input_p->size());
-    {
-      CodedInputStream cis(&instream);
+          
+    int version = (int)*ptr_p;
+    if (version != 1) 
+      return 0;
     
-      if (!cis.ReadVarint32(&m_channel))
-        return 0;
-      
-      if (!cis.ReadVarint32(&m_command))
-        return 0;
-    
-      if (!cis.ReadRaw(&m_sid[0], m_sid.size()))
-        return 0;
-        
-      vector<uint8_t>& nid = m_nid.get_nid();
-      if (!cis.ReadRaw(&nid[0], nid.size()))
-        return 0;
-    }
-    m_size = instream.ByteCount();
+    m_size = (uint32_t)*(ptr_p + 1) * 4;
+    if ((m_size < PACKET_HEADER_SIZE) || (m_size > size)) 
+      return 0;
+
+    uint16_t crc = *(uint16_t*)(ptr_p + 2);
+    m_channel = (uint32_t)*(uint16_t*)(ptr_p + 4);
+    m_command = (uint32_t)*(uint16_t*)(ptr_p + 6);
+    m_sid = *(uint32_t*)(ptr_p + 8);
     return m_size;
   }
-  
-  bool PacketHeader::serialize(google::protobuf::io::ZeroCopyOutputStream* output_p)
-  {
-    CodedOutputStream cos(output_p);
-    if (!cos.WriteVarint32(m_channel))
-      return false;
-    if (!cos.WriteVarint32(m_command))
-      return false;
-    if (!cos.WriteRaw(&m_sid[0], m_sid.size()))
-      return false;
-    vector<uint8_t>& nid = m_nid.get_nid();
-    if (!cos.WriteRaw(&nid[0], nid.size()))
-      return false;
-    return true;
-  }
 
-  
-  size_t PacketHeader::serialize(vector<char>* output_p)
+  size_t PacketHeader::serialize(char* ptr_p, size_t size)
   {
-    ArrayOutputStream outstream(&(*output_p)[0], output_p->size());
-    if (!serialize(&outstream))
+    if (size < PACKET_HEADER_SIZE)
       return 0;
-    return outstream.ByteCount();
+    
+    *ptr_p = 1;
+    *(ptr_p + 1) = 3;
+    *(uint16_t*)(ptr_p + 2) = 0xFFFF;
+    *(uint16_t*)(ptr_p + 4) = m_channel;
+    *(uint16_t*)(ptr_p + 6) = m_command;
+    *(uint32_t*)(ptr_p + 8) = m_sid;
+    return PACKET_HEADER_SIZE;
   }
 }

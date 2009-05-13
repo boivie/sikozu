@@ -35,13 +35,14 @@ class PingRequest;
 class PingResponse;
 class FindNodeRequest;
 class FindNodeResponse;
-class QueryServicesRequest;
-class QueryServicesResponse;
 class GetServicesRequest;
 class GetServicesResponse;
 class GetServicesResponse_Result;
-class AnnounceService;
-class AnnounceService_Info;
+class GetChannelRequest;
+class GetChannelResponse;
+class AnnounceServiceRequest;
+class AnnounceServiceRequest_Info;
+class AnnounceServiceResponse;
 
 // ===================================================================
 
@@ -427,156 +428,6 @@ class FindNodeResponse : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class QueryServicesRequest : public ::google::protobuf::Message {
- public:
-  QueryServicesRequest();
-  virtual ~QueryServicesRequest();
-  
-  QueryServicesRequest(const QueryServicesRequest& from);
-  
-  inline QueryServicesRequest& operator=(const QueryServicesRequest& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const QueryServicesRequest& default_instance();
-  void Swap(QueryServicesRequest* other);
-  
-  // implements Message ----------------------------------------------
-  
-  QueryServicesRequest* New() const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  const ::google::protobuf::Descriptor* GetDescriptor() const;
-  const ::google::protobuf::Reflection* GetReflection() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // repeated string service = 1;
-  inline int service_size() const;
-  inline void clear_service();
-  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& service() const;
-  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_service();
-  inline const ::std::string& service(int index) const;
-  inline ::std::string* mutable_service(int index);
-  inline void set_service(int index, const ::std::string& value);
-  inline void set_service(int index, const char* value);
-  inline ::std::string* add_service();
-  inline void add_service(const ::std::string& value);
-  inline void add_service(const char* value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::RepeatedPtrField< ::std::string> service_;
-  friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
-      const ::google::protobuf::FileDescriptor* file);
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static QueryServicesRequest* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class QueryServicesResponse : public ::google::protobuf::Message {
- public:
-  QueryServicesResponse();
-  virtual ~QueryServicesResponse();
-  
-  QueryServicesResponse(const QueryServicesResponse& from);
-  
-  inline QueryServicesResponse& operator=(const QueryServicesResponse& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const QueryServicesResponse& default_instance();
-  void Swap(QueryServicesResponse* other);
-  
-  // implements Message ----------------------------------------------
-  
-  QueryServicesResponse* New() const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  const ::google::protobuf::Descriptor* GetDescriptor() const;
-  const ::google::protobuf::Reflection* GetReflection() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // repeated uint32 present = 1;
-  inline int present_size() const;
-  inline void clear_present();
-  inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >& present() const;
-  inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >* mutable_present();
-  inline ::google::protobuf::uint32 present(int index) const;
-  inline void set_present(int index, ::google::protobuf::uint32 value);
-  inline void add_present(::google::protobuf::uint32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > present_;
-  friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
-      const ::google::protobuf::FileDescriptor* file);
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static QueryServicesResponse* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class GetServicesRequest : public ::google::protobuf::Message {
  public:
   GetServicesRequest();
@@ -795,14 +646,14 @@ class GetServicesResponse : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class AnnounceService_Info : public ::google::protobuf::Message {
+class GetChannelRequest : public ::google::protobuf::Message {
  public:
-  AnnounceService_Info();
-  virtual ~AnnounceService_Info();
+  GetChannelRequest();
+  virtual ~GetChannelRequest();
   
-  AnnounceService_Info(const AnnounceService_Info& from);
+  GetChannelRequest(const GetChannelRequest& from);
   
-  inline AnnounceService_Info& operator=(const AnnounceService_Info& from) {
+  inline GetChannelRequest& operator=(const GetChannelRequest& from) {
     CopyFrom(from);
     return *this;
   }
@@ -816,12 +667,155 @@ class AnnounceService_Info : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const AnnounceService_Info& default_instance();
-  void Swap(AnnounceService_Info* other);
+  static const GetChannelRequest& default_instance();
+  void Swap(GetChannelRequest* other);
   
   // implements Message ----------------------------------------------
   
-  AnnounceService_Info* New() const;
+  GetChannelRequest* New() const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  const ::google::protobuf::Descriptor* GetDescriptor() const;
+  const ::google::protobuf::Reflection* GetReflection() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required string name = 1;
+  inline bool has_name() const;
+  inline void clear_name();
+  inline const ::std::string& name() const;
+  inline void set_name(const ::std::string& value);
+  inline void set_name(const char* value);
+  inline ::std::string* mutable_name();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* name_;
+  static const ::std::string _default_name_;
+  friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
+      const ::google::protobuf::FileDescriptor* file);
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static GetChannelRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class GetChannelResponse : public ::google::protobuf::Message {
+ public:
+  GetChannelResponse();
+  virtual ~GetChannelResponse();
+  
+  GetChannelResponse(const GetChannelResponse& from);
+  
+  inline GetChannelResponse& operator=(const GetChannelResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const GetChannelResponse& default_instance();
+  void Swap(GetChannelResponse* other);
+  
+  // implements Message ----------------------------------------------
+  
+  GetChannelResponse* New() const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  const ::google::protobuf::Descriptor* GetDescriptor() const;
+  const ::google::protobuf::Reflection* GetReflection() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required uint32 channel = 1;
+  inline bool has_channel() const;
+  inline void clear_channel();
+  inline ::google::protobuf::uint32 channel() const;
+  inline void set_channel(::google::protobuf::uint32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::uint32 channel_;
+  friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
+      const ::google::protobuf::FileDescriptor* file);
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static GetChannelResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class AnnounceServiceRequest_Info : public ::google::protobuf::Message {
+ public:
+  AnnounceServiceRequest_Info();
+  virtual ~AnnounceServiceRequest_Info();
+  
+  AnnounceServiceRequest_Info(const AnnounceServiceRequest_Info& from);
+  
+  inline AnnounceServiceRequest_Info& operator=(const AnnounceServiceRequest_Info& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AnnounceServiceRequest_Info& default_instance();
+  void Swap(AnnounceServiceRequest_Info* other);
+  
+  // implements Message ----------------------------------------------
+  
+  AnnounceServiceRequest_Info* New() const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SetCachedSize(int size) const { _cached_size_ = size; }
@@ -878,18 +872,18 @@ class AnnounceService_Info : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static AnnounceService_Info* default_instance_;
+  static AnnounceServiceRequest_Info* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class AnnounceService : public ::google::protobuf::Message {
+class AnnounceServiceRequest : public ::google::protobuf::Message {
  public:
-  AnnounceService();
-  virtual ~AnnounceService();
+  AnnounceServiceRequest();
+  virtual ~AnnounceServiceRequest();
   
-  AnnounceService(const AnnounceService& from);
+  AnnounceServiceRequest(const AnnounceServiceRequest& from);
   
-  inline AnnounceService& operator=(const AnnounceService& from) {
+  inline AnnounceServiceRequest& operator=(const AnnounceServiceRequest& from) {
     CopyFrom(from);
     return *this;
   }
@@ -903,12 +897,12 @@ class AnnounceService : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const AnnounceService& default_instance();
-  void Swap(AnnounceService* other);
+  static const AnnounceServiceRequest& default_instance();
+  void Swap(AnnounceServiceRequest* other);
   
   // implements Message ----------------------------------------------
   
-  AnnounceService* New() const;
+  AnnounceServiceRequest* New() const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SetCachedSize(int size) const { _cached_size_ = size; }
@@ -919,27 +913,38 @@ class AnnounceService : public ::google::protobuf::Message {
   
   // nested types ----------------------------------------------------
   
-  typedef AnnounceService_Info Info;
+  typedef AnnounceServiceRequest_Info Info;
   
   // accessors -------------------------------------------------------
   
-  // repeated .Sikozu.Messages.AnnounceService.Info info = 1;
+  // required bytes nid = 1;
+  inline bool has_nid() const;
+  inline void clear_nid();
+  inline const ::std::string& nid() const;
+  inline void set_nid(const ::std::string& value);
+  inline void set_nid(const char* value);
+  inline void set_nid(const void* value, size_t size);
+  inline ::std::string* mutable_nid();
+  
+  // repeated .Sikozu.Messages.AnnounceServiceRequest.Info info = 2;
   inline int info_size() const;
   inline void clear_info();
-  inline const ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceService_Info >& info() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceService_Info >* mutable_info();
-  inline const ::Sikozu::Messages::AnnounceService_Info& info(int index) const;
-  inline ::Sikozu::Messages::AnnounceService_Info* mutable_info(int index);
-  inline ::Sikozu::Messages::AnnounceService_Info* add_info();
+  inline const ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceServiceRequest_Info >& info() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceServiceRequest_Info >* mutable_info();
+  inline const ::Sikozu::Messages::AnnounceServiceRequest_Info& info(int index) const;
+  inline ::Sikozu::Messages::AnnounceServiceRequest_Info* mutable_info(int index);
+  inline ::Sikozu::Messages::AnnounceServiceRequest_Info* add_info();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceService_Info > info_;
+  ::std::string* nid_;
+  static const ::std::string _default_nid_;
+  ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceServiceRequest_Info > info_;
   friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
       const ::google::protobuf::FileDescriptor* file);
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -953,7 +958,70 @@ class AnnounceService : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static AnnounceService* default_instance_;
+  static AnnounceServiceRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class AnnounceServiceResponse : public ::google::protobuf::Message {
+ public:
+  AnnounceServiceResponse();
+  virtual ~AnnounceServiceResponse();
+  
+  AnnounceServiceResponse(const AnnounceServiceResponse& from);
+  
+  inline AnnounceServiceResponse& operator=(const AnnounceServiceResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const AnnounceServiceResponse& default_instance();
+  void Swap(AnnounceServiceResponse* other);
+  
+  // implements Message ----------------------------------------------
+  
+  AnnounceServiceResponse* New() const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  const ::google::protobuf::Descriptor* GetDescriptor() const;
+  const ::google::protobuf::Reflection* GetReflection() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
+      const ::google::protobuf::FileDescriptor* file);
+  ::google::protobuf::uint32 _has_bits_[1];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static AnnounceServiceResponse* default_instance_;
 };
 // ===================================================================
 
@@ -1201,76 +1269,6 @@ inline ::Sikozu::Messages::Contact* FindNodeResponse::add_contacts() {
 
 // -------------------------------------------------------------------
 
-// QueryServicesRequest
-
-// repeated string service = 1;
-inline int QueryServicesRequest::service_size() const {
-  return service_.size();
-}
-inline void QueryServicesRequest::clear_service() {
-  service_.Clear();
-}
-inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
-QueryServicesRequest::service() const {
-  return service_;
-}
-inline ::google::protobuf::RepeatedPtrField< ::std::string>*
-QueryServicesRequest::mutable_service() {
-  return &service_;
-}
-inline const ::std::string& QueryServicesRequest::service(int index) const {
-  return service_.Get(index);
-}
-inline ::std::string* QueryServicesRequest::mutable_service(int index) {
-  return service_.Mutable(index);
-}
-inline void QueryServicesRequest::set_service(int index, const ::std::string& value) {
-  service_.Mutable(index)->assign(value);
-}
-inline void QueryServicesRequest::set_service(int index, const char* value) {
-  service_.Mutable(index)->assign(value);
-}
-inline ::std::string* QueryServicesRequest::add_service() {
-  return service_.Add();
-}
-inline void QueryServicesRequest::add_service(const ::std::string& value) {
-  service_.Add()->assign(value);
-}
-inline void QueryServicesRequest::add_service(const char* value) {
-  service_.Add()->assign(value);
-}
-
-// -------------------------------------------------------------------
-
-// QueryServicesResponse
-
-// repeated uint32 present = 1;
-inline int QueryServicesResponse::present_size() const {
-  return present_.size();
-}
-inline void QueryServicesResponse::clear_present() {
-  present_.Clear();
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
-QueryServicesResponse::present() const {
-  return present_;
-}
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
-QueryServicesResponse::mutable_present() {
-  return &present_;
-}
-inline ::google::protobuf::uint32 QueryServicesResponse::present(int index) const {
-  return present_.Get(index);
-}
-inline void QueryServicesResponse::set_present(int index, ::google::protobuf::uint32 value) {
-  present_.Set(index, value);
-}
-inline void QueryServicesResponse::add_present(::google::protobuf::uint32 value) {
-  present_.Add(value);
-}
-
-// -------------------------------------------------------------------
-
 // GetServicesRequest
 
 // -------------------------------------------------------------------
@@ -1359,36 +1357,95 @@ inline ::Sikozu::Messages::GetServicesResponse_Result* GetServicesResponse::add_
 
 // -------------------------------------------------------------------
 
-// AnnounceService_Info
+// GetChannelRequest
 
 // required string name = 1;
-inline bool AnnounceService_Info::has_name() const {
+inline bool GetChannelRequest::has_name() const {
   return _has_bit(0);
 }
-inline void AnnounceService_Info::clear_name() {
+inline void GetChannelRequest::clear_name() {
   if (name_ != &_default_name_) {
     name_->clear();
   }
   _clear_bit(0);
 }
-inline const ::std::string& AnnounceService_Info::name() const {
+inline const ::std::string& GetChannelRequest::name() const {
   return *name_;
 }
-inline void AnnounceService_Info::set_name(const ::std::string& value) {
+inline void GetChannelRequest::set_name(const ::std::string& value) {
   _set_bit(0);
   if (name_ == &_default_name_) {
     name_ = new ::std::string;
   }
   name_->assign(value);
 }
-inline void AnnounceService_Info::set_name(const char* value) {
+inline void GetChannelRequest::set_name(const char* value) {
   _set_bit(0);
   if (name_ == &_default_name_) {
     name_ = new ::std::string;
   }
   name_->assign(value);
 }
-inline ::std::string* AnnounceService_Info::mutable_name() {
+inline ::std::string* GetChannelRequest::mutable_name() {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  return name_;
+}
+
+// -------------------------------------------------------------------
+
+// GetChannelResponse
+
+// required uint32 channel = 1;
+inline bool GetChannelResponse::has_channel() const {
+  return _has_bit(0);
+}
+inline void GetChannelResponse::clear_channel() {
+  channel_ = 0u;
+  _clear_bit(0);
+}
+inline ::google::protobuf::uint32 GetChannelResponse::channel() const {
+  return channel_;
+}
+inline void GetChannelResponse::set_channel(::google::protobuf::uint32 value) {
+  _set_bit(0);
+  channel_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// AnnounceServiceRequest_Info
+
+// required string name = 1;
+inline bool AnnounceServiceRequest_Info::has_name() const {
+  return _has_bit(0);
+}
+inline void AnnounceServiceRequest_Info::clear_name() {
+  if (name_ != &_default_name_) {
+    name_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& AnnounceServiceRequest_Info::name() const {
+  return *name_;
+}
+inline void AnnounceServiceRequest_Info::set_name(const ::std::string& value) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline void AnnounceServiceRequest_Info::set_name(const char* value) {
+  _set_bit(0);
+  if (name_ == &_default_name_) {
+    name_ = new ::std::string;
+  }
+  name_->assign(value);
+}
+inline ::std::string* AnnounceServiceRequest_Info::mutable_name() {
   _set_bit(0);
   if (name_ == &_default_name_) {
     name_ = new ::std::string;
@@ -1397,65 +1454,111 @@ inline ::std::string* AnnounceService_Info::mutable_name() {
 }
 
 // optional bool provides = 2;
-inline bool AnnounceService_Info::has_provides() const {
+inline bool AnnounceServiceRequest_Info::has_provides() const {
   return _has_bit(1);
 }
-inline void AnnounceService_Info::clear_provides() {
+inline void AnnounceServiceRequest_Info::clear_provides() {
   provides_ = false;
   _clear_bit(1);
 }
-inline bool AnnounceService_Info::provides() const {
+inline bool AnnounceServiceRequest_Info::provides() const {
   return provides_;
 }
-inline void AnnounceService_Info::set_provides(bool value) {
+inline void AnnounceServiceRequest_Info::set_provides(bool value) {
   _set_bit(1);
   provides_ = value;
 }
 
 // optional bool tracks = 3;
-inline bool AnnounceService_Info::has_tracks() const {
+inline bool AnnounceServiceRequest_Info::has_tracks() const {
   return _has_bit(2);
 }
-inline void AnnounceService_Info::clear_tracks() {
+inline void AnnounceServiceRequest_Info::clear_tracks() {
   tracks_ = false;
   _clear_bit(2);
 }
-inline bool AnnounceService_Info::tracks() const {
+inline bool AnnounceServiceRequest_Info::tracks() const {
   return tracks_;
 }
-inline void AnnounceService_Info::set_tracks(bool value) {
+inline void AnnounceServiceRequest_Info::set_tracks(bool value) {
   _set_bit(2);
   tracks_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// AnnounceService
+// AnnounceServiceRequest
 
-// repeated .Sikozu.Messages.AnnounceService.Info info = 1;
-inline int AnnounceService::info_size() const {
+// required bytes nid = 1;
+inline bool AnnounceServiceRequest::has_nid() const {
+  return _has_bit(0);
+}
+inline void AnnounceServiceRequest::clear_nid() {
+  if (nid_ != &_default_nid_) {
+    nid_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& AnnounceServiceRequest::nid() const {
+  return *nid_;
+}
+inline void AnnounceServiceRequest::set_nid(const ::std::string& value) {
+  _set_bit(0);
+  if (nid_ == &_default_nid_) {
+    nid_ = new ::std::string;
+  }
+  nid_->assign(value);
+}
+inline void AnnounceServiceRequest::set_nid(const char* value) {
+  _set_bit(0);
+  if (nid_ == &_default_nid_) {
+    nid_ = new ::std::string;
+  }
+  nid_->assign(value);
+}
+inline void AnnounceServiceRequest::set_nid(const void* value, size_t size) {
+  _set_bit(0);
+  if (nid_ == &_default_nid_) {
+    nid_ = new ::std::string;
+  }
+  nid_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* AnnounceServiceRequest::mutable_nid() {
+  _set_bit(0);
+  if (nid_ == &_default_nid_) {
+    nid_ = new ::std::string;
+  }
+  return nid_;
+}
+
+// repeated .Sikozu.Messages.AnnounceServiceRequest.Info info = 2;
+inline int AnnounceServiceRequest::info_size() const {
   return info_.size();
 }
-inline void AnnounceService::clear_info() {
+inline void AnnounceServiceRequest::clear_info() {
   info_.Clear();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceService_Info >&
-AnnounceService::info() const {
+inline const ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceServiceRequest_Info >&
+AnnounceServiceRequest::info() const {
   return info_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceService_Info >*
-AnnounceService::mutable_info() {
+inline ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceServiceRequest_Info >*
+AnnounceServiceRequest::mutable_info() {
   return &info_;
 }
-inline const ::Sikozu::Messages::AnnounceService_Info& AnnounceService::info(int index) const {
+inline const ::Sikozu::Messages::AnnounceServiceRequest_Info& AnnounceServiceRequest::info(int index) const {
   return info_.Get(index);
 }
-inline ::Sikozu::Messages::AnnounceService_Info* AnnounceService::mutable_info(int index) {
+inline ::Sikozu::Messages::AnnounceServiceRequest_Info* AnnounceServiceRequest::mutable_info(int index) {
   return info_.Mutable(index);
 }
-inline ::Sikozu::Messages::AnnounceService_Info* AnnounceService::add_info() {
+inline ::Sikozu::Messages::AnnounceServiceRequest_Info* AnnounceServiceRequest::add_info() {
   return info_.Add();
 }
+
+// -------------------------------------------------------------------
+
+// AnnounceServiceResponse
 
 
 }  // namespace Messages

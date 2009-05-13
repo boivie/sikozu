@@ -22,6 +22,7 @@ namespace Sikozu {
   class NodeId {
   public:
     NodeId() : m_nid(NID_SIZE_BYTES) {}
+    NodeId(std::string bytes) {}
     std::vector<uint8_t>& get_nid() { return m_nid; }
     size_t size() const { return NID_SIZE_BYTES; }
     int get_log_distance(NodeId& other) const;

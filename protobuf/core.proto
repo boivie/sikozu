@@ -29,14 +29,6 @@ message FindNodeResponse {
   repeated Contact contacts = 1;
 }
 
-message QueryServicesRequest {
-  repeated string service = 1;
-}
-
-message QueryServicesResponse {
-  repeated uint32 present = 1;
-}
-
 message GetServicesRequest {
 }
 
@@ -48,13 +40,24 @@ message GetServicesResponse {
   repeated Result services = 1;
 }
 
-// There is no response to this message.
-message AnnounceService {
+message GetChannelRequest {
+  required string name = 1;
+}
+
+message GetChannelResponse {
+  required uint32 channel = 1;
+}
+
+message AnnounceServiceRequest {
 	message Info {
 		required string name = 1;
 	  optional bool provides = 2;
 	  optional bool tracks = 3;
 	}
-	repeated Info info = 1;
+	required bytes nid = 1;
+	repeated Info info = 2;
+}
+
+message AnnounceServiceResponse {
 }
 
