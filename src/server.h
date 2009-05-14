@@ -10,9 +10,10 @@
 #ifndef SERVER_H_INCLUSION_GUARD
 #define SERVER_H_INCLUSION_GUARD
 
-#include <stdint.h>
-#include <vector>
+#include <stdlib.h>
 #include <event.h>
+#include <vector>
+#include <stdint.h>
 #include "nodeid.h"
 #include "serviceregistry.h"
 

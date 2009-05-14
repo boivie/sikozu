@@ -7,6 +7,7 @@
  *
  */
 
+#include <assert.h>
 #include "nodeid.h"
 
 using namespace Sikozu;
