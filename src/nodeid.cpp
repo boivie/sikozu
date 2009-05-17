@@ -41,7 +41,7 @@ int NodeId::get_log_distance(NodeId& other) const
 {
   int distance = NID_SIZE_BITS;
   
-  for (int i = 0; i < m_nid.size(); i++)
+  for (size_t i = 0; i < m_nid.size(); i++)
   {
     uint8_t diff = m_nid[i] ^ other.m_nid[i];
     if (diff != 0)
@@ -54,7 +54,7 @@ int NodeId::get_log_distance(NodeId& other) const
 
 int NodeId::closest(const NodeId& left, const NodeId& right) const
 {
-  for (int i = 0; i < m_nid.size(); i++)
+  for (size_t i = 0; i < m_nid.size(); i++)
   {
     uint8_t diff_l = m_nid[i] ^ left.m_nid[i];
     uint8_t diff_r = m_nid[i] ^ right.m_nid[i];

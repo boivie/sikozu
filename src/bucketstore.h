@@ -22,7 +22,7 @@ class BucketStore {
   public:
     BucketStore() : m_buckets(NID_SIZE_BITS) {}
     void insert(ContactPtr contact_p);
-    void get_closest(NodeId& nodeid, std::list<ContactPtr>& contacts, int count = 20);
+    void get_closest(NodeId& nodeid, std::list<ContactPtr>& contacts, size_t count = 20);
   protected:
     std::vector< std::list< ContactPtr > > m_buckets;
     typedef std::map< NodeId, ContactPtr > AllContacts_t;

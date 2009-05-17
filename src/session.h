@@ -23,10 +23,10 @@ class Session {
   static SessionPtr create(ContactPtr contact_p, uint32_t channel, uint32_t sid);
   ContactPtr get_contact() { return m_contact_p; }
  protected:
-  ContactPtr m_contact_p;
-  uint32_t m_sid;
-  uint32_t m_channel;
   Session(ContactPtr contact_p, uint32_t channel, uint32_t sid) : m_contact_p(contact_p), m_channel(channel), m_sid(sid) {}
+  ContactPtr m_contact_p;
+  uint32_t m_channel;
+  uint32_t m_sid;
   friend class SessionPtr;
   int count_;  
 };

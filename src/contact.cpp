@@ -7,6 +7,8 @@
  *
  */
 
+#include <stdlib.h>
+#include <string.h>
 #include "contact.h"
 
 using namespace Sikozu;

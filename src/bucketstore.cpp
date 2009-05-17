@@ -26,7 +26,7 @@ void BucketStore::insert(ContactPtr contact_p)
   m_all_contacts[my_nid] = contact_p;
 }
 
-void BucketStore::get_closest(NodeId& nodeid, list<ContactPtr>& contacts, int count)
+void BucketStore::get_closest(NodeId& nodeid, list<ContactPtr>& contacts, size_t count)
 {
   AllContacts_t::iterator iter_up = m_all_contacts.lower_bound(nodeid);
   AllContacts_t::reverse_iterator iter_down(iter_up);
