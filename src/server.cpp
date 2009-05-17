@@ -72,7 +72,7 @@ void got_packet(int fd, short event, void* arg)
   Service* service_p = sr.get_service(ph.get_channel());
   if (service_p != NULL)
   {
-    cout << "Dispatching packet to service: " << service_p->get_long_name() << endl;
+    cout << "Dispatching packet to service: " << service_p->get_name() << endl;
     service_p->handle_request(request_p);
   }
   else
@@ -102,6 +102,7 @@ int Server::listen_udp(uint16_t port)
   if (bind(m_udp_socket, (const sockaddr*)&si_me, sizeof(si_me))==-1)
     return 0;
   
+  cout << "Listening on UDP port " << port << endl;
   event_set(&m_ev, m_udp_socket, EV_READ|EV_PERSIST, got_packet, &m_ev);
   event_add(&m_ev, NULL);
   return 1;

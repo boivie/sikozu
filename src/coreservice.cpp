@@ -38,6 +38,12 @@ static void sendmsg(Request& request, uint32_t command, google::protobuf::Messag
   request.get_session()->send(command, buffer);
 }
 
+const string& CoreService::get_name() const {
+  static const string name = "core";
+  return name;
+}
+
+
 
 void CoreService::handle_get_services(auto_ptr<Request> request_p)
 {
@@ -54,7 +60,7 @@ void CoreService::handle_get_services(auto_ptr<Request> request_p)
     {
       Messages::GetServicesResponse_Result* info_p = outmsg.add_services();
       info_p->set_channel(i->first);
-      info_p->set_name(i->second->get_short_name());
+      info_p->set_name(i->second->get_name());
     }
   }
   

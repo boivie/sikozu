@@ -16,8 +16,7 @@ namespace Sikozu {
 
   class CoreService : public Service {
   public:
-    const char* get_short_name() { return "core"; };
-    const char* get_long_name() { return "Sikozu Core"; };
+    const std::string& get_name() const;
     void handle_request(std::auto_ptr<Request> request_p);
   protected:
     void handle_ping(std::auto_ptr<Request> request_p);

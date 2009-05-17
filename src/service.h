@@ -20,8 +20,7 @@ namespace Sikozu {
   class Service {
    public:
     virtual ~Service() {};
-    virtual const char* get_short_name() = 0;
-    virtual const char* get_long_name() = 0;
+    virtual const std::string& get_name() const = 0;
     virtual void handle_request(std::auto_ptr<Request> request_p) = 0;
     virtual void find_nodes(NodeId& nodeid, std::list<ContactPtr> contacts);
     virtual void add_provider(ContactPtr client_p);

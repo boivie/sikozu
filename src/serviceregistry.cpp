@@ -38,9 +38,8 @@ Service* ServiceRegistry::get_service(string name)
 void ServiceRegistry::register_service(Service* service_p)
 {
   uint32_t channel;
-  cout << "Registered Service " << service_p->get_short_name() << "." << endl;
   // Find a matching channel number. Except for the core service, which gets channel 0 (reserved)
-  if (service_p->get_short_name() == "core")
+  if (service_p->get_name() == "core")
   {
     channel = 0;
   }
@@ -49,9 +48,10 @@ void ServiceRegistry::register_service(Service* service_p)
     assert(false);
   } 
   
+  cout << "Registered Service '" << service_p->get_name() << "' at channel " << channel << "." << endl;
   service_p->set_channel(channel);
   m_services[channel] = service_p;
-  m_services_by_name[service_p->get_short_name()] = service_p;
+  m_services_by_name[service_p->get_name()] = service_p;
 }
 
 }
