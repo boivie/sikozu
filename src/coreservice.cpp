@@ -29,7 +29,7 @@ enum CommandIdentifier {
   LAST
 };
 
-void sendmsg(Request& request, uint32_t command, google::protobuf::Message& outmsg)
+static void sendmsg(Request& request, uint32_t command, google::protobuf::Message& outmsg)
 {
   vector<char> buffer(8192);
   ArrayOutputStream outstream(&buffer[0], buffer.size());
