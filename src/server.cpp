@@ -31,7 +31,6 @@ void Server::send_udp(const struct sockaddr_in6& addr, vector<char>& buffer)
   sendto(m_udp_socket, &buffer[0], buffer.size(), 0, (struct sockaddr*)&addr, sizeof(struct sockaddr_in6));  
 }
 
-
 void got_packet(int fd, short event, void* arg) 
 {
   int len;
@@ -50,6 +49,7 @@ void got_packet(int fd, short event, void* arg)
     cout << "Connection Closed" << endl;
     return;
   }
+  buffer.resize(len);
   
   // Parse header, and copy the payload to another buffer that we keep.
   ph.parse(&buffer[0], buffer.size());
@@ -62,8 +62,10 @@ void got_packet(int fd, short event, void* arg)
   
   ContactPtr contact_p = Contact::get(from);
 
-  auto_ptr<vector<char> > payload_p(new vector<char>(buffer.size() - ph.size()));
-  memcpy(&(*payload_p)[0], &buffer[ph.size()], payload_p->size());
+  size_t payload_size = buffer.size() - ph.size();
+  auto_ptr<vector<char> > payload_p(new vector<char>(payload_size));
+  if (payload_size > 0)
+    memcpy(&(*payload_p)[0], &buffer[ph.size()], payload_size);
 
   auto_ptr<Request> request_p(new Request(ph, contact_p, payload_p));
   

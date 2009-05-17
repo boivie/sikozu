@@ -31,6 +31,7 @@ enum CommandIdentifier {
 
 static void sendmsg(Request& request, uint32_t command, google::protobuf::Message& outmsg)
 {
+  cout << "Sending reply." << endl;
   vector<char> buffer(8192);
   ArrayOutputStream outstream(&buffer[0], buffer.size());
   outmsg.SerializeToZeroCopyStream(&outstream);
@@ -81,33 +82,44 @@ void CoreService::handle_find_node(auto_ptr<Request> request_p)
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   Service* service_p = this;
   
-  if (inmsg.ParseFromZeroCopyStream(&instream))
+  Messages::FindNodeRequest smsg;
+  smsg.set_nid("testnid");
+  vector<char> sbuf(40);
+  ArrayOutputStream soutstream(&sbuf[0], sbuf.size());
+  smsg.SerializeToZeroCopyStream(&soutstream);
+  sbuf.resize(soutstream.ByteCount());
+
+  
+  if (!inmsg.ParseFromZeroCopyStream(&instream))
   {
-    list<ContactPtr> contacts;
-    NodeId nid(inmsg.nid());
-    if (inmsg.has_service())
-    {
-      service_p = sr.get_service(inmsg.service());
-    }
-    if (service_p != NULL)
-    {
-      service_p->find_nodes(nid, contacts);
-    }
-    // TODO: Query the ServiceNameServer
-    
-    Messages::FindNodeResponse outmsg;
-    for (list<ContactPtr>::iterator i = contacts.begin(); i != contacts.end(); ++i)
-    {    
-      Messages::Contact* outmsg_contact_p = outmsg.add_contacts();
-      ContactPtr contact_p = *i;
-      const std::vector<uint8_t>& nid = contact_p->get_nodeid().get_nid();
-      outmsg_contact_p->set_nid(&nid[0], nid.size());
-      const struct sockaddr_in6& addr = contact_p->get_address();
-      outmsg_contact_p->set_port(addr.sin6_port);
-    }
-    
-    sendmsg(*request_p, FIND_NODE_RESPONSE, outmsg);
+    cerr << "Invalid packet - can't parse." << endl;
+    return;
   }
+
+  list<ContactPtr> contacts;
+  NodeId nid(inmsg.nid());
+  if (inmsg.has_service())
+  {
+    service_p = sr.get_service(inmsg.service());
+  }
+  if (service_p != NULL)
+  {
+    service_p->find_nodes(nid, contacts);
+  }
+  // TODO: Query the ServiceNameServer
+    
+  Messages::FindNodeResponse outmsg;
+  for (list<ContactPtr>::iterator i = contacts.begin(); i != contacts.end(); ++i)
+  {    
+    Messages::Contact* outmsg_contact_p = outmsg.add_contacts();
+    ContactPtr contact_p = *i;
+    const std::vector<uint8_t>& nid = contact_p->get_nodeid().get_nid();
+    outmsg_contact_p->set_nid(&nid[0], nid.size());
+    const struct sockaddr_in6& addr = contact_p->get_address();
+    outmsg_contact_p->set_port(addr.sin6_port);
+  }
+  
+  sendmsg(*request_p, FIND_NODE_RESPONSE, outmsg);
 }
 
 void CoreService::handle_announce_service(auto_ptr<Request> request_p)
@@ -117,28 +129,31 @@ void CoreService::handle_announce_service(auto_ptr<Request> request_p)
   Messages::AnnounceServiceRequest inmsg;
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   
-  if (inmsg.ParseFromZeroCopyStream(&instream))
+  if (!inmsg.ParseFromZeroCopyStream(&instream))
   {
-    NodeId nid(inmsg.nid());
-    ContactPtr contact_p = request_p->get_contact();
-    contact_p->set_nodeid(nid);
+    cout << "Invalid packet - can't parse." << endl;
+    return;
+  }
   
-    // We always add nodes that provide something to the core service
-    sr.get_service("core")->add_provider(contact_p);
+  NodeId nid(inmsg.nid());
+  ContactPtr contact_p = request_p->get_contact();
+  contact_p->set_nodeid(nid);
   
-    for (int i = 0; i < inmsg.service_size(); i++)
+  // We always add nodes that provide something to the core service
+  sr.get_service("core")->add_provider(contact_p);
+  
+  for (int i = 0; i < inmsg.service_size(); i++)
+  {
+    Service* service_p = sr.get_service(inmsg.service(i));      
+    if (service_p)
     {
-      Service* service_p = sr.get_service(inmsg.service(i));      
-      if (service_p)
-      {
-        // The client provides a service we also provide. Remember that.
-        service_p->add_provider(contact_p);
-      }
-      else
-      {
-        // The client provides a service we don't know anything about. Remember it in the "unknown services" fifo
-        // TODO!
-      }
+      // The client provides a service we also provide. Remember that.
+      service_p->add_provider(contact_p);
+    }
+    else
+    {
+      // The client provides a service we don't know anything about. Remember it in the "unknown services" fifo
+      // TODO!
     }
   }
 }
@@ -152,13 +167,16 @@ void CoreService::handle_get_channel(auto_ptr<Request> request_p)
 
   if (inmsg.ParseFromZeroCopyStream(&instream))
   {
-    Messages::GetChannelResponse outmsg;
-
-    Service* service_p = sr.get_service(inmsg.name());
-    outmsg.set_channel(service_p != NULL ? service_p->get_channel() : 0xFFFF);
-
-    sendmsg(*request_p, GET_CHANNEL_RESPONSE, outmsg);
+    cout << "Invalid packet - can't parse." << endl;
+    return;
   }
+
+  Messages::GetChannelResponse outmsg;
+
+  Service* service_p = sr.get_service(inmsg.name());
+  outmsg.set_channel(service_p != NULL ? service_p->get_channel() : 0xFFFF);
+
+  sendmsg(*request_p, GET_CHANNEL_RESPONSE, outmsg);
 }
 
 
