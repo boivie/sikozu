@@ -1,11 +1,4 @@
 package Sikozu.Messages;
-// Header:
-// uint8 Channel
-// uint8 Command
-// uint8 SID[18]
-// uint8 NID[20]
-// -> header size = 40 bytes
-
 
 message Contact {
   required bytes nid= 1;

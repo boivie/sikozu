@@ -10,12 +10,13 @@
 #define CORE_SERVICE_H_INCLUSION_GUARD 
 
 #include <memory>
-#include "service.h"
+#include "baseservice.h"
  
 namespace Sikozu {
 
-  class CoreService : public Service {
+  class CoreService : public BaseService {
   public:
+    CoreService(NodeId& mynid) : BaseService(mynid) {}
     const std::string& get_name() const;
     void handle_request(std::auto_ptr<Request> request_p);
   protected:

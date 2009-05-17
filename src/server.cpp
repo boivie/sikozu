@@ -6,19 +6,17 @@
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
-
-#include "server.h"
-#include "request.h"
-#include <google/protobuf/io/zero_copy_stream_impl.h>
-
+#include <iostream>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <event.h>
-#include <iostream>
 #include <fcntl.h>
 
+#include <google/protobuf/io/zero_copy_stream_impl.h>
 
+#include "server.h"
+#include "request.h"
 
 using namespace Sikozu;
 using namespace google::protobuf::io;
@@ -43,10 +41,10 @@ void got_packet(int fd, short event, void* arg)
 
   if (len == -1)
   {
-    cout << "recvfrom()" << endl;
+    cerr << "recvfrom() returned -1, no packet." << endl;
     return;
   } else if (len == 0) {
-    cout << "Connection Closed" << endl;
+    cerr << "Connection Closed" << endl;
     return;
   }
   buffer.resize(len);
@@ -56,7 +54,7 @@ void got_packet(int fd, short event, void* arg)
   if (!ph.valid())
   {
     // Bad packet, drop.
-    cout << "Bad packet - dropping." << endl;
+    cerr << "Header validation failed, dropping packet." << endl;
     return;
   }
   
@@ -79,7 +77,7 @@ void got_packet(int fd, short event, void* arg)
   }
   else
   {
-    cout << "No service found." << endl;
+    cerr << "No service found." << endl;
   } 
 }
 

@@ -88,7 +88,6 @@ void CoreService::handle_find_node(auto_ptr<Request> request_p)
   ArrayOutputStream soutstream(&sbuf[0], sbuf.size());
   smsg.SerializeToZeroCopyStream(&soutstream);
   sbuf.resize(soutstream.ByteCount());
-
   
   if (!inmsg.ParseFromZeroCopyStream(&instream))
   {
@@ -131,7 +130,7 @@ void CoreService::handle_announce_service(auto_ptr<Request> request_p)
   
   if (!inmsg.ParseFromZeroCopyStream(&instream))
   {
-    cout << "Invalid packet - can't parse." << endl;
+    cerr << "Invalid packet - can't parse." << endl;
     return;
   }
   
@@ -167,7 +166,7 @@ void CoreService::handle_get_channel(auto_ptr<Request> request_p)
 
   if (inmsg.ParseFromZeroCopyStream(&instream))
   {
-    cout << "Invalid packet - can't parse." << endl;
+    cerr << "Invalid packet - can't parse." << endl;
     return;
   }
 
@@ -205,7 +204,7 @@ void CoreService::handle_request(auto_ptr<Request> request_p)
     handle_get_channel(request_p);
     break;
   default:
-    cout << "Got an unknown command: " << request_p->get_command() << endl; 
+    cerr << "Got an unknown command: " << request_p->get_command() << endl; 
     break;
   }
 }

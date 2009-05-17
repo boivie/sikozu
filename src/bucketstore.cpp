@@ -9,7 +9,6 @@
 #include <assert.h>
 #include "bucketstore.h"
 
-#include "server.h"
 #include "contact.h"
 
 using namespace Sikozu;
@@ -17,13 +16,12 @@ using namespace std;
 
 void BucketStore::insert(ContactPtr contact_p)
 {
-  NodeId& my_nid = Server::get_instance()->get_nid();
-  int bucket_idx = contact_p->get_nodeid().get_log_distance(my_nid);
+  int bucket_idx = contact_p->get_nodeid().get_log_distance(m_mynid);
   assert((bucket_idx >= 0) && (bucket_idx < NID_SIZE_BITS));
   list<ContactPtr>& bucket = m_buckets[bucket_idx];
   
   bucket.push_front(contact_p);
-  m_all_contacts[my_nid] = contact_p;
+  m_all_contacts[contact_p->get_nodeid()] = contact_p;
 }
 
 void BucketStore::get_closest(NodeId& nodeid, list<ContactPtr>& contacts, size_t count)
