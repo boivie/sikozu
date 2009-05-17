@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-c -Wall -DUSE_LUA51_PATH
-LDFLAGS=-levent -llua5.1 -lprotobuf
+LDFLAGS=-levent -lprotobuf
 SOURCES=src/main.cpp src/nodeid.cpp src/packetheader.cpp src/service.cpp src/coreservice.cpp src/server.cpp src/contact.cpp src/serviceregistry.cpp src/bucketstore.cpp src/request.cpp src/session.cpp src/core.pb.cc
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=sikozu

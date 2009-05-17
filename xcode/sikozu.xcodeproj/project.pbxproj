@@ -261,7 +261,6 @@
 				);
 				OTHER_LDFLAGS = (
 					"-levent",
-					"-llua",
 					"-lprotobuf",
 				);
 				PREBINDING = NO;
