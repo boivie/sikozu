@@ -43,7 +43,7 @@ void CoreService::handle_get_services(auto_ptr<Request> request_p)
 {
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   map<uint32_t, Service*>* map_p = sr.get_all_services();
-  Messages::GetServicesResponse msg;
+  Messages::GetServicesResponse outmsg;
 
   for (map<uint32_t, Service*>::iterator i = map_p->begin();
        i != map_p->end();
@@ -52,13 +52,13 @@ void CoreService::handle_get_services(auto_ptr<Request> request_p)
     // Don't include the core service - it's always there. 
     if (i->first != 0)
     {
-      Messages::GetServicesResponse_Result* info_p = msg.add_services();
+      Messages::GetServicesResponse_Result* info_p = outmsg.add_services();
       info_p->set_channel(i->first);
       info_p->set_name(i->second->get_short_name());
     }
   }
   
-  sendmsg(*request_p, GET_SERVICES_RESPONSE, msg);
+  sendmsg(*request_p, GET_SERVICES_RESPONSE, outmsg);
 }
 
 void CoreService::handle_ping(auto_ptr<Request> request_p)
@@ -71,17 +71,17 @@ void CoreService::handle_find_node(auto_ptr<Request> request_p)
 {
   const vector<char>& payload = request_p->get_payload();
   ArrayInputStream instream(&payload[0], payload.size());
-  Messages::FindNodeRequest msg;
+  Messages::FindNodeRequest inmsg;
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   Service* service_p = this;
   
-  if (msg.ParseFromZeroCopyStream(&instream))
+  if (inmsg.ParseFromZeroCopyStream(&instream))
   {
     list<ContactPtr> contacts;
-    NodeId nid(msg.nid());
-    if (msg.has_service())
+    NodeId nid(inmsg.nid());
+    if (inmsg.has_service())
     {
-      service_p = sr.get_service(msg.service());
+      service_p = sr.get_service(inmsg.service());
     }
     if (service_p != NULL)
     {
@@ -91,12 +91,12 @@ void CoreService::handle_find_node(auto_ptr<Request> request_p)
     Messages::FindNodeResponse outmsg;
     for (list<ContactPtr>::iterator i = contacts.begin(); i != contacts.end(); ++i)
     {    
-      Messages::Contact* msg_contact_p = outmsg.add_contacts();
+      Messages::Contact* outmsg_contact_p = outmsg.add_contacts();
       ContactPtr contact_p = *i;
       const std::vector<uint8_t>& nid = contact_p->get_nodeid().get_nid();
-      msg_contact_p->set_nid(&nid[0], nid.size());
+      outmsg_contact_p->set_nid(&nid[0], nid.size());
       const struct sockaddr_in6& addr = contact_p->get_address();
-      msg_contact_p->set_port(addr.sin6_port);
+      outmsg_contact_p->set_port(addr.sin6_port);
     }
     
     sendmsg(*request_p, FIND_NODE_RESPONSE, outmsg);
@@ -107,18 +107,18 @@ void CoreService::handle_announce_service(auto_ptr<Request> request_p)
 {
   const vector<char>& payload = request_p->get_payload();
   ArrayInputStream instream(&payload[0], payload.size());
-  Messages::AnnounceServiceRequest msg;
+  Messages::AnnounceServiceRequest inmsg;
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   
-  if (msg.ParseFromZeroCopyStream(&instream))
+  if (inmsg.ParseFromZeroCopyStream(&instream))
   {
-    NodeId nid(msg.nid());
+    NodeId nid(inmsg.nid());
     ContactPtr contact_p = request_p->get_contact();
     contact_p->set_nodeid(nid);
   
-    for (int i = 0; i < msg.info_size(); i++)
+    for (int i = 0; i < inmsg.info_size(); i++)
     {
-      const Messages::AnnounceServiceRequest_Info& info = msg.info(i);
+      const Messages::AnnounceServiceRequest_Info& info = inmsg.info(i);
       Service* service_p = sr.get_service(info.name());      
       if (info.provides() && service_p)
       {
@@ -143,13 +143,14 @@ void CoreService::handle_get_channel(auto_ptr<Request> request_p)
 {
   const vector<char>& payload = request_p->get_payload();
   ArrayInputStream instream(&payload[0], payload.size());
-  Messages::GetChannelRequest msg;
+  Messages::GetChannelRequest inmsg;
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
 
-  if (msg.ParseFromZeroCopyStream(&instream))
+  if (inmsg.ParseFromZeroCopyStream(&instream))
   {
     Messages::GetChannelResponse outmsg;
-    Service* service_p = sr.get_service(msg.name());
+
+    Service* service_p = sr.get_service(inmsg.name());
     outmsg.set_channel(service_p != NULL ? service_p->get_channel() : 0xFFFF);
 
     sendmsg(*request_p, GET_CHANNEL_RESPONSE, outmsg);
