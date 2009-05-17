@@ -25,6 +25,7 @@ enum CommandIdentifier {
   FIND_NODE_REQUEST, FIND_NODE_RESPONSE,
   GET_SERVICES_REQUEST, GET_SERVICES_RESPONSE,
   ANNOUNCE_SERVICE_REQUEST, ANNOUNCE_SERVICE_RESPONSE,
+  GET_CHANNEL_REQUEST, GET_CHANNEL_RESPONSE,
   LAST
 };
 
@@ -32,10 +33,8 @@ void CoreService::handle_get_services(auto_ptr<Request> request_p)
 {
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   map<uint32_t, Service*>* map_p = sr.get_all_services();
-  
-  cout << "GET_SERVICES" << endl;
-  
   Messages::GetServicesResponse msg;
+
   for (map<uint32_t, Service*>::iterator i = map_p->begin();
        i != map_p->end();
        i++)
@@ -55,24 +54,22 @@ void CoreService::handle_get_services(auto_ptr<Request> request_p)
   msg.SerializeToZeroCopyStream(&outstream);
   buffer.resize(outstream.ByteCount());
   request_p->get_session()->send(GET_SERVICES_RESPONSE, buffer);
-
 }
 
 void CoreService::handle_ping(auto_ptr<Request> request_p)
 {
-  cout << "PING, PONG" << endl;
-  vector<char> pb(0);
+  static const vector<char> pb(0);
   request_p->get_session()->send(PING_RESPONSE, pb);
 }
 
 void CoreService::handle_find_node(auto_ptr<Request> request_p)
 {
-  cout << "FIND_NODE" << endl;
-  vector<char>& payload = request_p->get_payload();
+  const vector<char>& payload = request_p->get_payload();
   ArrayInputStream instream(&payload[0], payload.size());
   Messages::FindNodeRequest msg;
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   Service* service_p = this;
+  
   if (msg.ParseFromZeroCopyStream(&instream))
   {
     list<ContactPtr> contacts;
@@ -106,8 +103,7 @@ void CoreService::handle_find_node(auto_ptr<Request> request_p)
 
 void CoreService::handle_announce_service(auto_ptr<Request> request_p)
 {
-  cout << "ANNOUNCE_SERVICE" << endl;
-  vector<char>& payload = request_p->get_payload();
+  const vector<char>& payload = request_p->get_payload();
   ArrayInputStream instream(&payload[0], payload.size());
   Messages::AnnounceServiceRequest msg;
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
@@ -141,21 +137,51 @@ void CoreService::handle_announce_service(auto_ptr<Request> request_p)
   }
 }
 
+void CoreService::handle_get_channel(auto_ptr<Request> request_p)
+{
+  const vector<char>& payload = request_p->get_payload();
+  ArrayInputStream instream(&payload[0], payload.size());
+  Messages::GetChannelRequest msg;
+  ServiceRegistry& sr = Server::get_instance()->get_service_registry();
+
+  if (msg.ParseFromZeroCopyStream(&instream))
+  {
+    Messages::GetChannelResponse outmsg;
+    Service* service_p = sr.get_service(msg.name());
+    outmsg.set_channel(service_p != NULL ? service_p->get_channel() : 0xFFFF);
+
+    vector<char> buffer(8192);
+    ArrayOutputStream outstream(&buffer[0], buffer.size());
+    outmsg.SerializeToZeroCopyStream(&outstream);
+    buffer.resize(outstream.ByteCount());
+    request_p->get_session()->send(GET_CHANNEL_RESPONSE, buffer);
+  }
+}
+
+
 void CoreService::handle_request(auto_ptr<Request> request_p)
 {
   switch (request_p->get_command())
   {
   case PING_REQUEST:
+    cout << "PING" << endl;
     handle_ping(request_p);
     break;
   case GET_SERVICES_REQUEST:
+    cout << "GET_SERVICES" << endl;
     handle_get_services(request_p);
     break;
   case FIND_NODE_REQUEST:
+    cout << "FIND_NODE" << endl;
     handle_find_node(request_p);
     break;
   case ANNOUNCE_SERVICE_REQUEST:
+    cout << "ANNOUNCE_SERVICE" << endl;
     handle_announce_service(request_p);
+    break;
+  case GET_CHANNEL_REQUEST:
+    cout << "GET_CHANNEL" << endl;
+    handle_get_channel(request_p);
     break;
   default:
     cout << "Got an unknown command: " << request_p->get_command() << endl; 

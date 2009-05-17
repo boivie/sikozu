@@ -24,6 +24,7 @@ namespace Sikozu {
     void handle_get_services(std::auto_ptr<Request> request_p);
     void handle_find_node(std::auto_ptr<Request> request_p);
     void handle_announce_service(std::auto_ptr<Request> request_p);
+    void handle_get_channel(std::auto_ptr<Request> request_p);
   };
 }
 
