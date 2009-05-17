@@ -29,6 +29,16 @@ enum CommandIdentifier {
   LAST
 };
 
+void sendmsg(Request& request, uint32_t command, google::protobuf::Message& outmsg)
+{
+  vector<char> buffer(8192);
+  ArrayOutputStream outstream(&buffer[0], buffer.size());
+  outmsg.SerializeToZeroCopyStream(&outstream);
+  buffer.resize(outstream.ByteCount());
+  request.get_session()->send(command, buffer);
+}
+
+
 void CoreService::handle_get_services(auto_ptr<Request> request_p)
 {
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
@@ -48,12 +58,7 @@ void CoreService::handle_get_services(auto_ptr<Request> request_p)
     }
   }
   
-  vector<char> buffer(8192);
-
-  ArrayOutputStream outstream(&buffer[0], buffer.size());
-  msg.SerializeToZeroCopyStream(&outstream);
-  buffer.resize(outstream.ByteCount());
-  request_p->get_session()->send(GET_SERVICES_RESPONSE, buffer);
+  sendmsg(*request_p, GET_SERVICES_RESPONSE, msg);
 }
 
 void CoreService::handle_ping(auto_ptr<Request> request_p)
@@ -93,11 +98,8 @@ void CoreService::handle_find_node(auto_ptr<Request> request_p)
       const struct sockaddr_in6& addr = contact_p->get_address();
       msg_contact_p->set_port(addr.sin6_port);
     }
-    vector<char> buffer(8192);
-    ArrayOutputStream outstream(&buffer[0], buffer.size());
-    outmsg.SerializeToZeroCopyStream(&outstream);
-    buffer.resize(outstream.ByteCount());
-    request_p->get_session()->send(FIND_NODE_RESPONSE, buffer);
+    
+    sendmsg(*request_p, FIND_NODE_RESPONSE, outmsg);
   }
 }
 
@@ -150,11 +152,7 @@ void CoreService::handle_get_channel(auto_ptr<Request> request_p)
     Service* service_p = sr.get_service(msg.name());
     outmsg.set_channel(service_p != NULL ? service_p->get_channel() : 0xFFFF);
 
-    vector<char> buffer(8192);
-    ArrayOutputStream outstream(&buffer[0], buffer.size());
-    outmsg.SerializeToZeroCopyStream(&outstream);
-    buffer.resize(outstream.ByteCount());
-    request_p->get_session()->send(GET_CHANNEL_RESPONSE, buffer);
+    sendmsg(*request_p, GET_CHANNEL_RESPONSE, outmsg);
   }
 }
 
