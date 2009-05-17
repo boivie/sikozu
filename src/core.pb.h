@@ -41,7 +41,6 @@ class GetServicesResponse_Result;
 class GetChannelRequest;
 class GetChannelResponse;
 class AnnounceServiceRequest;
-class AnnounceServiceRequest_Info;
 class AnnounceServiceResponse;
 
 // ===================================================================
@@ -789,93 +788,6 @@ class GetChannelResponse : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class AnnounceServiceRequest_Info : public ::google::protobuf::Message {
- public:
-  AnnounceServiceRequest_Info();
-  virtual ~AnnounceServiceRequest_Info();
-  
-  AnnounceServiceRequest_Info(const AnnounceServiceRequest_Info& from);
-  
-  inline AnnounceServiceRequest_Info& operator=(const AnnounceServiceRequest_Info& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const AnnounceServiceRequest_Info& default_instance();
-  void Swap(AnnounceServiceRequest_Info* other);
-  
-  // implements Message ----------------------------------------------
-  
-  AnnounceServiceRequest_Info* New() const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  const ::google::protobuf::Descriptor* GetDescriptor() const;
-  const ::google::protobuf::Reflection* GetReflection() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required string name = 1;
-  inline bool has_name() const;
-  inline void clear_name();
-  inline const ::std::string& name() const;
-  inline void set_name(const ::std::string& value);
-  inline void set_name(const char* value);
-  inline ::std::string* mutable_name();
-  
-  // optional bool provides = 2;
-  inline bool has_provides() const;
-  inline void clear_provides();
-  inline bool provides() const;
-  inline void set_provides(bool value);
-  
-  // optional bool tracks = 3;
-  inline bool has_tracks() const;
-  inline void clear_tracks();
-  inline bool tracks() const;
-  inline void set_tracks(bool value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::std::string* name_;
-  static const ::std::string _default_name_;
-  bool provides_;
-  bool tracks_;
-  friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
-      const ::google::protobuf::FileDescriptor* file);
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static AnnounceServiceRequest_Info* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class AnnounceServiceRequest : public ::google::protobuf::Message {
  public:
   AnnounceServiceRequest();
@@ -913,8 +825,6 @@ class AnnounceServiceRequest : public ::google::protobuf::Message {
   
   // nested types ----------------------------------------------------
   
-  typedef AnnounceServiceRequest_Info Info;
-  
   // accessors -------------------------------------------------------
   
   // required bytes nid = 1;
@@ -926,14 +836,18 @@ class AnnounceServiceRequest : public ::google::protobuf::Message {
   inline void set_nid(const void* value, size_t size);
   inline ::std::string* mutable_nid();
   
-  // repeated .Sikozu.Messages.AnnounceServiceRequest.Info info = 2;
-  inline int info_size() const;
-  inline void clear_info();
-  inline const ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceServiceRequest_Info >& info() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceServiceRequest_Info >* mutable_info();
-  inline const ::Sikozu::Messages::AnnounceServiceRequest_Info& info(int index) const;
-  inline ::Sikozu::Messages::AnnounceServiceRequest_Info* mutable_info(int index);
-  inline ::Sikozu::Messages::AnnounceServiceRequest_Info* add_info();
+  // repeated string service = 2;
+  inline int service_size() const;
+  inline void clear_service();
+  inline const ::google::protobuf::RepeatedPtrField< ::std::string>& service() const;
+  inline ::google::protobuf::RepeatedPtrField< ::std::string>* mutable_service();
+  inline const ::std::string& service(int index) const;
+  inline ::std::string* mutable_service(int index);
+  inline void set_service(int index, const ::std::string& value);
+  inline void set_service(int index, const char* value);
+  inline ::std::string* add_service();
+  inline void add_service(const ::std::string& value);
+  inline void add_service(const char* value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -941,7 +855,7 @@ class AnnounceServiceRequest : public ::google::protobuf::Message {
   
   ::std::string* nid_;
   static const ::std::string _default_nid_;
-  ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceServiceRequest_Info > info_;
+  ::google::protobuf::RepeatedPtrField< ::std::string> service_;
   friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
       const ::google::protobuf::FileDescriptor* file);
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
@@ -1416,77 +1330,6 @@ inline void GetChannelResponse::set_channel(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
-// AnnounceServiceRequest_Info
-
-// required string name = 1;
-inline bool AnnounceServiceRequest_Info::has_name() const {
-  return _has_bit(0);
-}
-inline void AnnounceServiceRequest_Info::clear_name() {
-  if (name_ != &_default_name_) {
-    name_->clear();
-  }
-  _clear_bit(0);
-}
-inline const ::std::string& AnnounceServiceRequest_Info::name() const {
-  return *name_;
-}
-inline void AnnounceServiceRequest_Info::set_name(const ::std::string& value) {
-  _set_bit(0);
-  if (name_ == &_default_name_) {
-    name_ = new ::std::string;
-  }
-  name_->assign(value);
-}
-inline void AnnounceServiceRequest_Info::set_name(const char* value) {
-  _set_bit(0);
-  if (name_ == &_default_name_) {
-    name_ = new ::std::string;
-  }
-  name_->assign(value);
-}
-inline ::std::string* AnnounceServiceRequest_Info::mutable_name() {
-  _set_bit(0);
-  if (name_ == &_default_name_) {
-    name_ = new ::std::string;
-  }
-  return name_;
-}
-
-// optional bool provides = 2;
-inline bool AnnounceServiceRequest_Info::has_provides() const {
-  return _has_bit(1);
-}
-inline void AnnounceServiceRequest_Info::clear_provides() {
-  provides_ = false;
-  _clear_bit(1);
-}
-inline bool AnnounceServiceRequest_Info::provides() const {
-  return provides_;
-}
-inline void AnnounceServiceRequest_Info::set_provides(bool value) {
-  _set_bit(1);
-  provides_ = value;
-}
-
-// optional bool tracks = 3;
-inline bool AnnounceServiceRequest_Info::has_tracks() const {
-  return _has_bit(2);
-}
-inline void AnnounceServiceRequest_Info::clear_tracks() {
-  tracks_ = false;
-  _clear_bit(2);
-}
-inline bool AnnounceServiceRequest_Info::tracks() const {
-  return tracks_;
-}
-inline void AnnounceServiceRequest_Info::set_tracks(bool value) {
-  _set_bit(2);
-  tracks_ = value;
-}
-
-// -------------------------------------------------------------------
-
 // AnnounceServiceRequest
 
 // required bytes nid = 1;
@@ -1531,29 +1374,41 @@ inline ::std::string* AnnounceServiceRequest::mutable_nid() {
   return nid_;
 }
 
-// repeated .Sikozu.Messages.AnnounceServiceRequest.Info info = 2;
-inline int AnnounceServiceRequest::info_size() const {
-  return info_.size();
+// repeated string service = 2;
+inline int AnnounceServiceRequest::service_size() const {
+  return service_.size();
 }
-inline void AnnounceServiceRequest::clear_info() {
-  info_.Clear();
+inline void AnnounceServiceRequest::clear_service() {
+  service_.Clear();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceServiceRequest_Info >&
-AnnounceServiceRequest::info() const {
-  return info_;
+inline const ::google::protobuf::RepeatedPtrField< ::std::string>&
+AnnounceServiceRequest::service() const {
+  return service_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::Sikozu::Messages::AnnounceServiceRequest_Info >*
-AnnounceServiceRequest::mutable_info() {
-  return &info_;
+inline ::google::protobuf::RepeatedPtrField< ::std::string>*
+AnnounceServiceRequest::mutable_service() {
+  return &service_;
 }
-inline const ::Sikozu::Messages::AnnounceServiceRequest_Info& AnnounceServiceRequest::info(int index) const {
-  return info_.Get(index);
+inline const ::std::string& AnnounceServiceRequest::service(int index) const {
+  return service_.Get(index);
 }
-inline ::Sikozu::Messages::AnnounceServiceRequest_Info* AnnounceServiceRequest::mutable_info(int index) {
-  return info_.Mutable(index);
+inline ::std::string* AnnounceServiceRequest::mutable_service(int index) {
+  return service_.Mutable(index);
 }
-inline ::Sikozu::Messages::AnnounceServiceRequest_Info* AnnounceServiceRequest::add_info() {
-  return info_.Add();
+inline void AnnounceServiceRequest::set_service(int index, const ::std::string& value) {
+  service_.Mutable(index)->assign(value);
+}
+inline void AnnounceServiceRequest::set_service(int index, const char* value) {
+  service_.Mutable(index)->assign(value);
+}
+inline ::std::string* AnnounceServiceRequest::add_service() {
+  return service_.Add();
+}
+inline void AnnounceServiceRequest::add_service(const ::std::string& value) {
+  service_.Add()->assign(value);
+}
+inline void AnnounceServiceRequest::add_service(const char* value) {
+  service_.Add()->assign(value);
 }
 
 // -------------------------------------------------------------------

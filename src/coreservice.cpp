@@ -93,6 +93,7 @@ void CoreService::handle_find_node(auto_ptr<Request> request_p)
     {
       service_p->find_nodes(nid, contacts);
     }
+    // TODO: Query the ServiceNameServer
     
     Messages::FindNodeResponse outmsg;
     for (list<ContactPtr>::iterator i = contacts.begin(); i != contacts.end(); ++i)
@@ -122,24 +123,21 @@ void CoreService::handle_announce_service(auto_ptr<Request> request_p)
     ContactPtr contact_p = request_p->get_contact();
     contact_p->set_nodeid(nid);
   
-    for (int i = 0; i < inmsg.info_size(); i++)
+    // We always add nodes that provide something to the core service
+    sr.get_service("core")->add_provider(contact_p);
+  
+    for (int i = 0; i < inmsg.service_size(); i++)
     {
-      const Messages::AnnounceServiceRequest_Info& info = inmsg.info(i);
-      Service* service_p = sr.get_service(info.name());      
-      if (info.provides() && service_p)
+      Service* service_p = sr.get_service(inmsg.service(i));      
+      if (service_p)
       {
         // The client provides a service we also provide. Remember that.
         service_p->add_provider(contact_p);
       }
-      if (info.provides() && !service_p)
+      else
       {
         // The client provides a service we don't know anything about. Remember it in the "unknown services" fifo
         // TODO!
-      }
-      if (info.tracks() && service_p)
-      {
-        // The client wants to track a service we provide. Remember that in the "track fifo"
-        service_p->add_tracker(contact_p);
       }
     }
   }

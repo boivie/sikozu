@@ -49,13 +49,8 @@ message GetChannelResponse {
 }
 
 message AnnounceServiceRequest {
-	message Info {
-		required string name = 1;
-	  optional bool provides = 2;
-	  optional bool tracks = 3;
-	}
 	required bytes nid = 1;
-	repeated Info info = 2;
+	repeated string service = 2;
 }
 
 message AnnounceServiceResponse {
