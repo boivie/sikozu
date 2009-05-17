@@ -9,6 +9,7 @@
 #ifndef SERVICE_H_INCLUSION_GUARD
 #define SERVICE_H_INCLUSION_GUARD
  
+#include <list>
 #include <vector>
 #include <memory>
 #include "contact.h"
@@ -22,7 +23,7 @@ namespace Sikozu {
     virtual const char* get_short_name() = 0;
     virtual const char* get_long_name() = 0;
     virtual void handle_request(std::auto_ptr<Request> request_p) = 0;
-    virtual bool handle_find_node_request(std::auto_ptr<Request> request_p);
+    virtual void find_nodes(NodeId& nodeid, std::list<ContactPtr> contacts);
     virtual void add_provider(ContactPtr client_p);
     virtual void add_tracker(ContactPtr client_p);
    protected:

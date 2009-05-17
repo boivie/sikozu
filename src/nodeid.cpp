@@ -51,3 +51,17 @@ int NodeId::get_log_distance(NodeId& other) const
   assert(distance == 0);
   return distance;
 }
+
+int NodeId::closest(const NodeId& left, const NodeId& right) const
+{
+  for (int i = 0; i < m_nid.size(); i++)
+  {
+    uint8_t diff_l = m_nid[i] ^ left.m_nid[i];
+    uint8_t diff_r = m_nid[i] ^ right.m_nid[i];
+    if (diff_l < diff_r)
+      return -1;
+    else if (diff_r < diff_l)
+      return 1;
+  }
+  return 0;
+}

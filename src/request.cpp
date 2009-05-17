@@ -15,7 +15,7 @@ using namespace std;
 
 Request::Request(PacketHeader& ph, ContactPtr contact_p, auto_ptr<vector<char> > payload_p)
  : m_sender_p(contact_p), 
-   m_session_p(Session::create(contact_p, ph.get_sid())),
+   m_session_p(Session::create(contact_p, 0xFFFF, ph.get_sid())),
    m_payload_p(payload_p),
    m_command(ph.get_command())
 {

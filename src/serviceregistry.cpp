@@ -7,8 +7,9 @@
  *
  */
 
-#include "serviceregistry.h"
 #include <exception>
+#include <iostream>
+#include "serviceregistry.h"
 
 using namespace std;
 
@@ -36,6 +37,7 @@ Service* ServiceRegistry::get_service(string name)
     
 void ServiceRegistry::register_service(uint32_t channel, Service* service_p)
 {
+  cout << "Registered Service " << service_p->get_short_name() << "." << endl;
   m_services[channel] = service_p;
   m_services_by_name[service_p->get_short_name()] = service_p;
 }

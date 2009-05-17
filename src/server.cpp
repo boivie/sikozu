@@ -72,14 +72,13 @@ void got_packet(int fd, short event, void* arg)
   Service* service_p = sr.get_service(ph.get_channel());
   if (service_p != NULL)
   {
-    cout << "Using service: " << service_p->get_long_name() << endl;
+    cout << "Dispatching packet to service: " << service_p->get_long_name() << endl;
     service_p->handle_request(request_p);
   }
   else
   {
     cout << "No service found." << endl;
   } 
-  cout << "Done." << endl;
 }
 
 int Server::listen_udp(uint16_t port)

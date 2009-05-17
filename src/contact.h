@@ -9,6 +9,7 @@
 #ifndef CONTACT_H_INCLUSION_GUARD
 #define CONTACT_H_INCLUSION_GUARD
 
+#include <exception>
 #include <netinet/in.h>
 #include <map>
 #include "nodeid.h"
@@ -32,9 +33,8 @@ class Contact {
   static ContactPtr get(struct sockaddr_in6& address);
 
  protected:
-  static std::map<NodeId, Contact*> s_instances;
   Contact(struct sockaddr_in6& address) : m_caddr(address) {} 
-
+  ~Contact();
   friend class ContactPtr;
   int count_;
   NodeId m_nodeid;
@@ -44,7 +44,7 @@ class Contact {
 
 class ContactPtr {
  public:
-   ContactPtr() { p_ = NULL; }
+   ContactPtr() { throw "Can not instiate empty ContactPtr."; }
    Contact* operator-> () const { return p_; }
    Contact& operator* ()  { return *p_; }
    ContactPtr(Contact* p)    : p_(p) { ++p_->count_; }  // p must not be NULL

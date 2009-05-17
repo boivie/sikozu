@@ -23,9 +23,9 @@ void Service::add_tracker(ContactPtr contact_p)
 
 }
 
-bool Service::handle_find_node_request(auto_ptr<Request> request_p)
+void Service::find_nodes(NodeId& nodeid, list<ContactPtr> contacts)
 {
-  return true;
+  return m_bucket_store.get_closest(nodeid, contacts);
 }
 
 }

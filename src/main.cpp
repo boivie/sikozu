@@ -81,6 +81,7 @@ int main(int argc, char **argv)
   }
 
   // Run main loop
+  cout << "Executing main loop." << endl;
   event_dispatch();
   
   lua_close(L);
