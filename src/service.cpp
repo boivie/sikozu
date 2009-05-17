@@ -18,11 +18,6 @@ void Service::add_provider(ContactPtr contact_p)
   m_bucket_store.insert(contact_p);
 }
 
-void Service::add_tracker(ContactPtr contact_p)
-{
-
-}
-
 void Service::find_nodes(NodeId& nodeid, list<ContactPtr> contacts)
 {
   return m_bucket_store.get_closest(nodeid, contacts);

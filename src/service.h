@@ -24,7 +24,6 @@ namespace Sikozu {
     virtual void handle_request(std::auto_ptr<Request> request_p) = 0;
     virtual void find_nodes(NodeId& nodeid, std::list<ContactPtr> contacts);
     virtual void add_provider(ContactPtr client_p);
-    virtual void add_tracker(ContactPtr client_p);
     uint32_t get_channel() const { return m_channel; }
     void set_channel(uint32_t channel) { m_channel = channel; }
    protected:
