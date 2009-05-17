@@ -22,7 +22,7 @@ int main(int argc, char **argv)
   // Register services.
   Server* server_p = Server::get_instance();
   ServiceRegistry& sr = server_p->get_service_registry();
-  sr.register_service(0, new CoreService());
+  sr.register_service(new CoreService());
   
   // Start listening socket
   Server::get_instance()->listen_udp(9081);

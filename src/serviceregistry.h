@@ -19,7 +19,7 @@ namespace Sikozu {
    public:
     Service* get_service(uint32_t channel);
     Service* get_service(std::string name);
-    void register_service(uint32_t channel, Service* service_p);
+    void register_service(Service* service_p);
     std::map<uint32_t, Service*>* get_all_services() { return &m_services; };
     
    private:
