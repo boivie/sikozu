@@ -33,7 +33,7 @@ class Contact {
   static ContactPtr get(struct sockaddr_in6& address);
 
  protected:
-  Contact(struct sockaddr_in6& address) : m_caddr(address) {} 
+  Contact(struct sockaddr_in6& address) : count_(0), m_caddr(address) {} 
   ~Contact();
   friend class ContactPtr;
   int count_;
@@ -44,7 +44,7 @@ class Contact {
 
 class ContactPtr {
  public:
-   ContactPtr() { throw "Can not instiate empty ContactPtr."; }
+   ContactPtr() : p_(0) { throw "Can not instiate empty ContactPtr."; }
    Contact* operator-> () const { return p_; }
    Contact& operator* ()  { return *p_; }
    ContactPtr(Contact* p)    : p_(p) { ++p_->count_; }  // p must not be NULL

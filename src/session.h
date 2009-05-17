@@ -23,7 +23,7 @@ class Session {
   static SessionPtr create(ContactPtr contact_p, uint32_t channel, uint32_t sid);
   ContactPtr get_contact() { return m_contact_p; }
  protected:
-  Session(ContactPtr contact_p, uint32_t channel, uint32_t sid) : m_contact_p(contact_p), m_channel(channel), m_sid(sid) {}
+  Session(ContactPtr contact_p, uint32_t channel, uint32_t sid) : m_contact_p(contact_p), m_channel(channel), m_sid(sid), count_(0) {}
   ContactPtr m_contact_p;
   uint32_t m_channel;
   uint32_t m_sid;
