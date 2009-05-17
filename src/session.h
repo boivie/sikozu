@@ -19,7 +19,7 @@ class SessionPtr;
 
 class Session {
  public:
-  void send(uint32_t command, std::vector<char>& message) const;
+  void send(uint32_t command, const std::vector<char>& message) const;
   static SessionPtr create(ContactPtr contact_p, uint32_t channel, uint32_t sid);
   ContactPtr get_contact() { return m_contact_p; }
  protected:
