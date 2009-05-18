@@ -81,14 +81,7 @@ void CoreService::handle_find_node(auto_ptr<Request> request_p)
   Messages::FindNodeRequest inmsg;
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   Service* service_p = this;
-  
-  Messages::FindNodeRequest smsg;
-  smsg.set_nid("testnid");
-  vector<char> sbuf(40);
-  ArrayOutputStream soutstream(&sbuf[0], sbuf.size());
-  smsg.SerializeToZeroCopyStream(&soutstream);
-  sbuf.resize(soutstream.ByteCount());
-  
+    
   if (!inmsg.ParseFromZeroCopyStream(&instream))
   {
     cerr << "Invalid packet - can't parse." << endl;
@@ -155,6 +148,8 @@ void CoreService::handle_announce_service(auto_ptr<Request> request_p)
       // TODO!
     }
   }
+  Messages::AnnounceServiceResponse outmsg;
+  sendmsg(*request_p, ANNOUNCE_SERVICE_RESPONSE, outmsg);
 }
 
 void CoreService::handle_get_channel(auto_ptr<Request> request_p)
@@ -213,8 +208,8 @@ void CoreService::handle_request(auto_ptr<Request> request_p)
   {
     cerr << "Got exception, " << e.what() << ", dropping packet." << endl;
   }
-  catch (...)
+/*  catch (...)
   {
     cerr << "Got an unknown exception. Dropping packet." << endl;
-  }
+  }*/
 }

@@ -18,6 +18,15 @@
 
 namespace Sikozu {
 
+class AllContactsComparator {
+ public:
+  bool operator()(const ContactPtr& lhs, const ContactPtr& rhs) const {
+    if(lhs->get_nodeid() < rhs->get_nodeid())
+      return true;
+    return false;
+  } 
+};
+
 class BucketStore {
   public:
     BucketStore(NodeId& mynid) : m_mynid(mynid), m_buckets(NID_SIZE_BITS) {}
@@ -26,7 +35,7 @@ class BucketStore {
   protected:
     NodeId& m_mynid;
     std::vector< std::list< ContactPtr > > m_buckets;
-    typedef std::map< NodeId, ContactPtr > AllContacts_t;
+    typedef std::set< ContactPtr, AllContactsComparator > AllContacts_t;
     AllContacts_t m_all_contacts; 
 };
 

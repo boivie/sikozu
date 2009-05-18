@@ -43,6 +43,13 @@ ContactPtr Contact::get(struct sockaddr_in6& address)
   return ContactPtr(object_p);
 }
 
+ContactPtr Contact::create_new(NodeId& nodeid) 
+{
+  Contact* object_p = new Contact();
+  object_p->set_nodeid(nodeid);
+  return ContactPtr(object_p);
+}
+
 Contact::~Contact() 
 {
   vector<char> key(16 + 2);
