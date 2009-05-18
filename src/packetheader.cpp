@@ -15,7 +15,7 @@
  
 using namespace std;
 using namespace google::protobuf::io;
-namespace Sikozu {
+using namespace Sikozu;
   
   size_t PacketHeader::parse(char* ptr_p, size_t size)
   {
@@ -39,8 +39,8 @@ namespace Sikozu {
     }
 
     uint16_t crc = *(uint16_t*)(ptr_p + 2);
-    m_channel = (uint32_t)*(uint16_t*)(ptr_p + 4);
-    m_command = (uint32_t)*(uint16_t*)(ptr_p + 6);
+    m_channel = (Channel_t)*(uint16_t*)(ptr_p + 4);
+    m_command = (Command_t)*(uint16_t*)(ptr_p + 6);
     m_sid = *(uint32_t*)(ptr_p + 8);
     m_valid = true;
     return m_size;
@@ -59,4 +59,3 @@ namespace Sikozu {
     *(uint32_t*)(ptr_p + 8) = m_sid;
     return PACKET_HEADER_SIZE;
   }
-}

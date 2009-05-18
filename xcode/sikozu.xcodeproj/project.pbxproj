@@ -40,7 +40,6 @@
 		5725203D0FAF876C0052F18F /* nodeid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = nodeid.cpp; path = ../src/nodeid.cpp; sourceTree = SOURCE_ROOT; };
 		5725203E0FAF876C0052F18F /* nodeid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = nodeid.h; path = ../src/nodeid.h; sourceTree = SOURCE_ROOT; };
 		5725203F0FAF876C0052F18F /* packetheader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = packetheader.cpp; path = ../src/packetheader.cpp; sourceTree = SOURCE_ROOT; };
-		572520400FAF876C0052F18F /* packetheader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = packetheader.h; path = ../src/packetheader.h; sourceTree = SOURCE_ROOT; };
 		572520E60FB0AD830052F18F /* service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = service.h; path = ../src/service.h; sourceTree = SOURCE_ROOT; };
 		572520E90FB0B29A0052F18F /* coreservice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = coreservice.h; path = ../src/coreservice.h; sourceTree = SOURCE_ROOT; };
 		572520EA0FB0B29A0052F18F /* coreservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = coreservice.cpp; path = ../src/coreservice.cpp; sourceTree = SOURCE_ROOT; };
@@ -60,6 +59,8 @@
 		57295C8D0FB88BBC0028DA4B /* request.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = request.cpp; path = ../src/request.cpp; sourceTree = SOURCE_ROOT; };
 		57D47EE90FC0B4650080E0CE /* baseservice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baseservice.h; path = ../src/baseservice.h; sourceTree = SOURCE_ROOT; };
 		57D47EEA0FC0B4650080E0CE /* baseservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = baseservice.cpp; path = ../src/baseservice.cpp; sourceTree = SOURCE_ROOT; };
+		57D47F860FC1DBED0080E0CE /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common.h; path = ../src/common.h; sourceTree = SOURCE_ROOT; };
+		57D47F920FC1DCF40080E0CE /* packetheader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = packetheader.h; path = ../src/packetheader.h; sourceTree = SOURCE_ROOT; };
 		8DD76F6C0486A84900D96B5E /* sikozu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sikozu; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859E8B029090EE04C91782 /* sikozu.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = sikozu.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,7 +94,7 @@
 				5725203D0FAF876C0052F18F /* nodeid.cpp */,
 				5725203E0FAF876C0052F18F /* nodeid.h */,
 				5725203F0FAF876C0052F18F /* packetheader.cpp */,
-				572520400FAF876C0052F18F /* packetheader.h */,
+				57D47F920FC1DCF40080E0CE /* packetheader.h */,
 				57251F270FAE18180052F18F /* main.cpp */,
 				572520E60FB0AD830052F18F /* service.h */,
 				572520E90FB0B29A0052F18F /* coreservice.h */,
@@ -112,6 +113,7 @@
 				57295C8D0FB88BBC0028DA4B /* request.cpp */,
 				57D47EE90FC0B4650080E0CE /* baseservice.h */,
 				57D47EEA0FC0B4650080E0CE /* baseservice.cpp */,
+				57D47F860FC1DBED0080E0CE /* common.h */,
 			);
 			name = Source;
 			sourceTree = "<group>";

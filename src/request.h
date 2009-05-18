@@ -17,6 +17,7 @@
 #include "packetheader.h"
 #include "session.h"
 #include "contact.h"
+#include "common.h"
 
 namespace Sikozu {
 class Request {
@@ -24,7 +25,7 @@ class Request {
   Request(PacketHeader& ph, ContactPtr contact_p, std::auto_ptr<std::vector<char> > payload_p);
   
   ContactPtr get_contact() const { return m_sender_p; }
-  uint32_t get_command() const { return m_command; }
+  Command_t get_command() const { return m_command; }
   std::vector<char>& get_payload() { return *m_payload_p; }
   SessionPtr get_session() { return m_session_p; }
   
@@ -32,7 +33,7 @@ class Request {
   ContactPtr m_sender_p;
   SessionPtr m_session_p;
   std::auto_ptr<std::vector<char> > m_payload_p;
-  uint32_t m_command;
+  Command_t m_command;
 };
 
 }

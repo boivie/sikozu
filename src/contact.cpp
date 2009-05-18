@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "contact.h"
+#include "common.h"
 
 using namespace Sikozu;
 using namespace std;

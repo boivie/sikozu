@@ -12,7 +12,7 @@
 #include <vector>
 #include <stdint.h>
 #include "nodeid.h"
-
+#include "common.h"
 #include <google/protobuf/io/zero_copy_stream.h>
 
 /*
@@ -35,11 +35,11 @@ namespace Sikozu {
     size_t parse(char* ptr_p, size_t size);
     size_t serialize(char* ptr_p, size_t size);
 
-    int get_channel() { return m_channel; };
-    void set_channel(int channel) { m_channel = channel; }
+    Channel_t get_channel() { return m_channel; };
+    void set_channel(Channel_t channel) { m_channel = channel; }
     
-    int get_command() { return m_command; };
-    void set_command(int command) { m_command = command; }
+    Command_t get_command() { return m_command; };
+    void set_command(Command_t command) { m_command = command; }
     
     uint32_t get_sid() const { return m_sid; }
     void set_sid(uint32_t sid) { m_sid = sid; }
@@ -49,8 +49,8 @@ namespace Sikozu {
     
    private:
     bool m_valid;
-    uint32_t m_channel; 
-    uint32_t m_command;
+    Channel_t m_channel; 
+    Command_t m_command;
     uint32_t m_sid;
     size_t m_size;
   };

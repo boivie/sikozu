@@ -17,13 +17,13 @@
 namespace Sikozu {
   class ServiceRegistry {
    public:
-    Service* get_service(uint32_t channel);
+    Service* get_service(Channel_t channel);
     Service* get_service(std::string name);
     void register_service(Service* service_p);
-    std::map<uint32_t, Service*>* get_all_services() { return &m_services; };
+    const std::map<Channel_t, Service*>& get_all_services() const { return m_services; };
     
    private:
-    std::map<uint32_t, Service*> m_services;
+    std::map<Channel_t, Service*> m_services;
     std::map<std::string, Service*> m_services_by_name;
   };
 }

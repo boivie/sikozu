@@ -19,11 +19,11 @@ class BaseService : public Service {
   BaseService(NodeId& mynid) : m_bucketstore(mynid) {}
   virtual void find_nodes(NodeId& nodeid, std::list<ContactPtr> contacts);
   virtual void add_provider(ContactPtr client_p);
-  virtual uint32_t get_channel() const { return m_channel; }
-  virtual void set_channel(uint32_t channel) { m_channel = channel; }
+  virtual Channel_t get_channel() const { return m_channel; }
+  virtual void set_channel(Channel_t channel) { m_channel = channel; }
  protected:
   BucketStore m_bucketstore;
-  uint32_t m_channel;
+  Channel_t m_channel;
 };
 
 }

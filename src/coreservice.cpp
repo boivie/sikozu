@@ -29,7 +29,7 @@ enum CommandIdentifier {
   LAST
 };
 
-static void sendmsg(Request& request, uint32_t command, google::protobuf::Message& outmsg)
+static void sendmsg(Request& request, Command_t command, google::protobuf::Message& outmsg)
 {
   cout << "Sending reply." << endl;
   vector<char> buffer(8192);
@@ -49,11 +49,11 @@ const string& CoreService::get_name() const {
 void CoreService::handle_get_services(auto_ptr<Request> request_p)
 {
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
-  map<uint32_t, Service*>* map_p = sr.get_all_services();
+  const map<Channel_t, Service*>& services = sr.get_all_services();
   Messages::GetServicesResponse outmsg;
 
-  for (map<uint32_t, Service*>::iterator i = map_p->begin();
-       i != map_p->end();
+  for (map<Channel_t, Service*>::const_iterator i = services.begin();
+       i != services.end();
        i++)
   {
     // Don't include the core service - it's always there. 

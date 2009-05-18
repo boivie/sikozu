@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <netinet/in.h>
 #include "contact.h"
+#include "common.h"
 
 namespace Sikozu {
 
@@ -19,13 +20,13 @@ class SessionPtr;
 
 class Session {
  public:
-  void send(uint32_t command, const std::vector<char>& message) const;
-  static SessionPtr create(ContactPtr contact_p, uint32_t channel, uint32_t sid);
+  void send(Command_t command, const std::vector<char>& message) const;
+  static SessionPtr create(ContactPtr contact_p, Channel_t channel, uint32_t sid);
   ContactPtr get_contact() const { return m_contact_p; }
  protected:
-  Session(ContactPtr contact_p, uint32_t channel, uint32_t sid) : m_contact_p(contact_p), m_channel(channel), m_sid(sid), count_(0) {}
+  Session(ContactPtr contact_p, Channel_t channel, uint32_t sid) : m_contact_p(contact_p), m_channel(channel), m_sid(sid), count_(0) {}
   ContactPtr m_contact_p;
-  uint32_t m_channel;
+  Channel_t m_channel;
   uint32_t m_sid;
   friend class SessionPtr;
   int count_;  
