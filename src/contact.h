@@ -31,9 +31,11 @@ class Contact {
   void set_timestamp(uint32_t timestamp) { m_timestamp = timestamp; }
 
   static ContactPtr get(struct sockaddr_in6& address);
+  static ContactPtr create_new(NodeId& nid);
 
  protected:
   Contact(struct sockaddr_in6& address) : count_(0), m_caddr(address) {} 
+  Contact() : count_(0) {}
   ~Contact();
   friend class ContactPtr;
   int count_;
@@ -44,7 +46,6 @@ class Contact {
 
 class ContactPtr {
  public:
-   ContactPtr() : p_(0) { throw "Can not instiate empty ContactPtr."; }
    Contact* operator-> () const { return p_; }
    Contact& operator* ()  { return *p_; }
    ContactPtr(Contact* p)    : p_(p) { ++p_->count_; }  // p must not be NULL

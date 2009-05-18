@@ -18,7 +18,7 @@ void BaseService::add_provider(ContactPtr contact_p)
   m_bucketstore.insert(contact_p);
 }
 
-void BaseService::find_nodes(NodeId& nodeid, list<ContactPtr> contacts)
+void BaseService::find_nodes(NodeId& nodeid, list<ContactPtr>& contacts)
 {
   return m_bucketstore.get_closest(nodeid, contacts);
 }

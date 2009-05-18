@@ -12,33 +12,33 @@ from google.protobuf import descriptor_pb2
 
 _CONTACT = descriptor.Descriptor(
   name='Contact',
-  full_name='Contact',
+  full_name='Sikozu.Messages.Contact',
   filename='core.proto',
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='nid', full_name='Contact.nid', index=0,
+      name='nid', full_name='Sikozu.Messages.Contact.nid', index=0,
       number=1, type=12, cpp_type=9, label=2,
       default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='ipv4', full_name='Contact.ipv4', index=1,
+      name='ipv4', full_name='Sikozu.Messages.Contact.ipv4', index=1,
       number=2, type=13, cpp_type=3, label=1,
       default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='ipv6', full_name='Contact.ipv6', index=2,
+      name='ipv6', full_name='Sikozu.Messages.Contact.ipv6', index=2,
       number=3, type=12, cpp_type=9, label=1,
       default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='port', full_name='Contact.port', index=3,
+      name='port', full_name='Sikozu.Messages.Contact.port', index=3,
       number=4, type=13, cpp_type=3, label=2,
       default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -55,7 +55,7 @@ _CONTACT = descriptor.Descriptor(
 
 _PINGREQUEST = descriptor.Descriptor(
   name='PingRequest',
-  full_name='PingRequest',
+  full_name='Sikozu.Messages.PingRequest',
   filename='core.proto',
   containing_type=None,
   fields=[
@@ -70,7 +70,7 @@ _PINGREQUEST = descriptor.Descriptor(
 
 _PINGRESPONSE = descriptor.Descriptor(
   name='PingResponse',
-  full_name='PingResponse',
+  full_name='Sikozu.Messages.PingResponse',
   filename='core.proto',
   containing_type=None,
   fields=[
@@ -85,19 +85,19 @@ _PINGRESPONSE = descriptor.Descriptor(
 
 _FINDNODEREQUEST = descriptor.Descriptor(
   name='FindNodeRequest',
-  full_name='FindNodeRequest',
+  full_name='Sikozu.Messages.FindNodeRequest',
   filename='core.proto',
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='nid', full_name='FindNodeRequest.nid', index=0,
+      name='nid', full_name='Sikozu.Messages.FindNodeRequest.nid', index=0,
       number=1, type=12, cpp_type=9, label=2,
       default_value="",
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='service', full_name='FindNodeRequest.service', index=1,
+      name='service', full_name='Sikozu.Messages.FindNodeRequest.service', index=1,
       number=2, type=9, cpp_type=9, label=1,
       default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
@@ -114,57 +114,13 @@ _FINDNODEREQUEST = descriptor.Descriptor(
 
 _FINDNODERESPONSE = descriptor.Descriptor(
   name='FindNodeResponse',
-  full_name='FindNodeResponse',
+  full_name='Sikozu.Messages.FindNodeResponse',
   filename='core.proto',
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='contacts', full_name='FindNodeResponse.contacts', index=0,
+      name='contacts', full_name='Sikozu.Messages.FindNodeResponse.contacts', index=0,
       number=1, type=11, cpp_type=10, label=3,
-      default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],  # TODO(robinson): Implement.
-  enum_types=[
-  ],
-  options=None)
-
-
-_QUERYSERVICESREQUEST = descriptor.Descriptor(
-  name='QueryServicesRequest',
-  full_name='QueryServicesRequest',
-  filename='core.proto',
-  containing_type=None,
-  fields=[
-    descriptor.FieldDescriptor(
-      name='service', full_name='QueryServicesRequest.service', index=0,
-      number=1, type=9, cpp_type=9, label=3,
-      default_value=[],
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],  # TODO(robinson): Implement.
-  enum_types=[
-  ],
-  options=None)
-
-
-_QUERYSERVICESRESPONSE = descriptor.Descriptor(
-  name='QueryServicesResponse',
-  full_name='QueryServicesResponse',
-  filename='core.proto',
-  containing_type=None,
-  fields=[
-    descriptor.FieldDescriptor(
-      name='present', full_name='QueryServicesResponse.present', index=0,
-      number=1, type=13, cpp_type=3, label=3,
       default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -180,7 +136,7 @@ _QUERYSERVICESRESPONSE = descriptor.Descriptor(
 
 _GETSERVICESREQUEST = descriptor.Descriptor(
   name='GetServicesRequest',
-  full_name='GetServicesRequest',
+  full_name='Sikozu.Messages.GetServicesRequest',
   filename='core.proto',
   containing_type=None,
   fields=[
@@ -193,15 +149,43 @@ _GETSERVICESREQUEST = descriptor.Descriptor(
   options=None)
 
 
-_GETSERVICESRESPONSE = descriptor.Descriptor(
-  name='GetServicesResponse',
-  full_name='GetServicesResponse',
+_GETSERVICESRESPONSE_RESULT = descriptor.Descriptor(
+  name='Result',
+  full_name='Sikozu.Messages.GetServicesResponse.Result',
   filename='core.proto',
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='services', full_name='GetServicesResponse.services', index=0,
-      number=1, type=9, cpp_type=9, label=3,
+      name='channel', full_name='Sikozu.Messages.GetServicesResponse.Result.channel', index=0,
+      number=1, type=13, cpp_type=3, label=2,
+      default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='name', full_name='Sikozu.Messages.GetServicesResponse.Result.name', index=1,
+      number=2, type=9, cpp_type=9, label=2,
+      default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],  # TODO(robinson): Implement.
+  enum_types=[
+  ],
+  options=None)
+
+_GETSERVICESRESPONSE = descriptor.Descriptor(
+  name='GetServicesResponse',
+  full_name='Sikozu.Messages.GetServicesResponse',
+  filename='core.proto',
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='services', full_name='Sikozu.Messages.GetServicesResponse.services', index=0,
+      number=1, type=11, cpp_type=10, label=3,
       default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -215,7 +199,96 @@ _GETSERVICESRESPONSE = descriptor.Descriptor(
   options=None)
 
 
+_GETCHANNELREQUEST = descriptor.Descriptor(
+  name='GetChannelRequest',
+  full_name='Sikozu.Messages.GetChannelRequest',
+  filename='core.proto',
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='name', full_name='Sikozu.Messages.GetChannelRequest.name', index=0,
+      number=1, type=9, cpp_type=9, label=2,
+      default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],  # TODO(robinson): Implement.
+  enum_types=[
+  ],
+  options=None)
+
+
+_GETCHANNELRESPONSE = descriptor.Descriptor(
+  name='GetChannelResponse',
+  full_name='Sikozu.Messages.GetChannelResponse',
+  filename='core.proto',
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='channel', full_name='Sikozu.Messages.GetChannelResponse.channel', index=0,
+      number=1, type=13, cpp_type=3, label=2,
+      default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],  # TODO(robinson): Implement.
+  enum_types=[
+  ],
+  options=None)
+
+
+_ANNOUNCESERVICEREQUEST = descriptor.Descriptor(
+  name='AnnounceServiceRequest',
+  full_name='Sikozu.Messages.AnnounceServiceRequest',
+  filename='core.proto',
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='nid', full_name='Sikozu.Messages.AnnounceServiceRequest.nid', index=0,
+      number=1, type=12, cpp_type=9, label=2,
+      default_value="",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='service', full_name='Sikozu.Messages.AnnounceServiceRequest.service', index=1,
+      number=2, type=9, cpp_type=9, label=3,
+      default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],  # TODO(robinson): Implement.
+  enum_types=[
+  ],
+  options=None)
+
+
+_ANNOUNCESERVICERESPONSE = descriptor.Descriptor(
+  name='AnnounceServiceResponse',
+  full_name='Sikozu.Messages.AnnounceServiceResponse',
+  filename='core.proto',
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],  # TODO(robinson): Implement.
+  enum_types=[
+  ],
+  options=None)
+
+
 _FINDNODERESPONSE.fields_by_name['contacts'].message_type = _CONTACT
+_GETSERVICESRESPONSE.fields_by_name['services'].message_type = _GETSERVICESRESPONSE_RESULT
 
 class Contact(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
@@ -237,71 +310,31 @@ class FindNodeResponse(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _FINDNODERESPONSE
 
-class QueryServicesRequest(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _QUERYSERVICESREQUEST
-
-class QueryServicesResponse(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _QUERYSERVICESRESPONSE
-
 class GetServicesRequest(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _GETSERVICESREQUEST
 
 class GetServicesResponse(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
+  
+  class Result(message.Message):
+    __metaclass__ = reflection.GeneratedProtocolMessageType
+    DESCRIPTOR = _GETSERVICESRESPONSE_RESULT
   DESCRIPTOR = _GETSERVICESRESPONSE
 
+class GetChannelRequest(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _GETCHANNELREQUEST
 
-_BASESERVICE = descriptor.ServiceDescriptor(
-  name='BaseService',
-  full_name='BaseService',
-  index=0,
-  options=None,
-  methods=[
-  descriptor.MethodDescriptor(
-    name='Ping',
-    full_name='BaseService.Ping',
-    index=0,
-    containing_service=None,
-    input_type=_PINGREQUEST,
-    output_type=_PINGRESPONSE,
-    options=None,
-  ),
-  descriptor.MethodDescriptor(
-    name='FindNode',
-    full_name='BaseService.FindNode',
-    index=1,
-    containing_service=None,
-    input_type=_FINDNODEREQUEST,
-    output_type=_FINDNODERESPONSE,
-    options=None,
-  ),
-  descriptor.MethodDescriptor(
-    name='QueryServices',
-    full_name='BaseService.QueryServices',
-    index=2,
-    containing_service=None,
-    input_type=_QUERYSERVICESREQUEST,
-    output_type=_QUERYSERVICESRESPONSE,
-    options=None,
-  ),
-  descriptor.MethodDescriptor(
-    name='GetServices',
-    full_name='BaseService.GetServices',
-    index=3,
-    containing_service=None,
-    input_type=_GETSERVICESREQUEST,
-    output_type=_GETSERVICESRESPONSE,
-    options=None,
-  ),
-])
+class GetChannelResponse(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _GETCHANNELRESPONSE
 
-class BaseService(service.Service):
-  __metaclass__ = service_reflection.GeneratedServiceType
-  DESCRIPTOR = _BASESERVICE
-class BaseService_Stub(BaseService):
-  __metaclass__ = service_reflection.GeneratedServiceStubType
-  DESCRIPTOR = _BASESERVICE
+class AnnounceServiceRequest(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _ANNOUNCESERVICEREQUEST
+
+class AnnounceServiceResponse(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _ANNOUNCESERVICERESPONSE
 

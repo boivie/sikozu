@@ -29,7 +29,7 @@ enum CommandIdentifier {
   LAST
 };
 
-static void sendmsg(Request& request, uint32_t command, google::protobuf::Message& outmsg)
+static void sendmsg(Request& request, Command_t command, google::protobuf::Message& outmsg)
 {
   cout << "Sending reply." << endl;
   vector<char> buffer(8192);
@@ -49,11 +49,11 @@ const string& CoreService::get_name() const {
 void CoreService::handle_get_services(auto_ptr<Request> request_p)
 {
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
-  map<uint32_t, Service*>* map_p = sr.get_all_services();
+  const map<Channel_t, Service*>& services = sr.get_all_services();
   Messages::GetServicesResponse outmsg;
 
-  for (map<uint32_t, Service*>::iterator i = map_p->begin();
-       i != map_p->end();
+  for (map<Channel_t, Service*>::const_iterator i = services.begin();
+       i != services.end();
        i++)
   {
     // Don't include the core service - it's always there. 
@@ -81,14 +81,7 @@ void CoreService::handle_find_node(auto_ptr<Request> request_p)
   Messages::FindNodeRequest inmsg;
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   Service* service_p = this;
-  
-  Messages::FindNodeRequest smsg;
-  smsg.set_nid("testnid");
-  vector<char> sbuf(40);
-  ArrayOutputStream soutstream(&sbuf[0], sbuf.size());
-  smsg.SerializeToZeroCopyStream(&soutstream);
-  sbuf.resize(soutstream.ByteCount());
-  
+    
   if (!inmsg.ParseFromZeroCopyStream(&instream))
   {
     cerr << "Invalid packet - can't parse." << endl;
@@ -155,6 +148,8 @@ void CoreService::handle_announce_service(auto_ptr<Request> request_p)
       // TODO!
     }
   }
+  Messages::AnnounceServiceResponse outmsg;
+  sendmsg(*request_p, ANNOUNCE_SERVICE_RESPONSE, outmsg);
 }
 
 void CoreService::handle_get_channel(auto_ptr<Request> request_p)
@@ -181,30 +176,40 @@ void CoreService::handle_get_channel(auto_ptr<Request> request_p)
 
 void CoreService::handle_request(auto_ptr<Request> request_p)
 {
-  switch (request_p->get_command())
+  try {
+    switch (request_p->get_command())
+    {
+    case PING_REQUEST:
+      cout << "PING" << endl;
+      handle_ping(request_p);
+      break;
+    case GET_SERVICES_REQUEST:
+      cout << "GET_SERVICES" << endl;
+      handle_get_services(request_p);
+      break;
+    case FIND_NODE_REQUEST:
+      cout << "FIND_NODE" << endl;
+      handle_find_node(request_p);
+      break;
+    case ANNOUNCE_SERVICE_REQUEST:
+      cout << "ANNOUNCE_SERVICE" << endl;
+      handle_announce_service(request_p);
+      break;
+    case GET_CHANNEL_REQUEST:
+      cout << "GET_CHANNEL" << endl;
+      handle_get_channel(request_p);
+      break;
+    default:
+      cerr << "Got an unknown command: " << request_p->get_command() << endl; 
+      break;
+    }
+  } 
+  catch (exception& e) 
   {
-  case PING_REQUEST:
-    cout << "PING" << endl;
-    handle_ping(request_p);
-    break;
-  case GET_SERVICES_REQUEST:
-    cout << "GET_SERVICES" << endl;
-    handle_get_services(request_p);
-    break;
-  case FIND_NODE_REQUEST:
-    cout << "FIND_NODE" << endl;
-    handle_find_node(request_p);
-    break;
-  case ANNOUNCE_SERVICE_REQUEST:
-    cout << "ANNOUNCE_SERVICE" << endl;
-    handle_announce_service(request_p);
-    break;
-  case GET_CHANNEL_REQUEST:
-    cout << "GET_CHANNEL" << endl;
-    handle_get_channel(request_p);
-    break;
-  default:
-    cerr << "Got an unknown command: " << request_p->get_command() << endl; 
-    break;
+    cerr << "Got exception, " << e.what() << ", dropping packet." << endl;
   }
+/*  catch (...)
+  {
+    cerr << "Got an unknown exception. Dropping packet." << endl;
+  }*/
 }

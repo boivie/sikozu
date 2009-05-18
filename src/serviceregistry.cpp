@@ -15,9 +15,9 @@ using namespace std;
 
 namespace Sikozu {
 
-Service* ServiceRegistry::get_service(uint32_t channel)
+Service* ServiceRegistry::get_service(Channel_t channel)
 {
-  map<uint32_t, Service*>::iterator iter = m_services.find(channel);
+  map<Channel_t, Service*>::iterator iter = m_services.find(channel);
   if (iter == m_services.end())
   {
     return NULL;
@@ -37,7 +37,7 @@ Service* ServiceRegistry::get_service(string name)
     
 void ServiceRegistry::register_service(Service* service_p)
 {
-  uint32_t channel;
+  Channel_t channel;
   // Find a matching channel number. Except for the core service, which gets channel 0 (reserved)
   if (service_p->get_name() == "core")
   {

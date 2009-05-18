@@ -21,8 +21,8 @@ namespace Sikozu {
 
   class NodeId {
   public:
-    NodeId() : m_nid(NID_SIZE_BYTES) {}
-    NodeId(std::string bytes) {}
+    NodeId() : m_nid(NID_SIZE_BYTES, 0) {}
+    NodeId(const std::string& bytes);
     const std::vector<uint8_t>& get_nid() const { return m_nid; }
     size_t size() const { return NID_SIZE_BYTES; }
     int closest(const NodeId& left, const NodeId& right) const;
