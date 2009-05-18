@@ -35,7 +35,7 @@ class Contact {
 
  protected:
   Contact(struct sockaddr_in6& address) : count_(0), m_caddr(address) {} 
-  Contact() : count_(0) {}
+  Contact(NodeId& nodeid) : count_(0), m_nodeid(nodeid) {}
   ~Contact();
   friend class ContactPtr;
   int count_;

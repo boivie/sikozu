@@ -45,8 +45,7 @@ ContactPtr Contact::get(struct sockaddr_in6& address)
 
 ContactPtr Contact::create_new(NodeId& nodeid) 
 {
-  Contact* object_p = new Contact();
-  object_p->set_nodeid(nodeid);
+  Contact* object_p = new Contact(nodeid);
   return ContactPtr(object_p);
 }
 

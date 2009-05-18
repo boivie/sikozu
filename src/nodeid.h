@@ -15,10 +15,6 @@
 namespace Sikozu {
 #define NID_SIZE_BITS 160
 #define NID_SIZE_BYTES (NID_SIZE_BITS / 8)
-
-#define SID_SIZE_BITS 144
-#define SID_SIZE_BYTES (SID_SIZE_BITS / 8)
-
   class NodeId {
   public:
     NodeId() : m_nid(NID_SIZE_BYTES, 0) {}

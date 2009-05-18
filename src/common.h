@@ -13,6 +13,10 @@
 namespace Sikozu {
   typedef uint16_t Channel_t;
   typedef uint16_t Command_t;
+  
+#define SIKOZU_CHANNEL_CORE 0
+#define SIKOZU_CHANNEL_REPLY 0xFFFF
+  
 }
 
 #endif

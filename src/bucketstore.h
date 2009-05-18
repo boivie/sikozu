@@ -21,9 +21,7 @@ namespace Sikozu {
 class AllContactsComparator {
  public:
   bool operator()(const ContactPtr& lhs, const ContactPtr& rhs) const {
-    if(lhs->get_nodeid() < rhs->get_nodeid())
-      return true;
-    return false;
+    return (lhs->get_nodeid() < rhs->get_nodeid());
   } 
 };
 

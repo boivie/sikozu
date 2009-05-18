@@ -41,7 +41,7 @@ void ServiceRegistry::register_service(Service* service_p)
   // Find a matching channel number. Except for the core service, which gets channel 0 (reserved)
   if (service_p->get_name() == "core")
   {
-    channel = 0;
+    channel = SIKOZU_CHANNEL_CORE;
   }
   else
   {
