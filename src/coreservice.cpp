@@ -181,30 +181,40 @@ void CoreService::handle_get_channel(auto_ptr<Request> request_p)
 
 void CoreService::handle_request(auto_ptr<Request> request_p)
 {
-  switch (request_p->get_command())
+  try {
+    switch (request_p->get_command())
+    {
+    case PING_REQUEST:
+      cout << "PING" << endl;
+      handle_ping(request_p);
+      break;
+    case GET_SERVICES_REQUEST:
+      cout << "GET_SERVICES" << endl;
+      handle_get_services(request_p);
+      break;
+    case FIND_NODE_REQUEST:
+      cout << "FIND_NODE" << endl;
+      handle_find_node(request_p);
+      break;
+    case ANNOUNCE_SERVICE_REQUEST:
+      cout << "ANNOUNCE_SERVICE" << endl;
+      handle_announce_service(request_p);
+      break;
+    case GET_CHANNEL_REQUEST:
+      cout << "GET_CHANNEL" << endl;
+      handle_get_channel(request_p);
+      break;
+    default:
+      cerr << "Got an unknown command: " << request_p->get_command() << endl; 
+      break;
+    }
+  } 
+  catch (exception& e) 
   {
-  case PING_REQUEST:
-    cout << "PING" << endl;
-    handle_ping(request_p);
-    break;
-  case GET_SERVICES_REQUEST:
-    cout << "GET_SERVICES" << endl;
-    handle_get_services(request_p);
-    break;
-  case FIND_NODE_REQUEST:
-    cout << "FIND_NODE" << endl;
-    handle_find_node(request_p);
-    break;
-  case ANNOUNCE_SERVICE_REQUEST:
-    cout << "ANNOUNCE_SERVICE" << endl;
-    handle_announce_service(request_p);
-    break;
-  case GET_CHANNEL_REQUEST:
-    cout << "GET_CHANNEL" << endl;
-    handle_get_channel(request_p);
-    break;
-  default:
-    cerr << "Got an unknown command: " << request_p->get_command() << endl; 
-    break;
+    cerr << "Got exception, " << e.what() << ", dropping packet." << endl;
+  }
+  catch (...)
+  {
+    cerr << "Got an unknown exception. Dropping packet." << endl;
   }
 }

@@ -21,7 +21,7 @@ class Session {
  public:
   void send(uint32_t command, const std::vector<char>& message) const;
   static SessionPtr create(ContactPtr contact_p, uint32_t channel, uint32_t sid);
-  ContactPtr get_contact() { return m_contact_p; }
+  ContactPtr get_contact() const { return m_contact_p; }
  protected:
   Session(ContactPtr contact_p, uint32_t channel, uint32_t sid) : m_contact_p(contact_p), m_channel(channel), m_sid(sid), count_(0) {}
   ContactPtr m_contact_p;

@@ -13,6 +13,19 @@
 using namespace Sikozu;
 using namespace std;
     
+NodeId::NodeId(const string& bytes)
+ : m_nid(NID_SIZE_BYTES)
+{
+  if (bytes.size() == NID_SIZE_BYTES)
+  {
+    memcpy(&m_nid[0], bytes.c_str(), NID_SIZE_BYTES);
+  }
+  else
+  {
+    throw "Invalid size of NID";
+  }
+}
+    
 ostream& operator << (ostream& os, NodeId& N)
 {
   os << "<NodeId: 'xxxxxxxx'>";

@@ -20,7 +20,7 @@ if what == "ping":
 elif what == "find_node":
 	header = create_header(CORE_CHANNEL, FIND_NODE_REQUEST, 0)
 	outmsg = core_pb2.FindNodeRequest()
-	outmsg.nid = "testnid"
+	outmsg.nid = "12345678901234567890"
 	data = outmsg.SerializeToString()	
 	print("<< " + repr(header) + " + " + repr(data))
 	
