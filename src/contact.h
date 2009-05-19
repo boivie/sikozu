@@ -14,6 +14,7 @@
 #include <map>
 #include "nodeid.h"
 #include <boost/smart_ptr.hpp>
+#include <boost/thread/mutex.hpp>
 
 namespace Sikozu {
 
@@ -34,6 +35,10 @@ class Contact {
   ~Contact();
 
  protected:
+  static boost::mutex instance_mutex;
+  typedef std::map<std::vector<char>, boost::weak_ptr<Contact> > Mapping;
+  static Mapping s_instances;
+  
   Contact(struct sockaddr_in6& address) : m_caddr(address), m_has_nid(false), m_has_addr(true) {} 
   Contact(NodeId& nodeid) : m_nodeid(nodeid), m_has_nid(true), m_has_addr(false) {}
   NodeId m_nodeid;

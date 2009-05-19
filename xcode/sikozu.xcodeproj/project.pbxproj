@@ -238,8 +238,8 @@
 				);
 				OTHER_LDFLAGS = (
 					"-levent",
-					"-llua",
 					"-lprotobuf",
+					"-lboost_thread-mt",
 				);
 				PREBINDING = NO;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
@@ -266,6 +266,7 @@
 				OTHER_LDFLAGS = (
 					"-levent",
 					"-lprotobuf",
+					"-lboost_thread-mt",
 				);
 				PREBINDING = NO;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";

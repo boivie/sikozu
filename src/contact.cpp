@@ -11,13 +11,14 @@
 #include <string.h>
 #include "contact.h"
 #include "common.h"
+#include <boost/thread/mutex.hpp>
 
 using namespace Sikozu;
 using namespace std;
+using namespace boost;
 
-  typedef std::map<std::vector<char>, Contact*> ContactMapping_t;
-  static ContactMapping_t s_instances;
-
+Contact::Mapping Contact::s_instances;
+boost::mutex Contact::instance_mutex;
 
 static void make_key(struct sockaddr_in6& address, vector<char>& key)
 {
@@ -29,18 +30,29 @@ ContactPtr Contact::get(struct sockaddr_in6& address)
 {
   vector<char> key(16 + 2);
   make_key(address, key);
-  ContactMapping_t::iterator i = s_instances.find(key);
-  Contact* object_p;
-  if (i == s_instances.end())
   {
-    object_p = new Contact(address);
-    s_instances[key] = object_p;
+    mutex::scoped_lock l(instance_mutex);
+    Contact::Mapping::iterator i = s_instances.find(key);
+    if (i != s_instances.end())
+    {
+      if (ContactPtr contact_p = i->second.lock())
+      {
+        return contact_p;
+      }
+      else
+      {
+        // The expired weak pointer will soon be overwritten again.
+      }
+    }
   }
-  else
+  
+  // Not here. Have to create one and insert it.
+  ContactPtr contact_p(new Contact(address));
   {
-    object_p = (*i).second;
+    mutex::scoped_lock l(instance_mutex);
+    s_instances[key] = weak_ptr<Contact>(contact_p);
   }
-  return ContactPtr(object_p);
+  return contact_p;
 }
 
 ContactPtr Contact::create_new(NodeId& nodeid) 
