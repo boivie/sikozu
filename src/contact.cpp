@@ -51,6 +51,7 @@ ContactPtr Contact::create_new(NodeId& nodeid)
 
 Contact::~Contact() 
 {
+  // Also remove it from the table of all instances
   vector<char> key(16 + 2);
   make_key(this->m_caddr, key);
   s_instances.erase(key);

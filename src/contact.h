@@ -13,10 +13,9 @@
 #include <netinet/in.h>
 #include <map>
 #include "nodeid.h"
+#include <boost/smart_ptr.hpp>
 
 namespace Sikozu {
-
-class ContactPtr;
 
 class Contact {
  public:
@@ -30,40 +29,18 @@ class Contact {
   uint32_t get_timestamp() const { return m_timestamp; }
   void set_timestamp(uint32_t timestamp) { m_timestamp = timestamp; }
 
-  static ContactPtr get(struct sockaddr_in6& address);
-  static ContactPtr create_new(NodeId& nid);
+  static boost::shared_ptr<Contact> get(struct sockaddr_in6& address);
+  static boost::shared_ptr<Contact> create_new(NodeId& nid);
+  ~Contact();
 
  protected:
-  Contact(struct sockaddr_in6& address) : count_(0), m_caddr(address) {} 
-  Contact(NodeId& nodeid) : count_(0), m_nodeid(nodeid) {}
-  ~Contact();
-  friend class ContactPtr;
-  int count_;
+  Contact(struct sockaddr_in6& address) : m_caddr(address) {} 
+  Contact(NodeId& nodeid) : m_nodeid(nodeid) {}
   NodeId m_nodeid;
   struct sockaddr_in6 m_caddr;
   uint32_t m_timestamp;
 };
 
-class ContactPtr {
- public:
-   Contact* operator-> () const { return p_; }
-   Contact& operator* ()  { return *p_; }
-   ContactPtr(Contact* p)    : p_(p) { ++p_->count_; }  // p must not be NULL
-  ~ContactPtr()           { if (--p_->count_ == 0) delete p_; }
-   ContactPtr(const ContactPtr& p) : p_(p.p_) { ++p_->count_; }
-   ContactPtr& operator= (const ContactPtr& p)
-         { // DO NOT CHANGE THE ORDER OF THESE STATEMENTS!
-           // (This order properly handles self-assignment)
-           // (This order also properly handles recursion, e.g., if a Contact contains ContactPtrs)
-           Contact* const old = p_;
-           p_ = p.p_;
-           ++p_->count_;
-           if (--old->count_ == 0) delete old;
-           return *this;
-         }
- private:
-   Contact* p_;    // p_ is never NULL
- }; 
-
+typedef boost::shared_ptr<Contact> ContactPtr;
 }
 #endif

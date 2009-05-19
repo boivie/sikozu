@@ -168,11 +168,10 @@ void CoreService::handle_get_channel(auto_ptr<Request> request_p)
   Messages::GetChannelResponse outmsg;
 
   Service* service_p = sr.get_service(inmsg.name());
-  outmsg.set_channel(service_p != NULL ? service_p->get_channel() : 0xFFFF);
+  outmsg.set_channel(service_p != NULL ? service_p->get_channel() : SIKOZU_CHANNEL_REPLY);
 
   sendmsg(*request_p, GET_CHANNEL_RESPONSE, outmsg);
 }
-
 
 void CoreService::handle_request(auto_ptr<Request> request_p)
 {

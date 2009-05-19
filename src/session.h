@@ -13,48 +13,23 @@
 #include <netinet/in.h>
 #include "contact.h"
 #include "common.h"
+#include <boost/smart_ptr.hpp>
 
 namespace Sikozu {
-
-class SessionPtr;
 
 class Session {
  public:
   void send(Command_t command, const std::vector<char>& message) const;
-  static SessionPtr create(ContactPtr contact_p, Channel_t channel, uint32_t sid);
+  static boost::shared_ptr<Session> create(ContactPtr contact_p, Channel_t channel, uint32_t sid);
   ContactPtr get_contact() const { return m_contact_p; }
  protected:
-  Session(ContactPtr contact_p, Channel_t channel, uint32_t sid) : m_contact_p(contact_p), m_channel(channel), m_sid(sid), count_(0) {}
+  Session(ContactPtr contact_p, Channel_t channel, uint32_t sid) : m_contact_p(contact_p), m_channel(channel), m_sid(sid) {}
   ContactPtr m_contact_p;
   Channel_t m_channel;
   uint32_t m_sid;
-  friend class SessionPtr;
-  int count_;  
 };
 
-
-class SessionPtr {
- public:
-   Session* operator-> () { return p_; }
-   Session& operator* ()  { return *p_; }
-   SessionPtr(Session* p)    : p_(p) { ++p_->count_; }  // p must not be NULL
-  ~SessionPtr()           { if (--p_->count_ == 0) delete p_; }
-   SessionPtr(const SessionPtr& p) : p_(p.p_) { ++p_->count_; }
-   SessionPtr& operator= (const SessionPtr& p)
-         { // DO NOT CHANGE THE ORDER OF THESE STATEMENTS!
-           // (This order properly handles self-assignment)
-           // (This order also properly handles recursion, e.g., if a Session contains SessionPtrs)
-           Session* const old = p_;
-           p_ = p.p_;
-           ++p_->count_;
-           if (--old->count_ == 0) delete old;
-           return *this;
-         }
- private:
-   Session* p_;    // p_ is never NULL
- }; 
-
-
+typedef boost::shared_ptr<Session> SessionPtr;
 
 }
 #endif

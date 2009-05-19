@@ -30,11 +30,11 @@ void BucketStore::insert(ContactPtr contact_p)
   
   bucket.push_front(contact_p);
   m_all_contacts.insert(contact_p);
-  cout << "Now, " << m_all_contacts.size() << " contacts in bucket store." << endl;
 }
 
 void BucketStore::get_closest(NodeId& nodeid, list<ContactPtr>& contacts, size_t count)
 {
+  // A temporary object only used for searching in the list.
   ContactPtr needle_p = Contact::create_new(nodeid);
   
   AllContacts_t::iterator iter_up = m_all_contacts.lower_bound(needle_p);
