@@ -21,10 +21,10 @@ class Contact {
  public:
 
   const NodeId& get_nodeid() const { return m_nodeid; }
-  void set_nodeid(const NodeId& nid) { m_nodeid = nid; }
+  void set_nodeid(const NodeId& nid) { m_has_nid = true; m_nodeid = nid; }
 
   const struct sockaddr_in6& get_address() const { return m_caddr; }
-  void set_address(const struct sockaddr_in6& addr) { m_caddr = addr; }
+  void set_address(const struct sockaddr_in6& addr) { m_has_addr = true; m_caddr = addr; }
 
   uint32_t get_timestamp() const { return m_timestamp; }
   void set_timestamp(uint32_t timestamp) { m_timestamp = timestamp; }
@@ -34,11 +34,13 @@ class Contact {
   ~Contact();
 
  protected:
-  Contact(struct sockaddr_in6& address) : m_caddr(address) {} 
-  Contact(NodeId& nodeid) : m_nodeid(nodeid) {}
+  Contact(struct sockaddr_in6& address) : m_caddr(address), m_has_nid(false), m_has_addr(true) {} 
+  Contact(NodeId& nodeid) : m_nodeid(nodeid), m_has_nid(true), m_has_addr(false) {}
   NodeId m_nodeid;
   struct sockaddr_in6 m_caddr;
   uint32_t m_timestamp;
+  bool m_has_nid;
+  bool m_has_addr;
 };
 
 typedef boost::shared_ptr<Contact> ContactPtr;
