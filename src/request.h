@@ -20,6 +20,13 @@
 #include "common.h"
 
 namespace Sikozu {
+
+struct RawRequest {
+  struct sockaddr_in6 from;
+  size_t buffer_size;
+  char buffer[8192];
+};
+
 class Request {
  public:
   Request(PacketHeader& ph, ContactPtr contact_p, std::auto_ptr<std::vector<char> > payload_p);

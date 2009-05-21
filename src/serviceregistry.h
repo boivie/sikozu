@@ -12,6 +12,7 @@
  
 #include <stdint.h>
 #include <map>
+#include <boost/thread/mutex.hpp>
 #include "service.h"
 
 namespace Sikozu {
@@ -20,9 +21,10 @@ namespace Sikozu {
     Service* get_service(Channel_t channel);
     Service* get_service(std::string name);
     void register_service(Service* service_p);
-    const std::map<Channel_t, Service*>& get_all_services() const { return m_services; };
-    
+    const std::map<Channel_t, Service*> get_all_services();
+
    private:
+    boost::mutex m_mutex;
     std::map<Channel_t, Service*> m_services;
     std::map<std::string, Service*> m_services_by_name;
   };

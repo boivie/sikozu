@@ -29,16 +29,22 @@ void Server::send_udp(const struct sockaddr_in6& addr, vector<char>& buffer)
   sendto(m_udp_socket, &buffer[0], buffer.size(), 0, (struct sockaddr*)&addr, sizeof(struct sockaddr_in6));  
 }
 
+static Server* callback_server = NULL;
+
 void got_packet(int fd, short event, void* arg) 
 {
+  callback_server->on_packet(fd, event, arg);
+}
+
+void Server::on_packet(int fd, short event, void* arg)
+{
   int len;
-  vector<char> buffer(8192);
-  struct sockaddr_in6 from;
-  socklen_t l = sizeof(from);
+  RawRequest* raw_p = new RawRequest();
+  socklen_t l = sizeof(raw_p->from);
   PacketHeader ph;
-
-  len = recvfrom(fd, &buffer[0], buffer.size(), 0, (struct sockaddr*)&from, &l);
-
+  
+  raw_p->buffer_size = recvfrom(fd, &raw_p->buffer[0], sizeof(raw_p->buffer), 0, (struct sockaddr*)&raw_p->from, &l);
+  
   if (len == -1)
   {
     cerr << "recvfrom() returned -1, no packet." << endl;
@@ -47,10 +53,9 @@ void got_packet(int fd, short event, void* arg)
     cerr << "Connection Closed" << endl;
     return;
   }
-  buffer.resize(len);
-  
-  // Parse header, and copy the payload to another buffer that we keep.
-  ph.parse(&buffer[0], buffer.size());
+
+  // Quick parse header
+  ph.parse(&raw_p->buffer[0], raw_p->buffer_size);
   if (!ph.valid())
   {
     // Bad packet, drop.
@@ -58,28 +63,11 @@ void got_packet(int fd, short event, void* arg)
     return;
   }
   
-  ContactPtr contact_p = Contact::get(from);
+  // TODO: Check destination thread, if matching sid
+  queue_incoming_request(raw_p);
 
-  size_t payload_size = buffer.size() - ph.size();
-  auto_ptr<vector<char> > payload_p(new vector<char>(payload_size));
-  if (payload_size > 0)
-    memcpy(&(*payload_p)[0], &buffer[ph.size()], payload_size);
-
-  auto_ptr<Request> request_p(new Request(ph, contact_p, payload_p));
-  
-  Server* server_p = Server::get_instance();
-  ServiceRegistry& sr = server_p->get_service_registry();
-  Service* service_p = sr.get_service(ph.get_channel());
-  if (service_p != NULL)
-  {
-    cout << "Dispatching packet to service: " << service_p->get_name() << endl;
-    service_p->handle_request(request_p);
-  }
-  else
-  {
-    cerr << "No service found." << endl;
-  } 
 }
+
 
 int Server::listen_udp(uint16_t port)
 {
@@ -103,7 +91,28 @@ int Server::listen_udp(uint16_t port)
     return 0;
   
   cout << "Listening on UDP port " << port << endl;
+  callback_server = this;
   event_set(&m_ev, m_udp_socket, EV_READ|EV_PERSIST, got_packet, &m_ev);
   event_add(&m_ev, NULL);
   return 1;
 }
+
+
+void Server::start_workers(int count)
+{
+  int i;
+  m_workers.resize(count);
+  
+  // Create the workers
+  for (i = 0; i < count; i++)
+  {
+    m_workers[i] = new WorkerThread(i);
+  }
+  
+  // Start the workers
+  for (i = 0; i < count; i++)
+  {
+    m_workers[i]->start();
+  }
+}
+

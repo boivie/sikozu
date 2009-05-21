@@ -44,8 +44,6 @@ const string& CoreService::get_name() const {
   return name;
 }
 
-
-
 void CoreService::handle_get_services(auto_ptr<Request> request_p)
 {
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();

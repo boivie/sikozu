@@ -13,9 +13,12 @@
 #include <stdlib.h>
 #include <event.h>
 #include <vector>
+#include <memory>
 #include <stdint.h>
 #include "nodeid.h"
 #include "serviceregistry.h"
+#include "workerthread.h"
+#include "cqueue.h"
 
 namespace Sikozu {
   class Server {
@@ -24,11 +27,17 @@ namespace Sikozu {
       NodeId& get_nid() { return nid; }
       ServiceRegistry& get_service_registry() { return m_serviceregistry; };
       void send_udp(const struct sockaddr_in6& addr, std::vector<char>& buffer);
-
+      void start_workers(int count = 4);
       int listen_udp(uint16_t port);
+      void on_packet(int fd, short event, void* arg);
+      
+      std::auto_ptr<RawRequest> get_incoming_request() { RawRequest* r; m_incoming_requests.wait_and_pop(r); return std::auto_ptr<RawRequest>(r); }
       
     protected:
       Server() {};
+      void queue_incoming_request(RawRequest* request_p) { m_incoming_requests.push(request_p); }
+      concurrent_queue<RawRequest*> m_incoming_requests;
+      std::vector<WorkerThread*> m_workers;
       static Server* m_instance;
       ServiceRegistry m_serviceregistry;
       int m_udp_socket;

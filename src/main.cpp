@@ -25,7 +25,10 @@ int main(int argc, char **argv)
   sr.register_service(new CoreService(server_p->get_nid()));
   
   // Start listening socket
-  Server::get_instance()->listen_udp(9081);
+  server_p->listen_udp(9081);
+  
+  // Start worker threads
+  server_p->start_workers();
   
   // Run main loop
   cout << "Executing main loop." << endl;

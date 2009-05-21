@@ -39,20 +39,13 @@ ContactPtr Contact::get(struct sockaddr_in6& address)
       {
         return contact_p;
       }
-      else
-      {
-        // The expired weak pointer will soon be overwritten again.
-      }
     }
-  }
-  
-  // Not here. Have to create one and insert it.
-  ContactPtr contact_p(new Contact(address));
-  {
-    mutex::scoped_lock l(instance_mutex);
+    
+    // Not here. Have to create one and insert it.
+    ContactPtr contact_p(new Contact(address));
     s_instances[key] = weak_ptr<Contact>(contact_p);
+    return contact_p;
   }
-  return contact_p;
 }
 
 ContactPtr Contact::create_new(NodeId& nodeid) 
