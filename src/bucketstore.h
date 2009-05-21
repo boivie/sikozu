@@ -13,6 +13,7 @@
 #include <vector>
 #include <list>
 #include <set>
+#include <boost/thread/mutex.hpp>
 
 #include "contact.h"
 
@@ -31,6 +32,7 @@ class BucketStore {
     void insert(ContactPtr contact_p);
     void get_closest(NodeId& nodeid, std::list<ContactPtr>& contacts, size_t count = 20);
   protected:
+    boost::mutex m_mutex;
     NodeId& m_mynid;
     std::vector< std::list< ContactPtr > > m_buckets;
     typedef std::set< ContactPtr, AllContactsComparator > AllContacts_t;

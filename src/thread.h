@@ -1,5 +1,5 @@
 /*
- *  workerthread.h
+ *  thread.h
  *  sikozu
  *
  *  Created by Victor Boivie on 2009-05-21.
@@ -7,18 +7,18 @@
  *
  */
 
-#ifndef WORKER_THREAD_H_INCLUSION_GUARD
-#define WORKER_THREAD_H_INCLUSION_GUARD
 
-#include <memory>
+#ifndef THREAD_H_INCLUSION_GUARD
+#define THREAD_H_INCLUSION_GUARD
+
 #include "basethread.h"
-#include "cqueue.h"
+#include "thread.h"
 #include "request.h"
 
 namespace Sikozu {
-  class WorkerThread : public BaseThread {
+  class Thread {
    public:
-    void thread_main();
+    virtual void add_raw_request(RawRequest* request) = 0;
   };
 }
 

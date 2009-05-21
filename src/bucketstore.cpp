@@ -14,6 +14,7 @@
 
 using namespace Sikozu;
 using namespace std;
+using namespace boost;
 
 void BucketStore::insert(ContactPtr contact_p)
 {
@@ -24,19 +25,23 @@ void BucketStore::insert(ContactPtr contact_p)
     // Can only happen if the distance was 0, i.e. my nid. Return quickly in that case.
     return;
   }
-  cout << "Using bucket: " << bucket_idx << endl;
-  assert((bucket_idx >= 0) && (bucket_idx < NID_SIZE_BITS));
-  list<ContactPtr>& bucket = m_buckets[bucket_idx];
   
-  bucket.push_front(contact_p);
-  m_all_contacts.insert(contact_p);
+  {
+    mutex::scoped_lock(m_mutex);
+    assert((bucket_idx >= 0) && (bucket_idx < NID_SIZE_BITS));
+    list<ContactPtr>& bucket = m_buckets[bucket_idx];
+  
+    bucket.push_front(contact_p);
+    m_all_contacts.insert(contact_p);
+  }
 }
 
 void BucketStore::get_closest(NodeId& nodeid, list<ContactPtr>& contacts, size_t count)
 {
   // A temporary object only used for searching in the list.
   ContactPtr needle_p = Contact::create_new(nodeid);
-  
+  mutex::scoped_lock(m_mutex);
+
   AllContacts_t::iterator iter_up = m_all_contacts.lower_bound(needle_p);
   AllContacts_t::reverse_iterator iter_down(iter_up);
   

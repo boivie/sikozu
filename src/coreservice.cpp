@@ -31,7 +31,6 @@ enum CommandIdentifier {
 
 static void sendmsg(Request& request, Command_t command, google::protobuf::Message& outmsg)
 {
-  cout << "Sending reply." << endl;
   vector<char> buffer(8192);
   ArrayOutputStream outstream(&buffer[0], buffer.size());
   outmsg.SerializeToZeroCopyStream(&outstream);
@@ -177,23 +176,23 @@ void CoreService::handle_request(auto_ptr<Request> request_p)
     switch (request_p->get_command())
     {
     case PING_REQUEST:
-      cout << "PING" << endl;
+//      cout << "PING" << endl;
       handle_ping(request_p);
       break;
     case GET_SERVICES_REQUEST:
-      cout << "GET_SERVICES" << endl;
+//      cout << "GET_SERVICES" << endl;
       handle_get_services(request_p);
       break;
     case FIND_NODE_REQUEST:
-      cout << "FIND_NODE" << endl;
+//      cout << "FIND_NODE" << endl;
       handle_find_node(request_p);
       break;
     case ANNOUNCE_SERVICE_REQUEST:
-      cout << "ANNOUNCE_SERVICE" << endl;
+//      cout << "ANNOUNCE_SERVICE" << endl;
       handle_announce_service(request_p);
       break;
     case GET_CHANNEL_REQUEST:
-      cout << "GET_CHANNEL" << endl;
+//      cout << "GET_CHANNEL" << endl;
       handle_get_channel(request_p);
       break;
     default:

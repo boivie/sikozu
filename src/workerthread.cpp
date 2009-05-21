@@ -16,22 +16,9 @@ using namespace std;
 using namespace Sikozu;
 using namespace boost;
 
-static mutex thread_starter;
-
-void WorkerThread::start() 
-{
-  mutex::scoped_lock(thread_starter);
-  wt_call wt(this);
-  m_me = boost::thread(wt);
-}
-
 void WorkerThread::thread_main()
 {
-  {
-    mutex::scoped_lock(thread_starter);
-  }
   Server* server_p = Server::get_instance();
-  cout << "Started thread " << m_id << " (" << (m_me.get_id()) << ")" << endl;
   
   while (true)
   {
@@ -61,7 +48,6 @@ void WorkerThread::thread_main()
     Service* service_p = sr.get_service(ph.get_channel());
     if (service_p != NULL)
     {
-      cout << "[" << m_id << "] Dispatching packet to service: " << service_p->get_name() << endl;
       service_p->handle_request(request_p);
     }
     else

@@ -65,7 +65,6 @@ void Server::on_packet(int fd, short event, void* arg)
   
   // TODO: Check destination thread, if matching sid
   queue_incoming_request(raw_p);
-
 }
 
 
@@ -104,12 +103,14 @@ void Server::start_workers(int count)
   m_workers.resize(count);
   
   // Create the workers
+  cout << "Creating worker thread." << endl;
   for (i = 0; i < count; i++)
   {
-    m_workers[i] = new WorkerThread(i);
+    m_workers[i] = new WorkerThread();
   }
   
   // Start the workers
+  cout << "Starting worker threads." << endl;
   for (i = 0; i < count; i++)
   {
     m_workers[i]->start();
