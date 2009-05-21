@@ -16,14 +16,20 @@ using namespace std;
 using namespace Sikozu;
 using namespace boost;
 
+static mutex thread_starter;
+
 void WorkerThread::start() 
 {
+  mutex::scoped_lock(thread_starter);
   wt_call wt(this);
   m_me = boost::thread(wt);
 }
 
 void WorkerThread::thread_main()
 {
+  {
+    mutex::scoped_lock(thread_starter);
+  }
   Server* server_p = Server::get_instance();
   cout << "Started thread " << m_id << " (" << (m_me.get_id()) << ")" << endl;
   
