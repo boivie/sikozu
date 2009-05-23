@@ -1,0 +1,29 @@
+package Sikozu.SimpleDb.Messages;
+
+message PutRequest {
+	required string key = 1;
+	required bytes value = 2;
+	optional uint32 ttl = 3;
+	optional bytes secret_hash = 4;
+}
+
+message PutResponse {
+  required bool success = 1 [default = true];
+}
+
+message GetRequest {
+  required string key = 1;
+}
+
+message GetResponse {
+	required bool success = 1 [default = true];
+  optional bytes value = 2;
+}
+
+message DeleteRequest {
+	required string key = 1;
+	required bytes secret = 2;
+}
+
+message DeleteResponse {
+}

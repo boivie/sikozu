@@ -29,15 +29,6 @@ enum CommandIdentifier {
   LAST
 };
 
-static void sendmsg(Request& request, Command_t command, google::protobuf::Message& outmsg)
-{
-  vector<char> buffer(8192);
-  ArrayOutputStream outstream(&buffer[0], buffer.size());
-  outmsg.SerializeToZeroCopyStream(&outstream);
-  buffer.resize(outstream.ByteCount());
-  request.get_session()->send(command, buffer);
-}
-
 const string& CoreService::get_name() const {
   static const string name = "core";
   return name;
@@ -62,7 +53,7 @@ void CoreService::handle_get_services(auto_ptr<Request> request_p)
     }
   }
   
-  sendmsg(*request_p, GET_SERVICES_RESPONSE, outmsg);
+  send_msg(*request_p, GET_SERVICES_RESPONSE, outmsg);
 }
 
 void CoreService::handle_ping(auto_ptr<Request> request_p)
@@ -73,20 +64,16 @@ void CoreService::handle_ping(auto_ptr<Request> request_p)
 
 void CoreService::handle_find_node(auto_ptr<Request> request_p)
 {
-  const vector<char>& payload = request_p->get_payload();
-  ArrayInputStream instream(&payload[0], payload.size());
   Messages::FindNodeRequest inmsg;
-  ServiceRegistry& sr = Server::get_instance()->get_service_registry();
-  Service* service_p = this;
-    
-  if (!inmsg.ParseFromZeroCopyStream(&instream))
-  {
-    cerr << "Invalid packet - can't parse." << endl;
-    return;
-  }
+
+  parse_msg(*request_p, inmsg);
 
   list<ContactPtr> contacts;
   NodeId nid(inmsg.nid());
+  
+  ServiceRegistry& sr = Server::get_instance()->get_service_registry();
+  Service* service_p = this;
+
   if (inmsg.has_service())
   {
     service_p = sr.get_service(inmsg.service());
@@ -108,27 +95,21 @@ void CoreService::handle_find_node(auto_ptr<Request> request_p)
     outmsg_contact_p->set_port(addr.sin6_port);
   }
   
-  sendmsg(*request_p, FIND_NODE_RESPONSE, outmsg);
+  send_msg(*request_p, FIND_NODE_RESPONSE, outmsg);
 }
 
 void CoreService::handle_announce_service(auto_ptr<Request> request_p)
 {
-  const vector<char>& payload = request_p->get_payload();
-  ArrayInputStream instream(&payload[0], payload.size());
   Messages::AnnounceServiceRequest inmsg;
-  ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   
-  if (!inmsg.ParseFromZeroCopyStream(&instream))
-  {
-    cerr << "Invalid packet - can't parse." << endl;
-    return;
-  }
+  parse_msg(*request_p, inmsg);
   
   NodeId nid(inmsg.nid());
   ContactPtr contact_p = request_p->get_contact();
   contact_p->set_nodeid(nid);
   
   // We always add nodes that provide something to the core service
+  ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   sr.get_service("core")->add_provider(contact_p);
   
   for (int i = 0; i < inmsg.service_size(); i++)
@@ -146,28 +127,22 @@ void CoreService::handle_announce_service(auto_ptr<Request> request_p)
     }
   }
   Messages::AnnounceServiceResponse outmsg;
-  sendmsg(*request_p, ANNOUNCE_SERVICE_RESPONSE, outmsg);
+  send_msg(*request_p, ANNOUNCE_SERVICE_RESPONSE, outmsg);
 }
 
 void CoreService::handle_get_channel(auto_ptr<Request> request_p)
 {
-  const vector<char>& payload = request_p->get_payload();
-  ArrayInputStream instream(&payload[0], payload.size());
   Messages::GetChannelRequest inmsg;
-  ServiceRegistry& sr = Server::get_instance()->get_service_registry();
 
-  if (inmsg.ParseFromZeroCopyStream(&instream))
-  {
-    cerr << "Invalid packet - can't parse." << endl;
-    return;
-  }
+  parse_msg(*request_p, inmsg);
 
   Messages::GetChannelResponse outmsg;
 
+  ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   Service* service_p = sr.get_service(inmsg.name());
   outmsg.set_channel(service_p != NULL ? service_p->get_channel() : SIKOZU_CHANNEL_REPLY);
 
-  sendmsg(*request_p, GET_CHANNEL_RESPONSE, outmsg);
+  send_msg(*request_p, GET_CHANNEL_RESPONSE, outmsg);
 }
 
 void CoreService::handle_request(auto_ptr<Request> request_p)
@@ -209,3 +184,15 @@ void CoreService::handle_request(auto_ptr<Request> request_p)
     cerr << "Got an unknown exception. Dropping packet." << endl;
   }*/
 }
+
+void CoreServiceThread::thread_main() 
+{
+}
+
+CoreService::CoreService(NodeId& mynid)
+  : BaseService(mynid) 
+{
+  // Create a thread for housekeeping. Will refresh buckets and such.
+  m_thread.start();
+}
+

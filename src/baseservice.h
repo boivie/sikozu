@@ -9,6 +9,7 @@
 #ifndef BASE_SERVICE_H_INCLUSION_GUARD
 #define BASE_SERVICE_H_INCLUSION_GUARD
 
+#include <google/protobuf/message.h>
 #include "service.h"
 #include "bucketstore.h"
 
@@ -21,6 +22,9 @@ class BaseService : public Service {
   virtual void add_provider(ContactPtr client_p);
   virtual Channel_t get_channel() const { return m_channel; }
   virtual void set_channel(Channel_t channel) { m_channel = channel; }
+  
+  virtual void send_msg(Request& request, Command_t command, google::protobuf::Message& outmsg);
+  virtual void parse_msg(Request& request, google::protobuf::Message& inmsg);
  protected:
   BucketStore m_bucketstore;
   Channel_t m_channel;

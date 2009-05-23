@@ -49,7 +49,8 @@ void ServiceRegistry::register_service(Service* service_p)
   }
   else
   {
-    assert(false);
+    static Channel_t last_channel = 0;
+    channel = ++last_channel;
   } 
   
   cout << "Registered Service '" << service_p->get_name() << "' at channel " << channel << "." << endl;

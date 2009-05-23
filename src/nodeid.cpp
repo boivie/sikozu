@@ -23,6 +23,7 @@ NodeId::NodeId(const string& bytes)
   }
   else
   {
+    assert(false);
     throw "Invalid size of NID";
   }
 }
