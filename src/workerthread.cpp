@@ -45,12 +45,19 @@ void WorkerThread::thread_main()
     auto_ptr<Request> request_p(new Request(ph, contact_p, payload_p));
   
     ServiceRegistry& sr = server_p->get_service_registry();
-    Service* service_p = sr.get_service(ph.get_channel());
-    if (service_p != NULL)
+    try 
     {
-      service_p->handle_request(request_p);
+      Service& service = sr.get_service(ph.get_channel());
+      try 
+      {
+        service.handle_request(request_p);
+      }
+      catch (...)
+      {
+        cerr << "Exception occured during handle_request - dropping." << endl;
+      }
     }
-    else
+    catch (ServiceNotFoundException& ex)
     {
       cerr << "No service found." << endl;
     } 

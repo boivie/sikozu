@@ -34,9 +34,9 @@ namespace SimpleDb {
     void handle_request(std::auto_ptr<Request> request_p);
   private:
     std::map<std::string, Value> m_values;
-    void handle_put(std::auto_ptr<Request> request_p);
-    void handle_get(std::auto_ptr<Request> request_p);
-    void handle_delete(std::auto_ptr<Request> request_p);  
+    void handle_put(Request& request);
+    void handle_get(Request& request);
+    void handle_delete(Request& request);  
   };
 }
 }

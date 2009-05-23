@@ -34,7 +34,7 @@ const string& CoreService::get_name() const {
   return name;
 }
 
-void CoreService::handle_get_services(auto_ptr<Request> request_p)
+void CoreService::handle_get_services(Request& request)
 {
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   const map<Channel_t, Service*>& services = sr.get_all_services();
@@ -53,36 +53,42 @@ void CoreService::handle_get_services(auto_ptr<Request> request_p)
     }
   }
   
-  send_msg(*request_p, GET_SERVICES_RESPONSE, outmsg);
+  send_msg(request, GET_SERVICES_RESPONSE, outmsg);
 }
 
-void CoreService::handle_ping(auto_ptr<Request> request_p)
+void CoreService::handle_ping(Request& request)
 {
   static const vector<char> pb(0);
-  request_p->get_session()->send(PING_RESPONSE, pb);
+  request.get_session()->send(PING_RESPONSE, pb);
 }
 
-void CoreService::handle_find_node(auto_ptr<Request> request_p)
+void CoreService::handle_find_node(Request& request)
 {
   Messages::FindNodeRequest inmsg;
 
-  parse_msg(*request_p, inmsg);
+  parse_msg(request, inmsg);
 
   list<ContactPtr> contacts;
   NodeId nid(inmsg.nid());
   
-  ServiceRegistry& sr = Server::get_instance()->get_service_registry();
-  Service* service_p = this;
-
+  
   if (inmsg.has_service())
   {
-    service_p = sr.get_service(inmsg.service());
+    ServiceRegistry& sr = Server::get_instance()->get_service_registry();
+    try 
+    {
+      Service& service = sr.get_service(inmsg.service());
+      service.find_nodes(nid, contacts);
+    }
+    catch (ServiceNotFoundException& ex)
+    {
+      // TODO: Query the ServiceNameServer
+    }
   }
-  if (service_p != NULL)
+  else
   {
-    service_p->find_nodes(nid, contacts);
+    find_nodes(nid, contacts);
   }
-  // TODO: Query the ServiceNameServer
     
   Messages::FindNodeResponse outmsg;
   for (list<ContactPtr>::iterator i = contacts.begin(); i != contacts.end(); ++i)
@@ -95,94 +101,84 @@ void CoreService::handle_find_node(auto_ptr<Request> request_p)
     outmsg_contact_p->set_port(addr.sin6_port);
   }
   
-  send_msg(*request_p, FIND_NODE_RESPONSE, outmsg);
+  send_msg(request, FIND_NODE_RESPONSE, outmsg);
 }
 
-void CoreService::handle_announce_service(auto_ptr<Request> request_p)
+void CoreService::handle_announce_service(Request& request)
 {
   Messages::AnnounceServiceRequest inmsg;
   
-  parse_msg(*request_p, inmsg);
+  parse_msg(request, inmsg);
   
   NodeId nid(inmsg.nid());
-  ContactPtr contact_p = request_p->get_contact();
+  ContactPtr contact_p = request.get_contact();
   contact_p->set_nodeid(nid);
   
   // We always add nodes that provide something to the core service
+
+  add_provider(contact_p);
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
-  sr.get_service("core")->add_provider(contact_p);
-  
+
   for (int i = 0; i < inmsg.service_size(); i++)
   {
-    Service* service_p = sr.get_service(inmsg.service(i));      
-    if (service_p)
+    try 
     {
-      // The client provides a service we also provide. Remember that.
-      service_p->add_provider(contact_p);
+      Service& service = sr.get_service(inmsg.service(i));      
+      service.add_provider(contact_p);
     }
-    else
+    catch (ServiceNotFoundException& ex)
     {
       // The client provides a service we don't know anything about. Remember it in the "unknown services" fifo
       // TODO!
     }
   }
   Messages::AnnounceServiceResponse outmsg;
-  send_msg(*request_p, ANNOUNCE_SERVICE_RESPONSE, outmsg);
+  send_msg(request, ANNOUNCE_SERVICE_RESPONSE, outmsg);
 }
 
-void CoreService::handle_get_channel(auto_ptr<Request> request_p)
+void CoreService::handle_get_channel(Request& request)
 {
   Messages::GetChannelRequest inmsg;
 
-  parse_msg(*request_p, inmsg);
+  parse_msg(request, inmsg);
 
   Messages::GetChannelResponse outmsg;
 
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
-  Service* service_p = sr.get_service(inmsg.name());
-  outmsg.set_channel(service_p != NULL ? service_p->get_channel() : SIKOZU_CHANNEL_REPLY);
+  try {
+    outmsg.set_channel(sr.get_service(inmsg.name()).get_channel());
+  } 
+  catch (ServiceNotFoundException& ex) 
+  {
+    outmsg.set_channel(SIKOZU_CHANNEL_REPLY);
+  }
 
-  send_msg(*request_p, GET_CHANNEL_RESPONSE, outmsg);
+  send_msg(request, GET_CHANNEL_RESPONSE, outmsg);
 }
 
 void CoreService::handle_request(auto_ptr<Request> request_p)
 {
-  try {
-    switch (request_p->get_command())
-    {
-    case PING_REQUEST:
-//      cout << "PING" << endl;
-      handle_ping(request_p);
-      break;
-    case GET_SERVICES_REQUEST:
-//      cout << "GET_SERVICES" << endl;
-      handle_get_services(request_p);
-      break;
-    case FIND_NODE_REQUEST:
-//      cout << "FIND_NODE" << endl;
-      handle_find_node(request_p);
-      break;
-    case ANNOUNCE_SERVICE_REQUEST:
-//      cout << "ANNOUNCE_SERVICE" << endl;
-      handle_announce_service(request_p);
-      break;
-    case GET_CHANNEL_REQUEST:
-//      cout << "GET_CHANNEL" << endl;
-      handle_get_channel(request_p);
-      break;
-    default:
-      cerr << "Got an unknown command: " << request_p->get_command() << endl; 
-      break;
-    }
-  } 
-  catch (exception& e) 
+  switch (request_p->get_command())
   {
-    cerr << "Got exception, " << e.what() << ", dropping packet." << endl;
+  case PING_REQUEST:
+    handle_ping(*request_p);
+    break;
+  case GET_SERVICES_REQUEST:
+    handle_get_services(*request_p);
+    break;
+  case FIND_NODE_REQUEST:
+    handle_find_node(*request_p);
+    break;
+  case ANNOUNCE_SERVICE_REQUEST:
+    handle_announce_service(*request_p);
+    break;
+  case GET_CHANNEL_REQUEST:
+    handle_get_channel(*request_p);
+    break;
+  default:
+    cerr << "Got an unknown command: " << request_p->get_command() << endl; 
+    break;
   }
-/*  catch (...)
-  {
-    cerr << "Got an unknown exception. Dropping packet." << endl;
-  }*/
 }
 
 void CoreServiceThread::thread_main() 

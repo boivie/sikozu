@@ -25,11 +25,11 @@ namespace Sikozu {
     const std::string& get_name() const;
     void handle_request(std::auto_ptr<Request> request_p);
   protected:
-    void handle_ping(std::auto_ptr<Request> request_p);
-    void handle_get_services(std::auto_ptr<Request> request_p);
-    void handle_find_node(std::auto_ptr<Request> request_p);
-    void handle_announce_service(std::auto_ptr<Request> request_p);
-    void handle_get_channel(std::auto_ptr<Request> request_p);
+    void handle_ping(Request& request);
+    void handle_get_services(Request& request);
+    void handle_find_node(Request& request);
+    void handle_announce_service(Request& request);
+    void handle_get_channel(Request& request);
     CoreServiceThread m_thread;
   };
 }

@@ -16,26 +16,26 @@ using namespace boost;
 
 namespace Sikozu {
 
-Service* ServiceRegistry::get_service(Channel_t channel)
+Service& ServiceRegistry::get_service(Channel_t channel)
 {
   mutex::scoped_lock lock(m_mutex);
   map<Channel_t, Service*>::iterator iter = m_services.find(channel);
   if (iter == m_services.end())
   {
-    return NULL;
+    throw new ServiceNotFoundException();
   }
-  return iter->second;
+  return *iter->second;
 }
 
-Service* ServiceRegistry::get_service(string name)
+Service& ServiceRegistry::get_service(string name)
 {
   mutex::scoped_lock lock(m_mutex);
   map<string, Service*>::iterator iter = m_services_by_name.find(name);
   if (iter == m_services_by_name.end())
   {
-    return NULL;
+    throw new ServiceNotFoundException();
   }
-  return iter->second;
+  return *iter->second;
 }
     
 void ServiceRegistry::register_service(Service* service_p)

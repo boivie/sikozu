@@ -13,13 +13,16 @@
 #include <stdint.h>
 #include <map>
 #include <boost/thread/mutex.hpp>
+#include <exception>
 #include "service.h"
 
 namespace Sikozu {
+  class ServiceNotFoundException : public std::exception {};
+
   class ServiceRegistry {
    public:
-    Service* get_service(Channel_t channel);
-    Service* get_service(std::string name);
+    Service& get_service(Channel_t channel);
+    Service& get_service(std::string name);
     void register_service(Service* service_p);
     const std::map<Channel_t, Service*> get_all_services();
 

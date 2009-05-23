@@ -29,11 +29,11 @@ const string& SimpleDbService::get_name() const {
 
 #define DEFAULT_TTL 7*24*3600
 
-void SimpleDbService::handle_put(std::auto_ptr<Request> request_p)
+void SimpleDbService::handle_put(Request& request)
 {
   Messages::PutRequest inmsg;
   
-  parse_msg(*request_p, inmsg);
+  parse_msg(request, inmsg);
 
   Value value;
   size_t size = inmsg.value().size();
@@ -50,14 +50,14 @@ void SimpleDbService::handle_put(std::auto_ptr<Request> request_p)
   
   Messages::PutResponse outmsg;
   outmsg.set_success(true);
-  send_msg(*request_p, PUT_RESPONSE, outmsg);
+  send_msg(request, PUT_RESPONSE, outmsg);
 }
 
-void SimpleDbService::handle_get(std::auto_ptr<Request> request_p)
+void SimpleDbService::handle_get(Request& request)
 {
   Messages::GetRequest inmsg;
   
-  parse_msg(*request_p, inmsg);
+  parse_msg(request, inmsg);
 
   map<std::string, Value>::iterator i = m_values.find(inmsg.key());
   
@@ -76,10 +76,10 @@ void SimpleDbService::handle_get(std::auto_ptr<Request> request_p)
     }
   }
 
-  send_msg(*request_p, GET_RESPONSE, outmsg);
+  send_msg(request, GET_RESPONSE, outmsg);
 }
 
-void SimpleDbService::handle_delete(std::auto_ptr<Request> request_p)
+void SimpleDbService::handle_delete(Request& request)
 {
   
 }
@@ -89,13 +89,13 @@ void SimpleDbService::handle_request(auto_ptr<Request> request_p)
   switch (request_p->get_command())
   {
   case PUT_REQUEST:
-    handle_put(request_p);
+    handle_put(*request_p);
     break;
   case GET_REQUEST:
-    handle_get(request_p);
+    handle_get(*request_p);
     break;
   case DELETE_REQUEST:
-    handle_delete(request_p);
+    handle_delete(*request_p);
     break;
   default:
     cerr << "Got an unknown command: " << request_p->get_command() << endl; 
