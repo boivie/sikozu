@@ -1,7 +1,6 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.63])
 AC_INIT(Sikozu, 0.1, victor-sikozu@boivie.com)
 AM_INIT_AUTOMAKE(Sikozu, 0.1)
 
@@ -14,7 +13,7 @@ AC_PROG_INSTALL
 AC_CHECK_HEADER(event.h, [], [AC_MSG_ERROR([header file <event.h> is required for libevent])])
 AC_LANG_PUSH([C++])
 AC_CHECK_HEADER(google/protobuf/message.h, [], [AC_MSG_ERROR([header file <google/protobuf/message.h> is required for protobuf])])
-
+AC_CHECK_HEADER(boost/thread/mutex.hpp, [], [AC_MSG_ERROR([header file <boost/thread/mutex.hpp> is required for boost])])
 LIBS="$LIBS -levent -lprotobuf -lboost_thread-mt"
 
 # Checks for typedefs, structures, and compiler characteristics.
