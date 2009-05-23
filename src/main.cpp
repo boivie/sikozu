@@ -11,7 +11,7 @@
 #include <vector>
 #include "server.h"
 #include "coreservice.h"
-#include "simpledb.h"
+//#include "simpledb.h"
 
 using namespace Sikozu;
 using namespace std;
@@ -30,7 +30,7 @@ int main(int argc, char **argv)
   // Register services
   ServiceRegistry& sr = server_p->get_service_registry();
   sr.register_service(new CoreService(server_p->get_nid()));
-  sr.register_service(new SimpleDb::SimpleDbService(server_p->get_nid())); 
+//  sr.register_service(new SimpleDb::SimpleDbService(server_p->get_nid())); 
   
   // Run main loop
   cout << "Executing main loop." << endl;
