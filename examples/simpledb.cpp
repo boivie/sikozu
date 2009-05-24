@@ -10,6 +10,7 @@
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 #include "simpledb.h"
 #include "simpledb.pb.h"
+#include "server.h"
 
 using namespace Sikozu;
 using namespace std;
@@ -102,3 +103,8 @@ void SimpleDbService::handle_request(auto_ptr<Request> request_p)
     break;
   }
 } 
+
+extern "C" void* create_service(Server* server_p)
+{
+  return new SimpleDbService(server_p->get_nid());
+}

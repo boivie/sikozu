@@ -11,6 +11,8 @@
 #include <vector>
 #include "server.h"
 #include "coreservice.h"
+#include <dlfcn.h>
+
 //#include "simpledb.h"
 
 using namespace Sikozu;
@@ -30,7 +32,36 @@ int main(int argc, char **argv)
   // Register services
   ServiceRegistry& sr = server_p->get_service_registry();
   sr.register_service(new CoreService(server_p->get_nid()));
-//  sr.register_service(new SimpleDb::SimpleDbService(server_p->get_nid())); 
+  
+  list<string> external_services;
+  
+  external_services.push_back("simpledb");
+  
+  for (list<string>::iterator i = external_services.begin(); i != external_services.end(); ++i)
+  {
+    string dlname = "./xcode/build/Debug/lib" + *i + ".dylib";
+    cout << "Loading: " << dlname << endl;
+    void* handle = dlopen(dlname.c_str(), RTLD_LAZY);
+    if (!handle) 
+    {
+      cerr << "Cannot open library: " << dlerror() << '\n';
+      return 1;
+    }
+    typedef Service* (*create_t)(Server*);
+
+    // reset errors
+    dlerror();
+    create_t create_service_p = (create_t) dlsym(handle, "create_service");
+    const char *dlsym_error = dlerror();
+    if (dlsym_error) 
+    {
+      cerr << "Cannot load symbol 'create_service': " << dlsym_error << endl;
+      dlclose(handle);
+      return 1;
+    }
+      
+    sr.register_service(create_service_p(server_p));
+  }
   
   // Run main loop
   cout << "Executing main loop." << endl;
