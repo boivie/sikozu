@@ -104,7 +104,9 @@ void SimpleDbService::handle_request(auto_ptr<Request> request_p)
   }
 } 
 
-extern "C" void* create_service(Server* server_p)
+extern "C" void sikozu_load(Server* server_p)
 {
-  return new SimpleDbService(server_p->get_nid());
+  Service* service_p = new SimpleDbService(server_p->get_nid());
+  ServiceRegistry& sr = server_p->get_service_registry();
+  sr.register_service(service_p);
 }

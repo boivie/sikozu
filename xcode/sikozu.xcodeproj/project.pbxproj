@@ -311,15 +311,13 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"_GLIBCXX_DEBUG=1",
-					"_GLIBCXX_DEBUG_PEDANTIC=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INSTALL_PATH = /usr/local/bin;
 				OTHER_LDFLAGS = (
 					"-levent",
 					"-lprotobuf",
 					"-lboost_thread-mt",
+					"-lboost_program_options-mt",
 				);
 				PRODUCT_NAME = sikozu;
 				ZERO_LINK = YES;
@@ -359,6 +357,7 @@
 					"-levent",
 					"-lprotobuf",
 					"-lboost_thread-mt",
+					"-lboost_program_options-mt",
 				);
 				PREBINDING = NO;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
@@ -403,10 +402,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"_GLIBCXX_DEBUG_PEDANTIC=1",
-					"_GLIBCXX_DEBUG=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INSTALL_PATH = /usr/local/lib;
 				OTHER_LDFLAGS = (
 					"-levent",
