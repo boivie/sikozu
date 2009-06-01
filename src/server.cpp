@@ -40,7 +40,6 @@ void Server::on_packet(int fd, short event, void* arg)
 {
   RawRequest* raw_p = new RawRequest();
   socklen_t l = sizeof(raw_p->from);
-  PacketHeader ph;
   
   raw_p->buffer_size = recvfrom(fd, &raw_p->buffer[0], sizeof(raw_p->buffer), 0, (struct sockaddr*)&raw_p->from, &l);
   
@@ -53,16 +52,6 @@ void Server::on_packet(int fd, short event, void* arg)
     return;
   }
 
-  // Quick parse header
-  ph.parse(&raw_p->buffer[0], raw_p->buffer_size);
-  if (!ph.valid())
-  {
-    // Bad packet, drop.
-    cerr << "Header validation failed, dropping packet." << endl;
-    return;
-  }
-  
-  // TODO: Check destination thread, if matching sid
   WorkerThread* thread_p = m_workers[last_used_worker];
   cout << "Posting to thread " << last_used_worker << endl;
   thread_p->post_event(auto_ptr<Event>(raw_p));
