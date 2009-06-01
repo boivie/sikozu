@@ -30,6 +30,7 @@ namespace Sikozu {
     virtual void thread_main() = 0;
 
   protected:
+    std::auto_ptr<Event> internal_receive();
     static boost::thread_specific_ptr<Thread> current_p;
     concurrent_queue< Event* > m_queue;
     boost::thread m_me;

@@ -39,8 +39,20 @@ void Thread::post_event(auto_ptr<Event> event_p)
 {
   // auto_ptr doesn't work good in STL containers, so we have to be very careful instead
   // and handle the deletion of the objects manually.
-  m_queue.push(event_p.get());
-  event_p.release();
+  m_queue.push(event_p.release());
 }
 
+std::auto_ptr<Event> Thread::receive()
+{
+  Thread* cur_p = current_p.get();
+  return cur_p->internal_receive();
+}
+
+std::auto_ptr<Event> Thread::internal_receive()
+{
+  Event* event_p;
+  
+  m_queue.wait_and_pop(event_p);
+  return auto_ptr<Event>(event_p);
+}
 

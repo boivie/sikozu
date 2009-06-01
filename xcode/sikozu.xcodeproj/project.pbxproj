@@ -174,9 +174,9 @@
 		57D483640FC5B9140080E0CE /* Base implementations  */ = {
 			isa = PBXGroup;
 			children = (
-				57D482FF0FC5A44A0080E0CE /* thread.h */,
 				57D47EE90FC0B4650080E0CE /* baseservice.h */,
 				57D47EEA0FC0B4650080E0CE /* baseservice.cpp */,
+				57D482FF0FC5A44A0080E0CE /* thread.h */,
 				57AAB3A70FD4643C00D902E5 /* thread.cpp */,
 			);
 			name = "Base implementations ";

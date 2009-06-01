@@ -25,8 +25,13 @@ void WorkerThread::thread_main()
     PacketHeader ph;
     
     // May block here.
-    auto_ptr<RawRequest> raw_p = server_p->get_incoming_request();
+    auto_ptr<Event> event_p = Thread::receive();
     
+    // We should only expect raw requests here.
+    if (!event_p->is_raw_request())
+      continue;
+
+    RawRequest* raw_p = (RawRequest*)event_p.get();
     ph.parse(&raw_p->buffer[0], raw_p->buffer_size);
     if (!ph.valid())
     {

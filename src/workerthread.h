@@ -11,12 +11,12 @@
 #define WORKER_THREAD_H_INCLUSION_GUARD
 
 #include <memory>
-#include "basethread.h"
+#include "thread.h"
 #include "cqueue.h"
 #include "request.h"
 
 namespace Sikozu {
-  class WorkerThread : public BaseThread {
+  class WorkerThread : public Thread {
    public:
     void thread_main();
   };

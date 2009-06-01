@@ -38,18 +38,17 @@ void got_packet(int fd, short event, void* arg)
 
 void Server::on_packet(int fd, short event, void* arg)
 {
-  int len;
   RawRequest* raw_p = new RawRequest();
   socklen_t l = sizeof(raw_p->from);
   PacketHeader ph;
   
   raw_p->buffer_size = recvfrom(fd, &raw_p->buffer[0], sizeof(raw_p->buffer), 0, (struct sockaddr*)&raw_p->from, &l);
   
-  if (len == -1)
+  if (raw_p->buffer_size == -1)
   {
     cerr << "recvfrom() returned -1, no packet." << endl;
     return;
-  } else if (len == 0) {
+  } else if (raw_p->buffer_size == 0) {
     cerr << "Connection Closed" << endl;
     return;
   }
@@ -64,7 +63,10 @@ void Server::on_packet(int fd, short event, void* arg)
   }
   
   // TODO: Check destination thread, if matching sid
-  queue_incoming_request(raw_p);
+  WorkerThread* thread_p = m_workers[last_used_worker];
+  cout << "Posting to thread " << last_used_worker << endl;
+  thread_p->post_event(auto_ptr<Event>(raw_p));
+  last_used_worker = (last_used_worker + 1) % m_workers.size();
 }
 
 

@@ -10,6 +10,7 @@
 #define EVENT_H_INCLUSION_GUARD
 namespace Sikozu {
   class Event {
+   public:
     virtual bool is_timer() { return false; }
     virtual bool is_request() { return false; }
     virtual bool is_raw_request() { return false; }
