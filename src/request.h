@@ -18,16 +18,19 @@
 #include "session.h"
 #include "contact.h"
 #include "common.h"
+#include "baseevent.h"
 
 namespace Sikozu {
 
-struct RawRequest {
+class RawRequest : public Event {
+public:
+  virtual bool is_raw_request() { return true; }
   struct sockaddr_in6 from;
   size_t buffer_size;
-  char buffer[8192];
+  char buffer[8192];  
 };
 
-class Request {
+class Request : public Event {
  public:
   Request(PacketHeader& ph, ContactPtr contact_p, std::auto_ptr<std::vector<char> > payload_p);
   

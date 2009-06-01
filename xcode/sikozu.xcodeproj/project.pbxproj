@@ -22,9 +22,9 @@
 		5797C5540FC9CFFA00A901F6 /* simpledb.h in Headers */ = {isa = PBXBuildFile; fileRef = 5797C5500FC9CFFA00A901F6 /* simpledb.h */; };
 		5797C5550FC9CFFA00A901F6 /* simpledb.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5797C5510FC9CFFA00A901F6 /* simpledb.pb.cc */; };
 		5797C5560FC9CFFA00A901F6 /* simpledb.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = 5797C5520FC9CFFA00A901F6 /* simpledb.pb.h */; };
+		57AAB3A80FD4643C00D902E5 /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57AAB3A70FD4643C00D902E5 /* thread.cpp */; };
 		57D47EEB0FC0B4650080E0CE /* baseservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57D47EEA0FC0B4650080E0CE /* baseservice.cpp */; };
 		57D481E90FC558F00080E0CE /* workerthread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57D481E80FC558F00080E0CE /* workerthread.cpp */; };
-		57D482FE0FC58E810080E0CE /* basethread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57D482FD0FC58E810080E0CE /* basethread.cpp */; };
 		8DD76F6A0486A84900D96B5E /* sikozu.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* sikozu.1 */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +68,8 @@
 		5797C5500FC9CFFA00A901F6 /* simpledb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = simpledb.h; path = ../examples/simpledb.h; sourceTree = SOURCE_ROOT; };
 		5797C5510FC9CFFA00A901F6 /* simpledb.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = simpledb.pb.cc; path = ../examples/simpledb.pb.cc; sourceTree = SOURCE_ROOT; };
 		5797C5520FC9CFFA00A901F6 /* simpledb.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = simpledb.pb.h; path = ../examples/simpledb.pb.h; sourceTree = SOURCE_ROOT; };
+		57AAB37C0FD45D6700D902E5 /* baseevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baseevent.h; path = ../src/baseevent.h; sourceTree = SOURCE_ROOT; };
+		57AAB3A70FD4643C00D902E5 /* thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread.cpp; path = ../src/thread.cpp; sourceTree = SOURCE_ROOT; };
 		57D47EE90FC0B4650080E0CE /* baseservice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baseservice.h; path = ../src/baseservice.h; sourceTree = SOURCE_ROOT; };
 		57D47EEA0FC0B4650080E0CE /* baseservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = baseservice.cpp; path = ../src/baseservice.cpp; sourceTree = SOURCE_ROOT; };
 		57D47F860FC1DBED0080E0CE /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common.h; path = ../src/common.h; sourceTree = SOURCE_ROOT; };
@@ -75,8 +77,6 @@
 		57D481E70FC558F00080E0CE /* workerthread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = workerthread.h; path = ../src/workerthread.h; sourceTree = SOURCE_ROOT; };
 		57D481E80FC558F00080E0CE /* workerthread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = workerthread.cpp; path = ../src/workerthread.cpp; sourceTree = SOURCE_ROOT; };
 		57D482250FC55B1E0080E0CE /* cqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cqueue.h; path = ../src/cqueue.h; sourceTree = SOURCE_ROOT; };
-		57D482FC0FC58E810080E0CE /* basethread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = basethread.h; path = ../src/basethread.h; sourceTree = SOURCE_ROOT; };
-		57D482FD0FC58E810080E0CE /* basethread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = basethread.cpp; path = ../src/basethread.cpp; sourceTree = SOURCE_ROOT; };
 		57D482FF0FC5A44A0080E0CE /* thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thread.h; path = ../src/thread.h; sourceTree = SOURCE_ROOT; };
 		8DD76F6C0486A84900D96B5E /* sikozu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sikozu; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859E8B029090EE04C91782 /* sikozu.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = sikozu.1; sourceTree = "<group>"; };
@@ -113,6 +113,7 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				57AAB37C0FD45D6700D902E5 /* baseevent.h */,
 				5797C5450FC9CF5A00A901F6 /* Example-SimpleDB */,
 				57D483630FC5B9090080E0CE /* Interfaces */,
 				57D483640FC5B9140080E0CE /* Base implementations  */,
@@ -166,7 +167,6 @@
 			isa = PBXGroup;
 			children = (
 				572520E60FB0AD830052F18F /* service.h */,
-				57D482FF0FC5A44A0080E0CE /* thread.h */,
 			);
 			name = Interfaces;
 			sourceTree = "<group>";
@@ -174,10 +174,10 @@
 		57D483640FC5B9140080E0CE /* Base implementations  */ = {
 			isa = PBXGroup;
 			children = (
+				57D482FF0FC5A44A0080E0CE /* thread.h */,
 				57D47EE90FC0B4650080E0CE /* baseservice.h */,
 				57D47EEA0FC0B4650080E0CE /* baseservice.cpp */,
-				57D482FC0FC58E810080E0CE /* basethread.h */,
-				57D482FD0FC58E810080E0CE /* basethread.cpp */,
+				57AAB3A70FD4643C00D902E5 /* thread.cpp */,
 			);
 			name = "Base implementations ";
 			sourceTree = "<group>";
@@ -296,7 +296,7 @@
 				57295C8E0FB88BBC0028DA4B /* request.cpp in Sources */,
 				57D47EEB0FC0B4650080E0CE /* baseservice.cpp in Sources */,
 				57D481E90FC558F00080E0CE /* workerthread.cpp in Sources */,
-				57D482FE0FC58E810080E0CE /* basethread.cpp in Sources */,
+				57AAB3A80FD4643C00D902E5 /* thread.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

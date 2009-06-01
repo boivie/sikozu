@@ -11,10 +11,10 @@
 
 #include <memory>
 #include "baseservice.h"
-#include "basethread.h"
+#include "thread.h"
 
 namespace Sikozu {
-  class CoreServiceThread : public BaseThread {
+  class CoreServiceThread : public Thread {
    public:
     void thread_main();
   };

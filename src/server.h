@@ -34,10 +34,11 @@ namespace Sikozu {
       std::auto_ptr<RawRequest> get_incoming_request() { RawRequest* r; m_incoming_requests.wait_and_pop(r); return std::auto_ptr<RawRequest>(r); }
       
     protected:
-      Server() {};
+      Server() : last_used_worker(0) {}
       void queue_incoming_request(RawRequest* request_p) { m_incoming_requests.push(request_p); }
       concurrent_queue<RawRequest*> m_incoming_requests;
       std::vector<WorkerThread*> m_workers;
+      int last_used_worker;
       static Server* m_instance;
       ServiceRegistry m_serviceregistry;
       int m_udp_socket;
