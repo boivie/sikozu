@@ -51,16 +51,18 @@ public:
         return true;
     }
 
-    void wait_and_pop(Data& popped_value)
+    bool wait_and_pop_timed(Data& popped_value, boost::system_time& timeout)
     {
         boost::mutex::scoped_lock lock(the_mutex);
         while(the_queue.empty())
         {
-            the_condition_variable.wait(lock);
+            if (the_condition_variable.timed_wait(lock, timeout))
+              return false;
         }
         
         popped_value=the_queue.front();
         the_queue.pop();
+        return true;
     }
 
 };

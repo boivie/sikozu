@@ -56,9 +56,25 @@ std::auto_ptr<Event> Thread::receive()
 
 std::auto_ptr<Event> Thread::internal_receive()
 {
+  bool got_event = false;
   Event* event_p;
+  boost::system_time timeout;
   
-  m_queue.wait_and_pop(event_p);
+  while (!got_event)
+  {
+    timers.get_next_timeout(timeout);
+    got_event = m_queue.wait_and_pop_timed(event_p, timeout);
+  
+    // Timeout. Create timer events and add them to the queue, and fetch them again (easiest this way)
+    for (;;)
+    {
+      TimerInfoPtr info_p = timers.get_first_expired();
+      if (!info_p.get())
+        break;
+      
+      m_queue.push((Event*)new Timer(info_p));
+    }
+  }
   return auto_ptr<Event>(event_p);
 }
 

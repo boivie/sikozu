@@ -42,21 +42,23 @@ void ThreadTimers::add_timer(TimerInfoPtr timer_p)
   m_future_timers.push(timer_p);
 }
 
-boost::system_time ThreadTimers::get_next_timeout()
+void ThreadTimers::get_next_timeout(boost::system_time& timeout)
 {
   for (;;)
   {
     if (m_future_timers.empty())
     {
       // No timer found. Return a really big value here.
-      return boost::get_system_time() + hours(5);
+      timeout = boost::get_system_time() + hours(5);
+      return;
     }
     
     TimerInfoPtr timer_p = m_future_timers.top();
     // Is it active? If not, drop it immediately.
     if (timer_p->m_active)
     {
-      return timer_p->m_abs_timeout;
+      timeout = timer_p->m_abs_timeout;
+      return;
     }
     m_future_timers.pop();
   }

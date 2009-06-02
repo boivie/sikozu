@@ -30,6 +30,7 @@ namespace Sikozu {
   public:
     Timer();
     Timer(int milliseconds);
+    Timer(TimerInfoPtr info_p) : m_timer_info_p(info_p) {}
     bool operator==(const Timer& other) const { return m_timer_info_p == other.m_timer_info_p; }
     void restart(int milliseconds);
     void cancel();    
@@ -48,7 +49,7 @@ namespace Sikozu {
 
   class ThreadTimers {
   public:
-    boost::system_time get_next_timeout();
+    void get_next_timeout(boost::system_time& timeout);
     TimerInfoPtr get_first_expired();
   protected:
     friend class Timer;
