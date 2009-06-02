@@ -15,6 +15,7 @@
 #include "baseevent.h"
 #include <boost/thread.hpp>
 #include "cqueue.h"
+#include "timer.h"
 
 namespace Sikozu {
   class Thread {
@@ -28,7 +29,8 @@ namespace Sikozu {
     void start();
     void thread_bootstrap();
     virtual void thread_main() = 0;
-
+    static Thread& current();
+    ThreadTimers timers;
   protected:
     std::auto_ptr<Event> internal_receive();
     static boost::thread_specific_ptr<Thread> current_p;

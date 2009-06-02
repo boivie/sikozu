@@ -24,7 +24,7 @@ namespace Sikozu {
 
 class RawRequest : public Event {
 public:
-  virtual bool is_raw_request() { return true; }
+  virtual bool is_raw_request() const { return true; }
   struct sockaddr_in6 from;
   size_t buffer_size;
   char buffer[8192];  
@@ -38,6 +38,7 @@ class Request : public Event {
   Command_t get_command() const { return m_command; }
   std::vector<char>& get_payload() { return *m_payload_p; }
   SessionPtr get_session() { return m_session_p; }
+  virtual bool is_request() const { return true; }
   
  protected:
   ContactPtr m_sender_p;

@@ -11,9 +11,9 @@
 namespace Sikozu {
   class Event {
    public:
-    virtual bool is_timer() { return false; }
-    virtual bool is_request() { return false; }
-    virtual bool is_raw_request() { return false; }
+    virtual bool is_timer() const { return false; }
+    virtual bool is_request() const { return false; }
+    virtual bool is_raw_request() const { return false; }
   };
 }
 #endif

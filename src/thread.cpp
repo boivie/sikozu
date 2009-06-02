@@ -42,6 +42,12 @@ void Thread::post_event(auto_ptr<Event> event_p)
   m_queue.push(event_p.release());
 }
 
+Thread& Thread::current()
+{
+  Thread* cur_p = current_p.get();
+  return *cur_p;
+}
+
 std::auto_ptr<Event> Thread::receive()
 {
   Thread* cur_p = current_p.get();
