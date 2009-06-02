@@ -324,6 +324,7 @@
 					"-lprotobuf",
 					"-lboost_thread-mt",
 					"-lboost_program_options-mt",
+					"-lboost_date_time-mt",
 				);
 				PRODUCT_NAME = sikozu;
 				ZERO_LINK = YES;
@@ -364,6 +365,7 @@
 					"-lprotobuf",
 					"-lboost_thread-mt",
 					"-lboost_program_options-mt",
+					"-lboost_date_time-mt",
 				);
 				PREBINDING = NO;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";

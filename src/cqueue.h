@@ -56,8 +56,10 @@ public:
         boost::mutex::scoped_lock lock(the_mutex);
         while(the_queue.empty())
         {
-            if (the_condition_variable.timed_wait(lock, timeout))
+            if (!the_condition_variable.timed_wait(lock, timeout))
+            {
               return false;
+            }
         }
         
         popped_value=the_queue.front();
