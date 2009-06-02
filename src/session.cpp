@@ -8,13 +8,19 @@
  */
 
 #include <vector>
+#include <boost/thread/mutex.hpp>
 #include "session.h"
 #include "server.h"
 
 using namespace Sikozu;
 using namespace std;
+using namespace boost;
 
-SessionPtr Session::create(ContactPtr contact_p, Channel_t channel, uint32_t sid) 
+Session::SessionMapping Session::s_sessions;
+uint32_t Session::s_last_used_sid = 0;
+boost::mutex Session::shared_mutex;
+
+SessionPtr Session::create_incoming(ContactPtr contact_p, Channel_t channel, uint32_t sid) 
 {
   return SessionPtr(new Session(contact_p, channel, sid));
 }
@@ -34,4 +40,20 @@ void Session::send(Command_t command, const std::vector<char>& message) const
     memcpy(&buffer[PACKET_HEADER_SIZE], &message[0], message.size());
   }
   server_p->send_udp(m_contact_p->get_address(), buffer);
+}
+
+SessionPtr Session::create_outgoing(ContactPtr contact_p, Channel_t channel)
+{
+  uint32_t sid;
+  
+  mutex::scoped_lock l(shared_mutex);
+
+  do {
+    sid = ++s_last_used_sid;
+  } while (s_sessions.find(sid) != s_sessions.end());
+  
+  SessionPtr session_p(new Session(contact_p, channel, sid));
+  
+  s_sessions[sid] = boost::weak_ptr<Session>(session_p);
+  return session_p;
 }
