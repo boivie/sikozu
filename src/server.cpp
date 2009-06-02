@@ -29,11 +29,9 @@ void Server::send_udp(const struct sockaddr_in6& addr, vector<char>& buffer)
   sendto(m_udp_socket, &buffer[0], buffer.size(), 0, (struct sockaddr*)&addr, sizeof(struct sockaddr_in6));  
 }
 
-static Server* callback_server = NULL;
-
 void got_packet(int fd, short event, void* arg) 
 {
-  callback_server->on_packet(fd, event, arg);
+  ((Server*)arg)->on_packet(fd, event, arg);
 }
 
 void Server::on_packet(int fd, short event, void* arg)
@@ -81,8 +79,7 @@ int Server::listen_udp(uint16_t port)
     return 0;
   
   cout << "Listening on UDP port " << port << endl;
-  callback_server = this;
-  event_set(&m_ev, m_udp_socket, EV_READ|EV_PERSIST, got_packet, &m_ev);
+  event_set(&m_ev, m_udp_socket, EV_READ|EV_PERSIST, got_packet, this);
   event_add(&m_ev, NULL);
   return 1;
 }
