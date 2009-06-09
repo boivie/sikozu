@@ -8,7 +8,6 @@
  */
 
 #include "request.h"
-#include "session.h"
 #include "common.h"
 
 using namespace Sikozu;

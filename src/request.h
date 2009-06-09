@@ -15,7 +15,6 @@
 #include <utility>
 #include <stdint.h>
 #include "packetheader.h"
-#include "session.h"
 #include "contact.h"
 #include "common.h"
 #include "baseevent.h"
