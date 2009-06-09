@@ -26,18 +26,18 @@ void BaseService::find_nodes(NodeId& nodeid, list<ContactPtr>& contacts)
   return m_bucketstore.get_closest(nodeid, contacts);
 }
 
-void BaseService::send_msg(Request& request, Command_t command, google::protobuf::Message& outmsg)
+void BaseService::send_reply(InboundTransaction& transaction, google::protobuf::Message& outmsg)
 {
   vector<char> buffer(8192);
   ArrayOutputStream outstream(&buffer[0], buffer.size());
   outmsg.SerializeToZeroCopyStream(&outstream);
   buffer.resize(outstream.ByteCount());
-  request.get_session()->send(command, buffer);
+  transaction.send_response(buffer);
 }
 
-void BaseService::parse_msg(Request& request, google::protobuf::Message& inmsg)
+void BaseService::parse_request(InboundTransaction& transaction, google::protobuf::Message& inmsg)
 {
-  const vector<char>& payload = request.get_payload();
+  const vector<char>& payload = transaction.get_request().get_payload();
   ArrayInputStream instream(&payload[0], payload.size());
 
   if (!inmsg.ParseFromZeroCopyStream(&instream))

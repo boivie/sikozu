@@ -21,11 +21,11 @@ using namespace Sikozu;
 #include "core.pb.h"
 
 enum CommandIdentifier {
-  PING_REQUEST, PING_RESPONSE,
-  FIND_NODE_REQUEST, FIND_NODE_RESPONSE,
-  GET_SERVICES_REQUEST, GET_SERVICES_RESPONSE,
-  ANNOUNCE_SERVICE_REQUEST, ANNOUNCE_SERVICE_RESPONSE,
-  GET_CHANNEL_REQUEST, GET_CHANNEL_RESPONSE,
+  PING_REQUEST,
+  FIND_NODE_REQUEST,
+  GET_SERVICES_REQUEST,
+  ANNOUNCE_SERVICE_REQUEST,
+  GET_CHANNEL_REQUEST,
   LAST
 };
 
@@ -34,7 +34,7 @@ const string& CoreService::get_name() const {
   return name;
 }
 
-void CoreService::handle_get_services(Request& request)
+void CoreService::handle_get_services(InboundTransaction& transaction)
 {
   ServiceRegistry& sr = Server::get_instance()->get_service_registry();
   const map<Channel_t, Service*>& services = sr.get_all_services();
@@ -53,25 +53,24 @@ void CoreService::handle_get_services(Request& request)
     }
   }
   
-  send_msg(request, GET_SERVICES_RESPONSE, outmsg);
+  send_reply(transaction, outmsg);
 }
 
-void CoreService::handle_ping(Request& request)
+void CoreService::handle_ping(InboundTransaction& transaction)
 {
   static const vector<char> pb(0);
-  request.get_session()->send(PING_RESPONSE, pb);
+  transaction.send_response(pb);
 }
 
-void CoreService::handle_find_node(Request& request)
+void CoreService::handle_find_node(InboundTransaction& transaction)
 {
   Messages::FindNodeRequest inmsg;
 
-  parse_msg(request, inmsg);
+  parse_request(transaction, inmsg);
 
   list<ContactPtr> contacts;
   NodeId nid(inmsg.nid());
-  
-  
+
   if (inmsg.has_service())
   {
     ServiceRegistry& sr = Server::get_instance()->get_service_registry();
@@ -101,17 +100,17 @@ void CoreService::handle_find_node(Request& request)
     outmsg_contact_p->set_port(addr.sin6_port);
   }
   
-  send_msg(request, FIND_NODE_RESPONSE, outmsg);
+  send_reply(transaction, outmsg);
 }
 
-void CoreService::handle_announce_service(Request& request)
+void CoreService::handle_announce_service(InboundTransaction& transaction)
 {
   Messages::AnnounceServiceRequest inmsg;
-  
-  parse_msg(request, inmsg);
+
+  parse_request(transaction, inmsg);
   
   NodeId nid(inmsg.nid());
-  ContactPtr contact_p = request.get_contact();
+  ContactPtr contact_p = transaction.get_sender();
   contact_p->set_nodeid(nid);
   
   // We always add nodes that provide something to the core service
@@ -133,14 +132,14 @@ void CoreService::handle_announce_service(Request& request)
     }
   }
   Messages::AnnounceServiceResponse outmsg;
-  send_msg(request, ANNOUNCE_SERVICE_RESPONSE, outmsg);
+  send_reply(transaction, outmsg);
 }
 
-void CoreService::handle_get_channel(Request& request)
+void CoreService::handle_get_channel(InboundTransaction& transaction)
 {
   Messages::GetChannelRequest inmsg;
 
-  parse_msg(request, inmsg);
+  parse_request(transaction, inmsg);
 
   Messages::GetChannelResponse outmsg;
 
@@ -153,36 +152,61 @@ void CoreService::handle_get_channel(Request& request)
     outmsg.set_channel(SIKOZU_CHANNEL_REPLY);
   }
 
-  send_msg(request, GET_CHANNEL_RESPONSE, outmsg);
+  send_reply(transaction, outmsg);
 }
 
-void CoreService::handle_request(auto_ptr<Request> request_p)
+void CoreService::on_transaction(std::auto_ptr<InboundTransaction> transaction_p)
 {
-  switch (request_p->get_command())
+  switch (transaction_p->get_request().get_command())
   {
   case PING_REQUEST:
-    handle_ping(*request_p);
+    cout << "PING_REQUEST" << endl;
+    handle_ping(*transaction_p);
     break;
   case GET_SERVICES_REQUEST:
-    handle_get_services(*request_p);
+    cout << "GET_SERVICES_REQUEST" << endl;
+    handle_get_services(*transaction_p);
     break;
   case FIND_NODE_REQUEST:
-    handle_find_node(*request_p);
+    cout << "FIND_NODE_REQUEST" << endl;
+    handle_find_node(*transaction_p);
     break;
   case ANNOUNCE_SERVICE_REQUEST:
-    handle_announce_service(*request_p);
+    cout << "ANNOUNCE_SERVICE_REQUEST" << endl;  
+    handle_announce_service(*transaction_p);
     break;
   case GET_CHANNEL_REQUEST:
-    handle_get_channel(*request_p);
+    cout << "GET_CHANNEL_REQUEST" << endl;  
+    handle_get_channel(*transaction_p);
     break;
   default:
-    cerr << "Got an unknown command: " << request_p->get_command() << endl; 
+    cerr << "Got an unknown command: " << transaction_p->get_request().get_command() << endl; 
     break;
   }
 }
 
 void CoreServiceThread::thread_main() 
 {
+#if 0
+  OutboundTransactionPtr transaction_p[3];
+  int i;
+  
+  for (i = 0; i < 3; i++)
+  {
+    ContactPtr contact_p;
+    RemoteService service;
+    transaction_p[i] = OutboundTransaction::create(contact_p, service);
+    transaction_p[i]->set_timeout(3000);
+  }
+  
+  while (transaction_p[0]->is_pending() || 
+         transaction_p[1]->is_pending() || 
+         transaction_p[2]->is_pending())
+  {
+    Thread::receive();
+  }
+  
+#endif
 }
 
 CoreService::CoreService(NodeId& mynid)

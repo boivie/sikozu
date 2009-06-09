@@ -10,6 +10,7 @@
 #include <boost/thread.hpp>
 #include <iostream> 
 #include "workerthread.h"
+#include "transaction.h"
 #include "server.h"
 
 using namespace std;
@@ -46,25 +47,44 @@ void WorkerThread::thread_main()
     auto_ptr<vector<char> > payload_p(new vector<char>(payload_size));
     if (payload_size > 0)
       memcpy(&(*payload_p)[0], &raw_p->buffer[ph.size()], payload_size);
+      
+    // This is a request - a start of a new inbound transaction.
+    auto_ptr<Request> request_p(new Request(ph.get_command(), payload_p));
 
-    auto_ptr<Request> request_p(new Request(ph, contact_p, payload_p));
-  
-    ServiceRegistry& sr = server_p->get_service_registry();
-    try 
+    // If this is a reply message, we must find a matching outbound transaction with this SID
+    // to direct it to the correct thread.
+    if (ph.get_channel() == SIKOZU_CHANNEL_REPLY)
     {
-      Service& service = sr.get_service(ph.get_channel());
       try 
       {
-        service.handle_request(request_p);
+        OutboundTransactionRegistry::wake_up(contact_p, ph.get_sid(), request_p);
       }
-      catch (...)
+      catch (TransactionNotFoundException& ex)
       {
-        cerr << "Exception occured during handle_request - dropping." << endl;
+        cerr << "Couldn't find transaction. Normal - don't bother." << endl;
       }
     }
-    catch (ServiceNotFoundException& ex)
+    else
     {
-      cerr << "No service found." << endl;
-    } 
+      auto_ptr<InboundTransaction> transaction_p(new InboundTransaction(contact_p, ph.get_sid(), request_p));
+  
+      ServiceRegistry& sr = server_p->get_service_registry();
+      try 
+      {
+        Service& service = sr.get_service(ph.get_channel());
+        try 
+        {
+          service.on_transaction(transaction_p);
+        }
+        catch (...)
+        {
+          cerr << "Exception occured during handle_request - dropping." << endl;
+        }
+      }
+      catch (ServiceNotFoundException& ex)
+      {
+        cerr << "No service found." << endl;
+      } 
+    }
   }
 }

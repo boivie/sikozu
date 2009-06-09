@@ -23,13 +23,13 @@ namespace Sikozu {
   public:
     CoreService(NodeId& mynid); 
     const std::string& get_name() const;
-    void handle_request(std::auto_ptr<Request> request_p);
+    void on_transaction(std::auto_ptr<InboundTransaction> transaction_p);
   protected:
-    void handle_ping(Request& request);
-    void handle_get_services(Request& request);
-    void handle_find_node(Request& request);
-    void handle_announce_service(Request& request);
-    void handle_get_channel(Request& request);
+    void handle_ping(InboundTransaction& transaction);
+    void handle_get_services(InboundTransaction& transaction);
+    void handle_find_node(InboundTransaction& transaction);
+    void handle_announce_service(InboundTransaction& transaction);
+    void handle_get_channel(InboundTransaction& transaction);
     CoreServiceThread m_thread;
   };
 }

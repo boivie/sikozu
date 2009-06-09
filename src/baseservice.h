@@ -23,8 +23,8 @@ class BaseService : public Service {
   virtual Channel_t get_channel() const { return m_channel; }
   virtual void set_channel(Channel_t channel) { m_channel = channel; }
   
-  virtual void send_msg(Request& request, Command_t command, google::protobuf::Message& outmsg);
-  virtual void parse_msg(Request& request, google::protobuf::Message& inmsg);
+  virtual void send_reply(InboundTransaction& transaction, google::protobuf::Message& outmsg);
+  virtual void parse_request(InboundTransaction& transaction, google::protobuf::Message& inmsg);
  protected:
   BucketStore m_bucketstore;
   Channel_t m_channel;
