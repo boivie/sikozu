@@ -15,26 +15,26 @@
 #include <vector>
 #include <memory>
 #include <stdint.h>
+#include <boost/threadpool.hpp>
 #include "nodeid.h"
 #include "serviceregistry.h"
-#include "workerthread.h"
+#include "rawpackethandler.h"
 #include "cqueue.h"
 
 namespace Sikozu {
   class Server {
     public:
-      static Server* get_instance() { if (m_instance == 0) m_instance = new Server(); return m_instance; };
+      Server(int workers = 4) : m_thread_pool(workers) { m_instance = this; }
+      static Server* get_instance() { return m_instance; };
       NodeId& get_nid() { return nid; }
       ServiceRegistry& get_service_registry() { return m_serviceregistry; };
       void send_udp(const struct sockaddr_in6& addr, std::vector<char>& buffer);
-      void start_workers(int count = 4);
       int listen_udp(uint16_t port);
       void on_packet(int fd, short event, void* arg);
+      boost::threadpool::pool& get_thread_pool() { return m_thread_pool; }
             
     protected:
-      Server() : last_used_worker(0) {}
-      std::vector<WorkerThread*> m_workers;
-      int last_used_worker;
+      boost::threadpool::pool m_thread_pool;
       static Server* m_instance;
       ServiceRegistry m_serviceregistry;
       int m_udp_socket;

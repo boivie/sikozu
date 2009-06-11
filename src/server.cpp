@@ -12,11 +12,13 @@
 #include <arpa/inet.h>
 #include <event.h>
 #include <fcntl.h>
+#include <boost/bind.hpp>
 
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 
 #include "server.h"
 #include "request.h"
+#include "rawpackethandler.h"
 
 using namespace Sikozu;
 using namespace google::protobuf::io;
@@ -36,7 +38,7 @@ void got_packet(int fd, short event, void* arg)
 
 void Server::on_packet(int fd, short event, void* arg)
 {
-  RawRequest* raw_p = new RawRequest();
+  auto_ptr<RawRequest> raw_p(new RawRequest());
   socklen_t l = sizeof(raw_p->from);
   
   raw_p->buffer_size = recvfrom(fd, &raw_p->buffer[0], sizeof(raw_p->buffer), 0, (struct sockaddr*)&raw_p->from, &l);
@@ -50,10 +52,9 @@ void Server::on_packet(int fd, short event, void* arg)
     return;
   }
 
-  WorkerThread* thread_p = m_workers[last_used_worker];
-  cout << "Posting to thread " << last_used_worker << endl;
-  thread_p->post_event(auto_ptr<Event>(raw_p));
-  last_used_worker = (last_used_worker + 1) % m_workers.size();
+  boost::shared_ptr<RawPacketHandler> handler_p(new RawPacketHandler(raw_p));
+
+  m_thread_pool.schedule(boost::bind(&RawPacketHandler::run, handler_p));
 }
 
 
@@ -84,24 +85,4 @@ int Server::listen_udp(uint16_t port)
   return 1;
 }
 
-
-void Server::start_workers(int count)
-{
-  int i;
-  m_workers.resize(count);
-  
-  // Create the workers
-  cout << "Creating worker thread." << endl;
-  for (i = 0; i < count; i++)
-  {
-    m_workers[i] = new WorkerThread();
-  }
-  
-  // Start the workers
-  cout << "Starting worker threads." << endl;
-  for (i = 0; i < count; i++)
-  {
-    m_workers[i]->start();
-  }
-}
 

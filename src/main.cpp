@@ -23,13 +23,13 @@ namespace po = boost::program_options;
 int main(int argc, char **argv)
 {
   event_init();
-  Server* server_p = Server::get_instance();
   
   po::options_description desc("Allowed options");
   desc.add_options()
       ("help", "produce help message")
       ("port", po::value<int>(), "use UDP port number")
       ("external,x", po::value< vector<string> >(), "enable external library")
+      ("threads,t", po::value<int>(), "Number of worker threads to use (default: 4)")
       ;
 
   po::variables_map vm;
@@ -41,13 +41,14 @@ int main(int argc, char **argv)
     cout << desc << "\n";
     return 1;
   }
-    
+  
+  // Create the server, and the worker threads
+  int worker_threads = (vm.count("threads")) ? vm["threads"].as<int>() : 4;
+  Server* server_p = new Server(worker_threads);
+      
   // Start listening socket
   uint16_t port = (vm.count("port")) ? vm["port"].as<int>() : 9081;
   server_p->listen_udp(port);
-  
-  // Start worker threads
-  server_p->start_workers();
   
   // Register services - core and external
   ServiceRegistry& sr = server_p->get_service_registry();
