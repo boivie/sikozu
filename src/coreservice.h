@@ -11,13 +11,8 @@
 
 #include <memory>
 #include "baseservice.h"
-#include "thread.h"
 
 namespace Sikozu {
-  class CoreServiceThread : public Thread {
-   public:
-    void thread_main();
-  };
 
   class CoreService : public BaseService {
   public:
@@ -30,7 +25,6 @@ namespace Sikozu {
     void handle_find_node(InboundTransaction& transaction);
     void handle_announce_service(InboundTransaction& transaction);
     void handle_get_channel(InboundTransaction& transaction);
-    CoreServiceThread m_thread;
   };
 }
 

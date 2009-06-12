@@ -15,7 +15,7 @@
 using namespace std;
 using namespace Sikozu;
 
-void RawPacketHandler::run()
+void RawPacketHandler::task_main()
 {
   PacketHeader ph;
 

@@ -19,11 +19,11 @@
 		57295C8E0FB88BBC0028DA4B /* request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57295C8D0FB88BBC0028DA4B /* request.cpp */; };
 		578210650FDC033900EAE28F /* remoteservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 578210640FDC033900EAE28F /* remoteservice.cpp */; };
 		578211780FE047FB00EAE28F /* rawpackethandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 578211770FE047FB00EAE28F /* rawpackethandler.cpp */; };
+		5782127D0FE2B7E000EAE28F /* task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5782127C0FE2B7E000EAE28F /* task.cpp */; };
 		5797C5530FC9CFFA00A901F6 /* simpledb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5797C54F0FC9CFFA00A901F6 /* simpledb.cpp */; };
 		5797C5540FC9CFFA00A901F6 /* simpledb.h in Headers */ = {isa = PBXBuildFile; fileRef = 5797C5500FC9CFFA00A901F6 /* simpledb.h */; };
 		5797C5550FC9CFFA00A901F6 /* simpledb.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5797C5510FC9CFFA00A901F6 /* simpledb.pb.cc */; };
 		5797C5560FC9CFFA00A901F6 /* simpledb.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = 5797C5520FC9CFFA00A901F6 /* simpledb.pb.h */; };
-		57AAB3A80FD4643C00D902E5 /* thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57AAB3A70FD4643C00D902E5 /* thread.cpp */; };
 		57AAB42A0FD4755D00D902E5 /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57AAB4280FD4755D00D902E5 /* timer.cpp */; };
 		57AAB56B0FD92E8C00D902E5 /* transaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57AAB56A0FD92E8C00D902E5 /* transaction.cpp */; };
 		57D47EEB0FC0B4650080E0CE /* baseservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57D47EEA0FC0B4650080E0CE /* baseservice.cpp */; };
@@ -67,13 +67,14 @@
 		578210640FDC033900EAE28F /* remoteservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = remoteservice.cpp; path = ../src/remoteservice.cpp; sourceTree = SOURCE_ROOT; };
 		578211760FE047FB00EAE28F /* rawpackethandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rawpackethandler.h; path = ../src/rawpackethandler.h; sourceTree = SOURCE_ROOT; };
 		578211770FE047FB00EAE28F /* rawpackethandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rawpackethandler.cpp; path = ../src/rawpackethandler.cpp; sourceTree = SOURCE_ROOT; };
+		578212590FE190A700EAE28F /* task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = task.h; path = ../src/task.h; sourceTree = SOURCE_ROOT; };
+		5782127C0FE2B7E000EAE28F /* task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = task.cpp; path = ../src/task.cpp; sourceTree = SOURCE_ROOT; };
 		5797C54A0FC9CF7E00A901F6 /* libsimpledb.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsimpledb.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		5797C54F0FC9CFFA00A901F6 /* simpledb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = simpledb.cpp; path = ../examples/simpledb.cpp; sourceTree = SOURCE_ROOT; };
 		5797C5500FC9CFFA00A901F6 /* simpledb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = simpledb.h; path = ../examples/simpledb.h; sourceTree = SOURCE_ROOT; };
 		5797C5510FC9CFFA00A901F6 /* simpledb.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = simpledb.pb.cc; path = ../examples/simpledb.pb.cc; sourceTree = SOURCE_ROOT; };
 		5797C5520FC9CFFA00A901F6 /* simpledb.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = simpledb.pb.h; path = ../examples/simpledb.pb.h; sourceTree = SOURCE_ROOT; };
 		57AAB37C0FD45D6700D902E5 /* baseevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baseevent.h; path = ../src/baseevent.h; sourceTree = SOURCE_ROOT; };
-		57AAB3A70FD4643C00D902E5 /* thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = thread.cpp; path = ../src/thread.cpp; sourceTree = SOURCE_ROOT; };
 		57AAB4280FD4755D00D902E5 /* timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = timer.cpp; path = ../src/timer.cpp; sourceTree = SOURCE_ROOT; };
 		57AAB4290FD4755D00D902E5 /* timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = timer.h; path = ../src/timer.h; sourceTree = SOURCE_ROOT; };
 		57AAB5690FD92E8C00D902E5 /* transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = transaction.h; path = ../src/transaction.h; sourceTree = SOURCE_ROOT; };
@@ -83,7 +84,6 @@
 		57D47F860FC1DBED0080E0CE /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common.h; path = ../src/common.h; sourceTree = SOURCE_ROOT; };
 		57D47F920FC1DCF40080E0CE /* packetheader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = packetheader.h; path = ../src/packetheader.h; sourceTree = SOURCE_ROOT; };
 		57D482250FC55B1E0080E0CE /* cqueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cqueue.h; path = ../src/cqueue.h; sourceTree = SOURCE_ROOT; };
-		57D482FF0FC5A44A0080E0CE /* thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = thread.h; path = ../src/thread.h; sourceTree = SOURCE_ROOT; };
 		8DD76F6C0486A84900D96B5E /* sikozu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sikozu; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859E8B029090EE04C91782 /* sikozu.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = sikozu.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -127,6 +127,8 @@
 				57D483640FC5B9140080E0CE /* Base implementations  */,
 				57D483650FC5B9340080E0CE /* Core Service */,
 				57D47F860FC1DBED0080E0CE /* common.h */,
+				578212590FE190A700EAE28F /* task.h */,
+				5782127C0FE2B7E000EAE28F /* task.cpp */,
 				57D482250FC55B1E0080E0CE /* cqueue.h */,
 				5725203D0FAF876C0052F18F /* nodeid.cpp */,
 				5725203E0FAF876C0052F18F /* nodeid.h */,
@@ -186,8 +188,6 @@
 			children = (
 				57D47EE90FC0B4650080E0CE /* baseservice.h */,
 				57D47EEA0FC0B4650080E0CE /* baseservice.cpp */,
-				57D482FF0FC5A44A0080E0CE /* thread.h */,
-				57AAB3A70FD4643C00D902E5 /* thread.cpp */,
 			);
 			name = "Base implementations ";
 			sourceTree = "<group>";
@@ -304,11 +304,11 @@
 				57295C3D0FB759930028DA4B /* contact.cpp in Sources */,
 				57295C8E0FB88BBC0028DA4B /* request.cpp in Sources */,
 				57D47EEB0FC0B4650080E0CE /* baseservice.cpp in Sources */,
-				57AAB3A80FD4643C00D902E5 /* thread.cpp in Sources */,
 				57AAB42A0FD4755D00D902E5 /* timer.cpp in Sources */,
 				57AAB56B0FD92E8C00D902E5 /* transaction.cpp in Sources */,
 				578210650FDC033900EAE28F /* remoteservice.cpp in Sources */,
 				578211780FE047FB00EAE28F /* rawpackethandler.cpp in Sources */,
+				5782127D0FE2B7E000EAE28F /* task.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

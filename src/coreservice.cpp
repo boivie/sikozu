@@ -184,7 +184,7 @@ void CoreService::on_transaction(std::auto_ptr<InboundTransaction> transaction_p
     break;
   }
 }
-
+/*
 void CoreServiceThread::thread_main() 
 {
 #if 0
@@ -208,11 +208,9 @@ void CoreServiceThread::thread_main()
   
 #endif
 }
-
+*/
 CoreService::CoreService(NodeId& mynid)
   : BaseService(mynid) 
 {
-  // Create a thread for housekeeping. Will refresh buckets and such.
-  m_thread.start();
 }
 

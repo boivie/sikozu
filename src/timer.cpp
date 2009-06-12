@@ -9,7 +9,7 @@
 
 #include "timer.h"
 #include <boost/date_time/posix_time/posix_time_types.hpp>
-#include "thread.h"
+#include "task.h"
 
 using namespace Sikozu;
 using namespace std;
@@ -33,7 +33,7 @@ void Timer::restart(int ms)
   m_timer_info_p->m_abs_timeout = boost::get_system_time();
   m_timer_info_p->m_abs_timeout += milliseconds(ms);
   m_timer_info_p->m_active = false;
-  Thread::current().timers.add_timer(m_timer_info_p);
+  Task::current()->timers.add_timer(m_timer_info_p);
 }
 
 void ThreadTimers::add_timer(TimerInfoPtr timer_p)

@@ -17,6 +17,7 @@ namespace Sikozu {
 class RemoteService {
   public:
     RemoteService() : m_channel(SIKOZU_CHANNEL_CORE) {}
+    Channel_t get_channel() const { return m_channel; }
   private:
     Channel_t m_channel;
 };

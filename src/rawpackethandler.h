@@ -11,14 +11,15 @@
 #define RAW_PACKET_HANDLER_H_INCLUSION_GUARD
 
 #include <memory>
+#include "task.h"
 #include "request.h"
 
 namespace Sikozu {
 
-struct RawPacketHandler
+struct RawPacketHandler : public Task
 {
   RawPacketHandler(std::auto_ptr<RawRequest> raw_p) : m_raw_p(raw_p) {}
-  void run();
+  virtual void task_main();
 protected:
   std::auto_ptr<RawRequest> m_raw_p;
 };

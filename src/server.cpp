@@ -54,7 +54,7 @@ void Server::on_packet(int fd, short event, void* arg)
 
   boost::shared_ptr<RawPacketHandler> handler_p(new RawPacketHandler(raw_p));
 
-  m_thread_pool.schedule(boost::bind(&RawPacketHandler::run, handler_p));
+  m_thread_pool.schedule(boost::bind(&RawPacketHandler::run, handler_p, handler_p));
 }
 
 

@@ -1,60 +1,53 @@
 /*
- *  basethread.cpp
+ *  task.cpp
  *  sikozu
  *
- *  Created by Victor Boivie on 2009-05-21.
+ *  Created by Victor Boivie on 2009-06-12.
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
 
-#include "thread.h"
+#include "task.h"
 
-using namespace Sikozu;
 using namespace std;
+using namespace Sikozu;
 
-static void cleanup_function(Thread* thread_p) 
+
+static void cleanup_function(Task* task_p) 
 {
 }
 
-boost::thread_specific_ptr<Thread> Thread::current_p(cleanup_function);
+boost::thread_specific_ptr<Task> Task::current_p(cleanup_function);
 
-struct wt_call {
-  wt_call(Thread* wt) : m_wt(wt) {}
-  void operator()() { m_wt->thread_bootstrap(); }
-  Thread* m_wt;
-};
 
-void Thread::thread_bootstrap() {
-  Thread::current_p.reset(this);
-  thread_main();
-}
-
-void Thread::start() 
+boost::shared_ptr<Task> Task::current()
 {
-  wt_call wt(this);
-  m_me = boost::thread(wt);
+  Task* cur_p = current_p.get();
+  return cur_p->m_me_p;
 }
 
-void Thread::post_event(auto_ptr<Event> event_p)
+Task::~Task()
+{
+  // Have to clear the event queue manually.
+  for (;;)
+  {
+    Event* event_p;
+    if (!m_queue.try_pop(event_p))
+      break;
+    delete event_p;
+  }
+}
+
+
+void Task::post_event(auto_ptr<Event> event_p)
 {
   // auto_ptr doesn't work good in STL containers, so we have to be very careful instead
   // and handle the deletion of the objects manually.
   m_queue.push(event_p.release());
 }
 
-Thread& Thread::current()
-{
-  Thread* cur_p = current_p.get();
-  return *cur_p;
-}
-
-std::auto_ptr<Event> Thread::receive()
-{
-  Thread* cur_p = current_p.get();
-  return cur_p->internal_receive();
-}
-
-std::auto_ptr<Event> Thread::internal_receive()
+/*
+std::auto_ptr<Event> Thread::()
 {
   bool got_event = false;
   Event* event_p;
@@ -76,5 +69,4 @@ std::auto_ptr<Event> Thread::internal_receive()
     }
   }
   return auto_ptr<Event>(event_p);
-}
-
+*/
