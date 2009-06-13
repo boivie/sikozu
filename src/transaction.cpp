@@ -131,31 +131,45 @@ void OutboundTransactionRegistry::add(boost::shared_ptr<OutboundTransaction> tra
   s_transactions.insert(std::make_pair(transaction_p->get_sid(), weak_p));
 }
 
-void OutboundTransactionRegistry::wake_up(ContactPtr contact_p, uint32_t sid, std::auto_ptr<Request> request_p)
+boost:shared_ptr<OutboundTransaction> OutboundTransactionRegistry::find(ContactPtr contact_p, uint32_t sid, bool remove)
 {
-  boost:shared_ptr<OutboundTransaction> transaction_p;
-  
-  {
-    mutex::scoped_lock l(s_mutex);
-    OutboundTransactionRegistry::TransactionMapping::iterator it = OutboundTransactionRegistry::s_transactions.find(sid);
-    if (it == OutboundTransactionRegistry::s_transactions.end())
-      throw TransactionNotFoundException();
-  
-    transaction_p = it->second.lock();
-
-    // Remove it from the registry
-    OutboundTransactionRegistry::s_transactions.erase(it); 
-  }
-  
-  // We are not protected by the mutex any longer!
-  if (transaction_p == NULL)
-  {
-    // It has already been deleted. Remove it.
+  mutex::scoped_lock l(s_mutex);
+  OutboundTransactionRegistry::TransactionMapping::iterator it = OutboundTransactionRegistry::s_transactions.find(sid);
+  if (it == OutboundTransactionRegistry::s_transactions.end())
     throw TransactionNotFoundException();
-  }
+
+  boost:shared_ptr<OutboundTransaction> transaction_p = it->second.lock();
   
+  if (transaction_p == 0)
+    throw TransactionNotFoundException();  
+    
+  ContactPtr tr_contact_p = transaction_p->get_contact();
+  
+  if (*tr_contact_p != *contact_p)
+    throw TransactionNotFoundException();
+  
+  if (remove)
+    OutboundTransactionRegistry::s_transactions.erase(it);
+
+  return transaction_p;
+}
+
+void OutboundTransactionRegistry::redirect_to_task(ContactPtr contact_p, uint32_t sid, std::auto_ptr<Request> request_p)
+{
+  boost:shared_ptr<OutboundTransaction> transaction_p = find(contact_p, sid, false)
+
   boost::shared_ptr<Task> task_p = transaction_p->get_task();
   task_p->post_event(static_cast<auto_ptr<Event> >(request_p));
+}
+
+void OutboundTransactionRegistry::wake_up(ContactPtr contact_p, uint32_t sid, std::auto_ptr<Request> request_p)
+{
+  boost:shared_ptr<OutboundTransaction> transaction_p = find(contact_p, sid, true);
+
+  transaction_p->set_response(request_p);
+  // Delete all timers as well
+  boost::shared_ptr<Task> task_p = transaction_p->get_task();
+  task_p->timers.remove(
 }
 
 void OutboundTransactionRegistry::remove(uint32_t sid)

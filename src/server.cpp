@@ -52,11 +52,16 @@ void Server::on_packet(int fd, short event, void* arg)
     return;
   }
 
-  boost::shared_ptr<RawPacketHandler> handler_p(new RawPacketHandler(raw_p));
-
-  m_thread_pool.schedule(boost::bind(&RawPacketHandler::run, handler_p, handler_p));
+  auto_ptr<Task> task_p(new RawPacketHandler(raw_p));
+  schedule(task_p);
 }
 
+void Server::schedule(auto_ptr<Task> task_p)
+{
+  boost::shared_ptr<Task> n_task_p(task_p.release());
+
+  m_thread_pool.schedule(boost::bind(&Task::run, n_task_p, n_task_p));
+}
 
 int Server::listen_udp(uint16_t port)
 {

@@ -14,6 +14,7 @@ namespace Sikozu {
     virtual bool is_timer() const { return false; }
     virtual bool is_request() const { return false; }
     virtual bool is_raw_request() const { return false; }
+    virtual bool is_transaction_reply() const { return false; }
   };
 }
 #endif

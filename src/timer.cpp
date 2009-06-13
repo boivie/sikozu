@@ -64,7 +64,7 @@ void ThreadTimers::get_next_timeout(boost::system_time& timeout)
   }
 }
 
-TimerInfoPtr ThreadTimers::get_first_expired()
+bool ThreadTimers::get_first_expired(TimerInfoPtr& timer_p)
 {
   const boost::system_time now = boost::get_system_time();
   for (;;)
@@ -72,21 +72,21 @@ TimerInfoPtr ThreadTimers::get_first_expired()
     // No timers left?
     if (m_future_timers.empty())
     {
-      return TimerInfoPtr();
+      return false;
     }
 
-    TimerInfoPtr timer_p = m_future_timers.top();
+    timer_p = m_future_timers.top();
 
     // First one hasn't expired yet?
     if (timer_p->m_abs_timeout > now)
     {
-      return TimerInfoPtr();
+      return false;
     }
     // It has expired! Is it active?
     m_future_timers.pop();
     if (timer_p->m_active)
     {
-      return timer_p;
+      return true;
     }
     // If not, re-iterate and drop this one.
   }

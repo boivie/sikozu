@@ -34,24 +34,27 @@ void RawPacketHandler::task_main()
   if (payload_size > 0)
     memcpy(&(*payload_p)[0], &m_raw_p->buffer[ph.size()], payload_size);
     
-  // This is a request - a start of a new inbound transaction.
   auto_ptr<Request> request_p(new Request(ph.get_command(), payload_p));
 
   // If this is a reply message, we must find a matching outbound transaction with this SID
-  // to direct it to the correct thread.
+  // to direct it to the correct task (running in its own thread).
   if (ph.get_channel() == SIKOZU_CHANNEL_REPLY)
   {
     try 
     {
-      OutboundTransactionRegistry::wake_up(contact_p, ph.get_sid(), request_p);
+      boost::shared_ptr<Task> task_p = TaskEventRegistry::get_task(ph.get_sid());
+      auto_ptr<TransactionReply> reply_p(new TransactionReply(contact_p, request_p));
+      task_p->post_event(reply_p);
     }
-    catch (TransactionNotFoundException& ex)
+    catch (TaskNotFoundException& ex)
     {
-      cerr << "Couldn't find transaction. Normal - don't bother." << endl;
+      cerr << "Couldn't find task. Normal - don't bother." << endl;
     }
   }
   else
   {
+    // This is a request - a start of a new inbound transaction.
+
     auto_ptr<InboundTransaction> transaction_p(new InboundTransaction(contact_p, ph.get_sid(), request_p));
     Server* server_p = Server::get_instance();
     ServiceRegistry& sr = server_p->get_service_registry();

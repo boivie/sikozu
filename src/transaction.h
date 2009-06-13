@@ -37,9 +37,11 @@ class OutboundTransaction : public Transaction {
   void send_request(Command_t command, const std::vector<char>& payload);
   Request& get_response();
   boost::shared_ptr<Task> get_task() { return m_task_p; }
+  ContactPtr get_contact() { return m_contact_p; }
  private:
   uint32_t get_sid() const { return m_sid; } 
   OutboundTransaction(ContactPtr contact_p, const RemoteService& destination_service, uint32_t sid);
+  void set_response(std::auto_ptr<Request> response_p) { m_response_p = response_p; }
   uint32_t m_sid;
   RemoteService m_service;
   ContactPtr m_contact_p;
@@ -67,6 +69,7 @@ class InboundTransaction : public Transaction {
 class OutboundTransactionRegistry {
  public:
   friend class OutboundTransaction;
+  static void redirect_to_task(ContactPtr contact_p, uint32_t sid, std::auto_ptr<Request> request_p);
   static void wake_up(ContactPtr contact_p, uint32_t sid, std::auto_ptr<Request> request_p);
   static void remove(uint32_t sid);
  
@@ -78,6 +81,18 @@ class OutboundTransactionRegistry {
   static TransactionMapping s_transactions;
   static uint32_t s_last_used_sid;
 
+};
+
+class TransactionReply {
+ public:
+  TransactionReply(uint32_t sid, ContactPtr contact_p, std::auto_ptr<Request> request_p) : m_sid(sid), m_contact_p(contact_p), m_request_p(request_p) {}
+  ContactPtr get_contact() { return m_contact_p; }
+  std::auto_ptr<Request> get_request() { return m_request_p; }
+  virtual bool is_transaction_reply() const { return true; }
+ private:
+  uint32_t m_sid;
+  ContactPtr m_contact_p;
+  std::auto_ptr<Request> m_request_p;
 };
 
 typedef boost::shared_ptr<OutboundTransaction> OutboundTransactionPtr;

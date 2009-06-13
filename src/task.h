@@ -32,8 +32,16 @@ namespace Sikozu {
     concurrent_queue< Event* > m_queue;
     boost::shared_ptr<Task> m_me_p; // Only available during task_main
     static boost::thread_specific_ptr<Task> current_p;
-};
+  };
 
+  class TaskEventRegistry {
+   public:
+    static uint32_t register_id();
+    static boost::shared_ptr<Task> unregister_id(uint32_t id);
+    static void cleanup();
+   private:
+    std::map<uint32_t, boost::shared_ptr<Task> > s_mapping;
+  };
 
 
 }

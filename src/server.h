@@ -31,7 +31,7 @@ namespace Sikozu {
       void send_udp(const struct sockaddr_in6& addr, std::vector<char>& buffer);
       int listen_udp(uint16_t port);
       void on_packet(int fd, short event, void* arg);
-      boost::threadpool::pool& get_thread_pool() { return m_thread_pool; }
+      void schedule(std::auto_ptr<Task> task_p);
             
     protected:
       boost::threadpool::pool m_thread_pool;

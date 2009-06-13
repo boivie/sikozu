@@ -46,27 +46,39 @@ void Task::post_event(auto_ptr<Event> event_p)
   m_queue.push(event_p.release());
 }
 
-/*
-std::auto_ptr<Event> Thread::()
+
+void Task::wait()
 {
-  bool got_event = false;
+  bool again = true;
   Event* event_p;
   boost::system_time timeout;
   
-  while (!got_event)
+  while (again)
   {
     timers.get_next_timeout(timeout);
-    got_event = m_queue.wait_and_pop_timed(event_p, timeout);
+    if (m_queue.wait_and_pop_timed(event_p, timeout)
+    {
+      if (event_p->is_transaction_reply())
+      {
+        if (OutboundTransactionRegistry::wake_up(event_p->contact_p, 
+          again = false;
+      }
+    }
   
-    // Timeout. Create timer events and add them to the queue, and fetch them again (easiest this way)
+    // Timeout transactions, if any
     for (;;)
     {
-      TimerInfoPtr info_p = timers.get_first_expired();
-      if (!info_p.get())
-        break;
+      TimerInfoPtr info_p;
       
-      m_queue.push((Event*)new Timer(info_p));
+      if (timers.get_first_expired(info_p))
+      {
+        
+        again = false;
+      }
+      else
+      {
+        break;
+      }
     }
-  }
-  return auto_ptr<Event>(event_p);
-*/
+  }  
+}

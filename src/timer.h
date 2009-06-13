@@ -39,7 +39,6 @@ namespace Sikozu {
     TimerInfoPtr m_timer_info_p;
   };
   
-
   class TimerComparator {
   public:
     bool operator()(const TimerInfoPtr& lhs, const TimerInfoPtr& rhs) const {
