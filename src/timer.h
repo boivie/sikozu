@@ -49,7 +49,7 @@ namespace Sikozu {
   class ThreadTimers {
   public:
     void get_next_timeout(boost::system_time& timeout);
-    TimerInfoPtr get_first_expired();
+    bool get_first_expired(TimerInfoPtr& timer_p);
   protected:
     friend class Timer;
     void add_timer(TimerInfoPtr timer_p);

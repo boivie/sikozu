@@ -8,10 +8,10 @@
  */
 
 #include "task.h"
+#include "transaction.h"
 
 using namespace std;
 using namespace Sikozu;
-
 
 static void cleanup_function(Task* task_p) 
 {
@@ -31,7 +31,7 @@ Task::~Task()
   // Have to clear the event queue manually.
   for (;;)
   {
-    Event* event_p;
+    TransactionReply* event_p;
     if (!m_queue.try_pop(event_p))
       break;
     delete event_p;
@@ -39,7 +39,7 @@ Task::~Task()
 }
 
 
-void Task::post_event(auto_ptr<Event> event_p)
+void Task::post_event(auto_ptr<TransactionReply> event_p)
 {
   // auto_ptr doesn't work good in STL containers, so we have to be very careful instead
   // and handle the deletion of the objects manually.
@@ -50,35 +50,30 @@ void Task::post_event(auto_ptr<Event> event_p)
 void Task::wait()
 {
   bool again = true;
-  Event* event_p;
   boost::system_time timeout;
   
   while (again)
   {
-    timers.get_next_timeout(timeout);
-    if (m_queue.wait_and_pop_timed(event_p, timeout)
+    m_transactions.get_next_timeout(timeout);
+    TransactionReply* eventRaw_p;
+    if (m_queue.wait_and_pop_timed(eventRaw_p, timeout))
     {
-      if (event_p->is_transaction_reply())
+      auto_ptr<TransactionReply> reply_p(eventRaw_p);
+      try 
       {
-        if (OutboundTransactionRegistry::wake_up(event_p->contact_p, 
-          again = false;
+        m_transactions.wake_up(reply_p);
+        again = false;
+      } 
+      catch (TransactionNotFoundException& ex)
+      {
       }
     }
   
     // Timeout transactions, if any
-    for (;;)
+    if (m_transactions.timeout_transactions())
     {
-      TimerInfoPtr info_p;
-      
-      if (timers.get_first_expired(info_p))
-      {
-        
-        again = false;
-      }
-      else
-      {
-        break;
-      }
+      again = false;
     }
   }  
 }
+

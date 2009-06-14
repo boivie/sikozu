@@ -1,3 +1,4 @@
+#if 0
 /*
  *  timer.cpp
  *  sikozu
@@ -91,3 +92,5 @@ bool ThreadTimers::get_first_expired(TimerInfoPtr& timer_p)
     // If not, re-iterate and drop this one.
   }
 }
+
+#endif

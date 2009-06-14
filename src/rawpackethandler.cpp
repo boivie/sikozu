@@ -42,8 +42,8 @@ void RawPacketHandler::task_main()
   {
     try 
     {
-      boost::shared_ptr<Task> task_p = TaskEventRegistry::get_task(ph.get_sid());
-      auto_ptr<TransactionReply> reply_p(new TransactionReply(contact_p, request_p));
+      boost::shared_ptr<Task> task_p = ActiveOutboundTransactions::get_task(ph.get_sid());
+      auto_ptr<TransactionReply> reply_p(new TransactionReply(ph.get_sid(), contact_p, request_p));
       task_p->post_event(reply_p);
     }
     catch (TaskNotFoundException& ex)
