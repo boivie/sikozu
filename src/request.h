@@ -17,24 +17,21 @@
 #include "packetheader.h"
 #include "contact.h"
 #include "common.h"
-#include "baseevent.h"
 
 namespace Sikozu {
 
-class RawRequest : public Event {
+class RawRequest {
 public:
-  virtual bool is_raw_request() const { return true; }
   struct sockaddr_in6 from;
   size_t buffer_size;
   char buffer[8192];  
 };
 
-class Request : public Event {
+class Request {
  public:
   Request(Command_t command, std::auto_ptr<std::vector<char> > payload_p);
   Command_t get_command() const { return m_command; }
   std::vector<char>& get_payload() { return *m_payload_p; }
-  virtual bool is_request() const { return true; }
   
  protected:
   std::auto_ptr<std::vector<char> > m_payload_p;

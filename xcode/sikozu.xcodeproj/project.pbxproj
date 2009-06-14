@@ -73,7 +73,6 @@
 		5797C5500FC9CFFA00A901F6 /* simpledb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = simpledb.h; path = ../examples/simpledb.h; sourceTree = SOURCE_ROOT; };
 		5797C5510FC9CFFA00A901F6 /* simpledb.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = simpledb.pb.cc; path = ../examples/simpledb.pb.cc; sourceTree = SOURCE_ROOT; };
 		5797C5520FC9CFFA00A901F6 /* simpledb.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = simpledb.pb.h; path = ../examples/simpledb.pb.h; sourceTree = SOURCE_ROOT; };
-		57AAB37C0FD45D6700D902E5 /* baseevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baseevent.h; path = ../src/baseevent.h; sourceTree = SOURCE_ROOT; };
 		57AAB5690FD92E8C00D902E5 /* transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = transaction.h; path = ../src/transaction.h; sourceTree = SOURCE_ROOT; };
 		57AAB56A0FD92E8C00D902E5 /* transaction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = transaction.cpp; path = ../src/transaction.cpp; sourceTree = SOURCE_ROOT; };
 		57D47EE90FC0B4650080E0CE /* baseservice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baseservice.h; path = ../src/baseservice.h; sourceTree = SOURCE_ROOT; };
@@ -116,7 +115,6 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				57AAB37C0FD45D6700D902E5 /* baseevent.h */,
 				5797C5450FC9CF5A00A901F6 /* Example-SimpleDB */,
 				57D483630FC5B9090080E0CE /* Interfaces */,
 				57D483640FC5B9140080E0CE /* Base implementations  */,
