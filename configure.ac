@@ -14,7 +14,8 @@ AC_CHECK_HEADER(event.h, [], [AC_MSG_ERROR([header file <event.h> is required fo
 AC_LANG_PUSH([C++])
 AC_CHECK_HEADER(google/protobuf/message.h, [], [AC_MSG_ERROR([header file <google/protobuf/message.h> is required for protobuf])])
 AC_CHECK_HEADER(boost/thread/mutex.hpp, [], [AC_MSG_ERROR([header file <boost/thread/mutex.hpp> is required for boost])])
-LIBS="$LIBS -levent -lprotobuf -lboost_thread-mt"
+AC_CHECK_HEADER(boost/program_options.hpp, [], [AC_MSG_ERROR([header file <boost/program_options.hpp> is required for boost])])
+LIBS="$LIBS -levent -lprotobuf -lboost_thread-mt -lboost_program_options-mt -lboost_date_time-mt -ldl"
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
