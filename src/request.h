@@ -14,6 +14,7 @@
 #include <memory>
 #include <utility>
 #include <stdint.h>
+#include <iostream.h>
 #include "packetheader.h"
 #include "contact.h"
 #include "common.h"

@@ -27,7 +27,7 @@ namespace Sikozu {
     void post_event(std::auto_ptr<TransactionReply> event_p);
     void run(boost::shared_ptr<Task> me_p);
     Task();
-    ~Task();
+    virtual ~Task();
     /** Waits for one event, then returns. */
     void wait();
     static boost::shared_ptr<Task> current();
