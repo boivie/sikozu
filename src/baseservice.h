@@ -18,6 +18,7 @@ namespace Sikozu {
 class BaseService : public Service {
  public:
   BaseService(NodeId& mynid) : m_bucketstore(mynid) {}
+  virtual ~BaseService() {}
   virtual void find_nodes(NodeId& nodeid, std::list<ContactPtr>& contacts);
   virtual void add_provider(ContactPtr client_p);
   virtual Channel_t get_channel() const { return m_channel; }

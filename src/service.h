@@ -20,6 +20,7 @@
 namespace Sikozu {
   class Service {
    public:
+    virtual ~Service() {}
     virtual const std::string& get_name() const = 0;
     virtual void on_transaction(std::auto_ptr<InboundTransaction> transaction_p) = 0;
     virtual void find_nodes(NodeId& nodeid, std::list<ContactPtr>& contacts) = 0;

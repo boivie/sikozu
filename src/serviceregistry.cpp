@@ -22,7 +22,7 @@ Service& ServiceRegistry::get_service(Channel_t channel)
   map<Channel_t, Service*>::iterator iter = m_services.find(channel);
   if (iter == m_services.end())
   {
-    throw new ServiceNotFoundException();
+    throw ServiceNotFoundException();
   }
   return *iter->second;
 }
@@ -33,7 +33,7 @@ Service& ServiceRegistry::get_service(string name)
   map<string, Service*>::iterator iter = m_services_by_name.find(name);
   if (iter == m_services_by_name.end())
   {
-    throw new ServiceNotFoundException();
+    throw ServiceNotFoundException();
   }
   return *iter->second;
 }
