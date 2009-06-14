@@ -7,8 +7,10 @@
  *
  */
 
+#include <iostream>
 #include "task.h"
 #include "transaction.h"
+
 
 using namespace std;
 using namespace Sikozu;
@@ -24,6 +26,10 @@ boost::shared_ptr<Task> Task::current()
 {
   Task* cur_p = current_p.get();
   return cur_p->m_me_p;
+}
+
+Task::Task()
+{
 }
 
 Task::~Task()
@@ -77,3 +83,12 @@ void Task::wait()
   }  
 }
 
+void Task::run(boost::shared_ptr<Task> me_p)
+{
+  // We keep a shared_ptr-reference to ourselves while we run. We have to pass it 
+  // to whoever calls ::current(), so that's why. We remove the reference as soon
+  // as we have finished executing.
+  m_me_p = me_p; 
+  task_main(); 
+  m_me_p.reset(); 
+}

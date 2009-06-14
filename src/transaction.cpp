@@ -59,13 +59,12 @@ void OutboundTransaction::send_request(Command_t command, const std::vector<char
   // Start timer, if any
   if (m_timeout_ms > 0)
   {
-    boost::shared_ptr<Task> task_p = Task::current();
     boost::system_time abs_timeout = boost::get_system_time() + boost::posix_time::milliseconds(m_timeout_ms);
     // Also, we'll have to find the task in the registry, to really get a shared pointer.
     // TODO: Is there no easier way to do this?
     try {
       boost::shared_ptr<OutboundTransaction> transaction_p = ActiveOutboundTransactions::find(m_sid);
-      task_p->m_transactions.add_timeout(transaction_p, abs_timeout);
+      m_task_p->m_transactions.add_timeout(transaction_p, abs_timeout);
     } catch (TransactionNotFoundException& ex)
     {
       assert(false); // This can not happen. The transaction must be alive, and we must have it in the registry in that case.
@@ -81,13 +80,12 @@ Request& OutboundTransaction::get_response()
 
 boost::shared_ptr<OutboundTransaction> OutboundTransaction::create(ContactPtr contact_p, const RemoteService& destination_service)
 {
-  uint32_t sid = ActiveOutboundTransactions::get_sid();
+  uint32_t sid = ActiveOutboundTransactions::get_new_sid();
   
   boost::shared_ptr<OutboundTransaction> transaction_p(new OutboundTransaction(contact_p, destination_service, sid));
   
-  // Register it in the OutboundTransactionRegistry.
-  boost::shared_ptr<Task> task_p = Task::current();
-  task_p->m_transactions.add(transaction_p);
+  // Register it in the global SID registry.
+  ActiveOutboundTransactions::add(transaction_p);
   
   return transaction_p;
 }
@@ -96,11 +94,12 @@ OutboundTransaction::~OutboundTransaction()
 {
   // TODO: This might be unnecessary in most cases - where the request has already been received. Maybe have a flag indicating 
   // if it should be done?
-  boost::shared_ptr<Task> task_p = Task::current();
+
   // Remove from the global sid registry
   ActiveOutboundTransactions::remove(m_sid);
+
   // And the local timeout registry
-  task_p->m_transactions.cleanup_orphan_timeouts();
+  m_task_p->m_transactions.cleanup_orphan_timeouts();
 }
 
 void OutboundTransaction::timeout()
@@ -147,7 +146,7 @@ ContactPtr InboundTransaction::get_sender()
   return m_contact_p;
 }
 
-uint32_t ActiveOutboundTransactions::get_sid()
+uint32_t ActiveOutboundTransactions::get_new_sid()
 {
   mutex::scoped_lock l(s_mutex);
   uint32_t sid = s_last_used_sid + 1;

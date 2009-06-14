@@ -7,6 +7,7 @@
  *
  */
 
+#include <iostream>
 #include "rawpackethandler.h"
 #include "packetheader.h"
 #include "transaction.h"

@@ -106,8 +106,6 @@ class ActiveOutboundTransactions {
   void get_next_timeout(boost::system_time& timeout);
   void add_timeout(boost::shared_ptr<OutboundTransaction> transaction_p, boost::system_time& abs_timeout);
   void cleanup_orphan_timeouts();
- protected:
-  void add(boost::shared_ptr<OutboundTransaction> transaction_p);  
   
   typedef std::multiset<TimeoutTransactionInfo, TransactionTimeComparator> Timeout_Transactions_t;
   Timeout_Transactions_t m_timeout_transactions;
@@ -117,7 +115,8 @@ class ActiveOutboundTransactions {
   static boost::shared_ptr<Task> get_task(uint32_t sid);
 
  protected:
-  static uint32_t get_sid();
+  static void add(boost::shared_ptr<OutboundTransaction> transaction_p);  
+  static uint32_t get_new_sid();
   static boost::shared_ptr<OutboundTransaction> find(uint32_t sid);
   static void remove(uint32_t sid);
 
