@@ -14,7 +14,6 @@
 #include <boost/thread.hpp>
 #include <boost/thread/mutex.hpp>
 #include "event.h"
-#include "timer.h"
 #include "cqueue.h"
 #include "transaction.h"
 

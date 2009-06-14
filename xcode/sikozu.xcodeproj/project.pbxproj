@@ -24,7 +24,6 @@
 		5797C5540FC9CFFA00A901F6 /* simpledb.h in Headers */ = {isa = PBXBuildFile; fileRef = 5797C5500FC9CFFA00A901F6 /* simpledb.h */; };
 		5797C5550FC9CFFA00A901F6 /* simpledb.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5797C5510FC9CFFA00A901F6 /* simpledb.pb.cc */; };
 		5797C5560FC9CFFA00A901F6 /* simpledb.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = 5797C5520FC9CFFA00A901F6 /* simpledb.pb.h */; };
-		57AAB42A0FD4755D00D902E5 /* timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57AAB4280FD4755D00D902E5 /* timer.cpp */; };
 		57AAB56B0FD92E8C00D902E5 /* transaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57AAB56A0FD92E8C00D902E5 /* transaction.cpp */; };
 		57D47EEB0FC0B4650080E0CE /* baseservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 57D47EEA0FC0B4650080E0CE /* baseservice.cpp */; };
 		8DD76F6A0486A84900D96B5E /* sikozu.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859E8B029090EE04C91782 /* sikozu.1 */; };
@@ -75,8 +74,6 @@
 		5797C5510FC9CFFA00A901F6 /* simpledb.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = simpledb.pb.cc; path = ../examples/simpledb.pb.cc; sourceTree = SOURCE_ROOT; };
 		5797C5520FC9CFFA00A901F6 /* simpledb.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = simpledb.pb.h; path = ../examples/simpledb.pb.h; sourceTree = SOURCE_ROOT; };
 		57AAB37C0FD45D6700D902E5 /* baseevent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baseevent.h; path = ../src/baseevent.h; sourceTree = SOURCE_ROOT; };
-		57AAB4280FD4755D00D902E5 /* timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = timer.cpp; path = ../src/timer.cpp; sourceTree = SOURCE_ROOT; };
-		57AAB4290FD4755D00D902E5 /* timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = timer.h; path = ../src/timer.h; sourceTree = SOURCE_ROOT; };
 		57AAB5690FD92E8C00D902E5 /* transaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = transaction.h; path = ../src/transaction.h; sourceTree = SOURCE_ROOT; };
 		57AAB56A0FD92E8C00D902E5 /* transaction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = transaction.cpp; path = ../src/transaction.cpp; sourceTree = SOURCE_ROOT; };
 		57D47EE90FC0B4650080E0CE /* baseservice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = baseservice.h; path = ../src/baseservice.h; sourceTree = SOURCE_ROOT; };
@@ -119,8 +116,6 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				57AAB4280FD4755D00D902E5 /* timer.cpp */,
-				57AAB4290FD4755D00D902E5 /* timer.h */,
 				57AAB37C0FD45D6700D902E5 /* baseevent.h */,
 				5797C5450FC9CF5A00A901F6 /* Example-SimpleDB */,
 				57D483630FC5B9090080E0CE /* Interfaces */,
@@ -304,7 +299,6 @@
 				57295C3D0FB759930028DA4B /* contact.cpp in Sources */,
 				57295C8E0FB88BBC0028DA4B /* request.cpp in Sources */,
 				57D47EEB0FC0B4650080E0CE /* baseservice.cpp in Sources */,
-				57AAB42A0FD4755D00D902E5 /* timer.cpp in Sources */,
 				57AAB56B0FD92E8C00D902E5 /* transaction.cpp in Sources */,
 				578210650FDC033900EAE28F /* remoteservice.cpp in Sources */,
 				578211780FE047FB00EAE28F /* rawpackethandler.cpp in Sources */,
