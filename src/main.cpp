@@ -22,8 +22,6 @@ namespace po = boost::program_options;
 
 int main(int argc, char **argv)
 {
-  event_init();
-  
   po::options_description desc("Allowed options");
   desc.add_options()
       ("help", "produce help message")
@@ -84,10 +82,9 @@ int main(int argc, char **argv)
       sikozu_load(server_p);
     }
   }
-  
-  // Run main loop
-  cout << "Executing main loop." << endl;
-  event_dispatch();
+
+  cout << "Executing main loop." << endl;  
+  server_p->run();
   
   cout << "Exiting..." << endl;
   return 0;

@@ -13,7 +13,8 @@
 #include <event.h>
 #include <fcntl.h>
 #include <boost/bind.hpp>
-
+#include <unistd.h>
+#include <boost/thread/mutex.hpp>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 
 #include "server.h"
@@ -26,6 +27,39 @@ using namespace std;
 
 Server* Server::m_instance = NULL;
 
+void got_ipc(int fd, short event, void* arg) 
+{
+  ((Server*)arg)->on_ipc(fd);
+}
+
+
+Server::Server(int workers)
+  : m_thread_pool(workers) 
+{
+  m_instance = this;
+  event_init();
+  
+  int pipefd[2];
+  if (pipe(pipefd) == -1)
+  {
+    throw ServerException();
+  }
+
+  m_write_pipe = pipefd[1];
+  event_set(&m_pipe, pipefd[0], EV_READ|EV_PERSIST, got_ipc, this);
+  event_add(&m_pipe, NULL);
+}
+
+Server::~Server()
+{
+  list<struct ScheduledTask*>::iterator it;
+  
+  for (it = m_timers.begin(); it != m_timers.end(); ++it)
+  {
+    delete *it;
+  }
+}
+
 void Server::send_udp(const struct sockaddr_in6& addr, vector<char>& buffer)
 {
   sendto(m_udp_socket, &buffer[0], buffer.size(), 0, (struct sockaddr*)&addr, sizeof(struct sockaddr_in6));  
@@ -33,10 +67,16 @@ void Server::send_udp(const struct sockaddr_in6& addr, vector<char>& buffer)
 
 void got_packet(int fd, short event, void* arg) 
 {
-  ((Server*)arg)->on_packet(fd, event, arg);
+  ((Server*)arg)->on_packet(fd);
 }
 
-void Server::on_packet(int fd, short event, void* arg)
+void on_timer_cb(int fd, short event, void* arg)
+{
+  ScheduledTask* taskinfo_p = (ScheduledTask*)arg;
+  taskinfo_p->server_p->on_timer(taskinfo_p);
+}
+
+void Server::on_packet(int fd)
 {
   auto_ptr<RawRequest> raw_p(new RawRequest());
   socklen_t l = sizeof(raw_p->from);
@@ -56,11 +96,77 @@ void Server::on_packet(int fd, short event, void* arg)
   schedule(task_p);
 }
 
+void Server::on_timer(ScheduledTask* taskinfo_p)
+{
+  // Copy what we need to stay alive.
+  boost::shared_ptr<Task> task_p = taskinfo_p->task_p;
+
+  {
+    boost::mutex::scoped_lock l(timer_mutex);
+    // Find the expired task and delete it from the list.
+    m_timers.remove(taskinfo_p);
+  }
+  delete taskinfo_p;
+  
+  m_thread_pool.schedule(boost::bind(&Task::run, task_p, task_p));
+}
+
+void Server::on_ipc(int fd)
+{
+  char buf[1];
+  int ret = read(fd, buf, 1);
+  
+  if (ret == -1)
+  {
+    cerr << "read() return -1, IPC dead." << endl;
+    return;
+  }
+  else if (ret == 0)
+  {
+    cerr << "Connection closed?" << endl;
+    return;
+  }
+  
+  if (buf[0] == 'T')
+  {
+    // add timer! But which one? Add any that is new and not running already.
+    list<ScheduledTask*>::iterator it;
+    boost::mutex::scoped_lock l(timer_mutex);
+    for (it = m_timers.begin(); it != m_timers.end(); ++it)
+    {
+      ScheduledTask* taskinfo_p = *it;
+      if (taskinfo_p->is_new)
+      {
+        evtimer_set(&taskinfo_p->event, on_timer_cb, taskinfo_p);
+        evtimer_add(&(taskinfo_p->event), &taskinfo_p->delay);
+        taskinfo_p->is_new = false;
+      }
+    }
+  }
+  cout << "GOT: " << buf << endl;
+}
+
 void Server::schedule(auto_ptr<Task> task_p)
 {
   boost::shared_ptr<Task> n_task_p(task_p.release());
 
   m_thread_pool.schedule(boost::bind(&Task::run, n_task_p, n_task_p));
+}
+
+void Server::schedule_at(auto_ptr<Task> task_p, struct timeval& delay)
+{
+  auto_ptr<ScheduledTask> scheduled_task_p(new ScheduledTask);
+  scheduled_task_p->task_p = boost::shared_ptr<Task>(task_p.release());
+  scheduled_task_p->server_p = this;
+  scheduled_task_p->delay = delay;
+  scheduled_task_p->is_new = true;
+  {
+    boost::mutex::scoped_lock l(timer_mutex);
+    m_timers.push_front(scheduled_task_p.release());
+  }
+  // Ask ourselves (well, the main thread) to add the timer.
+  char buf[1] = {'T'};
+  write(m_write_pipe, buf, 1);
 }
 
 int Server::listen_udp(uint16_t port)
@@ -90,4 +196,9 @@ int Server::listen_udp(uint16_t port)
   return 1;
 }
 
+void Server::run()
+{
+  // Run main loop
+  event_dispatch();
+}
 
