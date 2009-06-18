@@ -29,14 +29,14 @@ namespace SimpleDb {
 
   class SimpleDbService : public BaseService {
   public:
-    SimpleDbService(NodeId& mynid) : BaseService(mynid) {}
+    SimpleDbService(const NodeId& mynid) : BaseService(mynid) {}
     const std::string& get_name() const;
-    void handle_request(std::auto_ptr<Request> request_p);
+    void on_transaction(std::auto_ptr<InboundTransaction> transaction_p);
   private:
     std::map<std::string, Value> m_values;
-    void handle_put(Request& request);
-    void handle_get(Request& request);
-    void handle_delete(Request& request);  
+    void handle_put(InboundTransaction& transaction);
+    void handle_get(InboundTransaction& transaction);
+    void handle_delete(InboundTransaction& transaction);  
   };
 }
 }

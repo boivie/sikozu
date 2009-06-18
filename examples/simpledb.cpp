@@ -18,9 +18,9 @@ using namespace Sikozu::SimpleDb;
 using namespace google::protobuf::io;
 
 enum {
-  PUT_REQUEST, PUT_RESPONSE,
-  GET_REQUEST, GET_RESPONSE,
-  DELETE_REQUEST, DELETE_RESPONSE
+  PUT_REQUEST,
+  GET_REQUEST,
+  DELETE_REQUEST
 };
 
 const string& SimpleDbService::get_name() const {
@@ -30,11 +30,11 @@ const string& SimpleDbService::get_name() const {
 
 #define DEFAULT_TTL 7*24*3600
 
-void SimpleDbService::handle_put(Request& request)
+void SimpleDbService::handle_put(InboundTransaction& transaction)
 {
   Messages::PutRequest inmsg;
   
-  parse_msg(request, inmsg);
+  parse_request(transaction, inmsg);
 
   Value value;
   size_t size = inmsg.value().size();
@@ -51,14 +51,14 @@ void SimpleDbService::handle_put(Request& request)
   
   Messages::PutResponse outmsg;
   outmsg.set_success(true);
-  send_msg(request, PUT_RESPONSE, outmsg);
+  send_reply(transaction, outmsg);
 }
 
-void SimpleDbService::handle_get(Request& request)
+void SimpleDbService::handle_get(InboundTransaction& transaction)
 {
   Messages::GetRequest inmsg;
   
-  parse_msg(request, inmsg);
+  parse_request(transaction, inmsg);
 
   map<std::string, Value>::iterator i = m_values.find(inmsg.key());
   
@@ -77,29 +77,29 @@ void SimpleDbService::handle_get(Request& request)
     }
   }
 
-  send_msg(request, GET_RESPONSE, outmsg);
+  send_reply(transaction, outmsg);
 }
 
-void SimpleDbService::handle_delete(Request& request)
+void SimpleDbService::handle_delete(InboundTransaction& transaction)
 {
   
 }
 
-void SimpleDbService::handle_request(auto_ptr<Request> request_p)
+void SimpleDbService::on_transaction(std::auto_ptr<InboundTransaction> transaction_p)
 {
-  switch (request_p->get_command())
+  switch (transaction_p->get_request().get_command())
   {
   case PUT_REQUEST:
-    handle_put(*request_p);
+    handle_put(*transaction_p);
     break;
   case GET_REQUEST:
-    handle_get(*request_p);
+    handle_get(*transaction_p);
     break;
   case DELETE_REQUEST:
-    handle_delete(*request_p);
+    handle_delete(*transaction_p);
     break;
   default:
-    cerr << "Got an unknown command: " << request_p->get_command() << endl; 
+    cerr << "Got an unknown command: " << transaction_p->get_request().get_command() << endl; 
     break;
   }
 } 
