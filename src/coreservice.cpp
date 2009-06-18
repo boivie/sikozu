@@ -94,7 +94,7 @@ void CoreService::handle_find_node(InboundTransaction& transaction)
   {    
     Messages::Contact* outmsg_contact_p = outmsg.add_contacts();
     ContactPtr contact_p = *i;
-    const std::vector<uint8_t>& nid = contact_p->get_nodeid().get_nid();
+    const std::vector<uint8_t> nid = contact_p->get_nodeid().get_nid();
     outmsg_contact_p->set_nid(&nid[0], nid.size());
     const struct sockaddr_in6& addr = contact_p->get_address();
     outmsg_contact_p->set_port(addr.sin6_port);

@@ -32,7 +32,7 @@ Task::Task()
 {
 }
 
-Task::~Task()
+BlockableTask::~BlockableTask()
 {
   // Have to clear the event queue manually.
   for (;;)
@@ -45,7 +45,7 @@ Task::~Task()
 }
 
 
-void Task::post_event(auto_ptr<TransactionReply> event_p)
+void BlockableTask::post_event(auto_ptr<TransactionReply> event_p)
 {
   // auto_ptr doesn't work good in STL containers, so we have to be very careful instead
   // and handle the deletion of the objects manually.
@@ -53,7 +53,7 @@ void Task::post_event(auto_ptr<TransactionReply> event_p)
 }
 
 
-void Task::wait()
+void BlockableTask::wait()
 {
   bool again = true;
   boost::system_time timeout;

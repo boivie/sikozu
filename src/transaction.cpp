@@ -64,7 +64,7 @@ void OutboundTransaction::send_request(Command_t command, const std::vector<char
     // TODO: Is there no easier way to do this?
     try {
       boost::shared_ptr<OutboundTransaction> transaction_p = ActiveOutboundTransactions::find(m_sid);
-      m_task_p->m_transactions.add_timeout(transaction_p, abs_timeout);
+      m_task_p->get_transactions().add_timeout(transaction_p, abs_timeout);
     } catch (TransactionNotFoundException& ex)
     {
       assert(false); // This can not happen. The transaction must be alive, and we must have it in the registry in that case.
@@ -99,7 +99,7 @@ OutboundTransaction::~OutboundTransaction()
   ActiveOutboundTransactions::remove(m_sid);
 
   // And the local timeout registry
-  m_task_p->m_transactions.cleanup_orphan_timeouts();
+  m_task_p->get_transactions().cleanup_orphan_timeouts();
 }
 
 void OutboundTransaction::timeout()

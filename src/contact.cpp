@@ -20,16 +20,9 @@ using namespace boost;
 ContactRegistry::Mapping ContactRegistry::s_instances;
 boost::mutex ContactRegistry::instance_mutex;
 
-static void make_key(struct sockaddr_in6& address, vector<char>& key)
-{
-  memcpy(&key[0], &address.sin6_addr, 16);
-  memcpy(&key[16], &address.sin6_port, 2);
-}
-
-ContactPtr ContactRegistry::get(struct sockaddr_in6& address)
-{
-  vector<char> key(16 + 2);
-  make_key(address, key);
+ContactPtr ContactRegistry::get(const struct sockaddr_in6& address)
+{ 
+  ContactRegistryKey key(address);
   {
     mutex::scoped_lock l(instance_mutex);
     ContactRegistry::Mapping::iterator i = s_instances.find(key);
@@ -43,7 +36,7 @@ ContactPtr ContactRegistry::get(struct sockaddr_in6& address)
     
     // Not here. Have to create one and insert it.
     ContactPtr contact_p(new Contact(address));
-    s_instances[key] = weak_ptr<Contact>(contact_p);
+    s_instances.insert(std::make_pair(key, weak_ptr<Contact>(contact_p)));
     return contact_p;
   }
 }
@@ -54,19 +47,29 @@ ContactPtr ContactRegistry::create_new(const NodeId& nodeid)
   return ContactPtr(object_p);
 }
 
-void ContactRegistry::remove(const vector<char>& key)
+void ContactRegistry::remove(const struct sockaddr_in6& address)
 {
+  ContactRegistryKey key(address);
   mutex::scoped_lock l(instance_mutex);
   s_instances.erase(key);
 }
+ContactRegistryKey::ContactRegistryKey(const struct sockaddr_in6& address)
+{
+  memcpy(&m_key[0],  &address.sin6_addr, 16);
+  memcpy(&m_key[16], &address.sin6_port, 2);
+}
+
+bool ContactRegistryKey::operator < (const ContactRegistryKey& n1) const
+{
+  return memcmp(n1.m_key, m_key, sizeof(n1.m_key));
+}
+
 
 Contact::~Contact() 
 {
   if (m_has_addr)
   {
     // Also remove it from the table of all instances
-    vector<char> key(16 + 2);
-    make_key(this->m_caddr, key);
-    ContactRegistry::remove(key);
+    ContactRegistry::remove(this->m_caddr);
   }
 }

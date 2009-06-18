@@ -13,7 +13,26 @@
 #include "coreservice.h"
 #include <boost/program_options.hpp>
 #include <dlfcn.h>
+#include <exception> // for std::bad_alloc
+#include <new>
+#include <cstdlib> // for malloc() and free()
 
+// Visual C++ fix of operator new
+#if 0
+void* operator new (size_t size)
+{
+ printf("alloc %d\n", size);
+ void *p=malloc(size); 
+ if (p==0) // did malloc succeed?
+  throw std::bad_alloc(); // ANSI/ISO compliant behavior
+ return p;
+}
+
+void operator delete (void *p)
+{
+ free(p); 
+}
+#endif
 //#include "simpledb.h"
 
 using namespace Sikozu;

@@ -14,8 +14,12 @@
 using namespace Sikozu;
 using namespace std;
     
+NodeId::NodeId()
+{
+  memset(m_nid, 0, sizeof(m_nid));
+}    
+
 NodeId::NodeId(const string& bytes)
- : m_nid(NID_SIZE_BYTES)
 {
   if (bytes.size() == NID_SIZE_BYTES)
   {
@@ -56,7 +60,7 @@ int NodeId::get_log_distance(const NodeId& other) const
 {
   int distance = NID_SIZE_BITS;
   
-  for (size_t i = 0; i < m_nid.size(); i++)
+  for (size_t i = 0; i < NID_SIZE_BYTES; i++)
   {
     uint8_t diff = m_nid[i] ^ other.m_nid[i];
     if (diff != 0)
@@ -69,7 +73,7 @@ int NodeId::get_log_distance(const NodeId& other) const
 
 int NodeId::closest(const NodeId& left, const NodeId& right) const
 {
-  for (size_t i = 0; i < m_nid.size(); i++)
+  for (size_t i = 0; i < NID_SIZE_BYTES; i++)
   {
     uint8_t diff_l = m_nid[i] ^ left.m_nid[i];
     uint8_t diff_r = m_nid[i] ^ right.m_nid[i];
@@ -79,4 +83,11 @@ int NodeId::closest(const NodeId& left, const NodeId& right) const
       return 1;
   }
   return 0;
+}
+
+std::vector<uint8_t> NodeId::get_nid() const
+{
+  std::vector<uint8_t> output(NID_SIZE_BYTES);
+  memcpy(&output[0], m_nid, NID_SIZE_BYTES);
+  return output;
 }

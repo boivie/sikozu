@@ -20,22 +20,34 @@
 namespace Sikozu {
 
   class TaskNotFoundException : public std::exception {};
+  class TaskNotBlockable : public std::exception {};
 
   class Task {
    public:
     virtual void task_main() = 0;
-    void post_event(std::auto_ptr<TransactionReply> event_p);
     void run(boost::shared_ptr<Task> me_p);
     Task();
-    virtual ~Task();
-    /** Waits for one event, then returns. */
-    void wait();
+    virtual ~Task() {}
+    virtual void post_event(std::auto_ptr<TransactionReply> event_p) { throw TaskNotBlockable(); }
+    virtual ActiveOutboundTransactions& get_transactions() { throw TaskNotBlockable(); }
     static boost::shared_ptr<Task> current();
-    ActiveOutboundTransactions m_transactions;
+
    protected:
-    concurrent_queue< TransactionReply* > m_queue;
     boost::shared_ptr<Task> m_me_p; // Only available during task_main
     static boost::thread_specific_ptr<Task> current_p;
+  };
+
+  class BlockableTask : public Task {
+   public:
+    virtual ~BlockableTask();   
+    virtual void post_event(std::auto_ptr<TransactionReply> event_p);
+    virtual ActiveOutboundTransactions& get_transactions() { return m_transactions; }
+    /** Waits for one event, then returns. */
+    void wait();
+   protected:
+    concurrent_queue< TransactionReply* > m_queue;
+    ActiveOutboundTransactions m_transactions;
+   
   };
 
 }

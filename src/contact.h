@@ -34,7 +34,7 @@ class Contact {
   ~Contact();
 
  protected:  
-  Contact(struct sockaddr_in6& address) : m_caddr(address), m_has_nid(false), m_has_addr(true) {} 
+  Contact(const struct sockaddr_in6& address) : m_caddr(address), m_has_nid(false), m_has_addr(true) {} 
   Contact(const NodeId& nodeid) : m_nodeid(nodeid), m_has_nid(true), m_has_addr(false) {}
   NodeId m_nodeid;
   struct sockaddr_in6 m_caddr;
@@ -43,15 +43,23 @@ class Contact {
   bool m_has_addr;
 };
 
+class ContactRegistryKey {
+ public:
+  ContactRegistryKey(const struct sockaddr_in6& address);
+  bool operator < (const ContactRegistryKey& n1) const;
+ private:
+  uint8_t m_key[18];
+};
+
 class ContactRegistry {
 friend class Contact;
 public:
-  static boost::shared_ptr<Contact> get(struct sockaddr_in6& address);
+  static boost::shared_ptr<Contact> get(const struct sockaddr_in6& address);
   static boost::shared_ptr<Contact> create_new(const NodeId& nid);
 protected:
-  static void remove(const std::vector<char>& key);
+  static void remove(const struct sockaddr_in6& address);
   static boost::mutex instance_mutex;
-  typedef std::map<std::vector<char>, boost::weak_ptr<Contact> > Mapping;
+  typedef std::map<ContactRegistryKey, boost::weak_ptr<Contact> > Mapping;
   static Mapping s_instances;
 };
 
