@@ -34,10 +34,10 @@ class OutboundTransaction : public Transaction {
   friend class TransactionTimeComparator;
   ~OutboundTransaction();
   static boost::shared_ptr<OutboundTransaction> create(ContactPtr contact_p, const RemoteService& destination_service);
-  void set_timeout(int timeout_ms);
+  void set_timeout(const int timeout_ms);
   bool has_timed_out() const;
   bool is_pending() const;
-  void send_request(Command_t command, const std::vector<char>& payload);
+  void send_request(const Command_t command, const std::vector<char>& payload);
   Request& get_response();
   boost::shared_ptr<Task> get_task() { return m_task_p; }
   ContactPtr get_contact() { return m_contact_p; }
@@ -57,7 +57,7 @@ class OutboundTransaction : public Transaction {
 
 class InboundTransaction : public Transaction {
  public:
-  InboundTransaction(ContactPtr contact_p, uint32_t sid, std::auto_ptr<Request> request_p);
+  InboundTransaction(ContactPtr contact_p, const uint32_t sid, std::auto_ptr<Request> request_p);
   
   void send_response(const std::vector<char>& payload);
   Request& get_request();  
@@ -71,7 +71,7 @@ class InboundTransaction : public Transaction {
 
 class TransactionReply {
  public:
-  TransactionReply(uint32_t sid, ContactPtr contact_p, std::auto_ptr<Request> request_p) : m_sid(sid), m_contact_p(contact_p), m_request_p(request_p) {}
+  TransactionReply(const uint32_t sid, ContactPtr contact_p, std::auto_ptr<Request> request_p) : m_sid(sid), m_contact_p(contact_p), m_request_p(request_p) {}
   ContactPtr get_contact() { return m_contact_p; }
   std::auto_ptr<Request> get_request() { return m_request_p; }
   virtual bool is_transaction_reply() const { return true; }

@@ -30,7 +30,7 @@ class BucketStore {
   public:
     BucketStore(const NodeId& mynid) : m_mynid(mynid), m_buckets(NID_SIZE_BITS) {}
     void insert(ContactPtr contact_p);
-    void get_closest(NodeId& nodeid, std::list<ContactPtr>& contacts, size_t count = 20);
+    void get_closest(const NodeId& nodeid, std::list<ContactPtr>& contacts, size_t count = 20);
   protected:
     boost::mutex m_mutex;
     const NodeId& m_mynid;

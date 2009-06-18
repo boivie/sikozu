@@ -28,7 +28,7 @@ void RawPacketHandler::task_main()
     return;
   }
 
-  ContactPtr contact_p = Contact::get(m_raw_p->from);
+  ContactPtr contact_p = ContactRegistry::get(m_raw_p->from);
 
   size_t payload_size = m_raw_p->buffer_size - ph.size();
   auto_ptr<vector<char> > payload_p(new vector<char>(payload_size));

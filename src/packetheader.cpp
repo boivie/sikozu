@@ -17,7 +17,7 @@ using namespace std;
 using namespace google::protobuf::io;
 using namespace Sikozu;
   
-  size_t PacketHeader::parse(char* ptr_p, size_t size)
+  size_t PacketHeader::parse(const char* ptr_p, size_t size)
   {
     m_valid = false;
 

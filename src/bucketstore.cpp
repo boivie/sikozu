@@ -36,10 +36,10 @@ void BucketStore::insert(ContactPtr contact_p)
   }
 }
 
-void BucketStore::get_closest(NodeId& nodeid, list<ContactPtr>& contacts, size_t count)
+void BucketStore::get_closest(const NodeId& nodeid, list<ContactPtr>& contacts, size_t count)
 {
   // A temporary object only used for searching in the list.
-  ContactPtr needle_p = Contact::create_new(nodeid);
+  ContactPtr needle_p = ContactRegistry::create_new(nodeid);
   mutex::scoped_lock(m_mutex);
 
   AllContacts_t::iterator iter_up = m_all_contacts.lower_bound(needle_p);

@@ -19,6 +19,7 @@
 namespace Sikozu {
 
 class Contact {
+ friend class ContactRegistry;
  public:
 
   const NodeId& get_nodeid() const { return m_nodeid; }
@@ -30,23 +31,30 @@ class Contact {
   uint32_t get_timestamp() const { return m_timestamp; }
   void set_timestamp(uint32_t timestamp) { m_timestamp = timestamp; }
 
-  static boost::shared_ptr<Contact> get(struct sockaddr_in6& address);
-  static boost::shared_ptr<Contact> create_new(NodeId& nid);
   ~Contact();
 
- protected:
-  static boost::mutex instance_mutex;
-  typedef std::map<std::vector<char>, boost::weak_ptr<Contact> > Mapping;
-  static Mapping s_instances;
-  
+ protected:  
   Contact(struct sockaddr_in6& address) : m_caddr(address), m_has_nid(false), m_has_addr(true) {} 
-  Contact(NodeId& nodeid) : m_nodeid(nodeid), m_has_nid(true), m_has_addr(false) {}
+  Contact(const NodeId& nodeid) : m_nodeid(nodeid), m_has_nid(true), m_has_addr(false) {}
   NodeId m_nodeid;
   struct sockaddr_in6 m_caddr;
   uint32_t m_timestamp;
   bool m_has_nid;
   bool m_has_addr;
 };
+
+class ContactRegistry {
+friend class Contact;
+public:
+  static boost::shared_ptr<Contact> get(struct sockaddr_in6& address);
+  static boost::shared_ptr<Contact> create_new(const NodeId& nid);
+protected:
+  static void remove(const std::vector<char>& key);
+  static boost::mutex instance_mutex;
+  typedef std::map<std::vector<char>, boost::weak_ptr<Contact> > Mapping;
+  static Mapping s_instances;
+};
+
 
 typedef boost::shared_ptr<Contact> ContactPtr;
 }

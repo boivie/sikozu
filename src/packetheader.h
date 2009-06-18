@@ -32,13 +32,13 @@ namespace Sikozu {
   class PacketHeader {
    public:
     PacketHeader() {};
-    size_t parse(char* ptr_p, size_t size);
+    size_t parse(const char* ptr_p, size_t size);
     size_t serialize(char* ptr_p, size_t size);
 
-    Channel_t get_channel() { return m_channel; };
+    Channel_t get_channel() const { return m_channel; };
     void set_channel(Channel_t channel) { m_channel = channel; }
     
-    Command_t get_command() { return m_command; };
+    Command_t get_command() const { return m_command; };
     void set_command(Command_t command) { m_command = command; }
     
     uint32_t get_sid() const { return m_sid; }

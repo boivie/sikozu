@@ -17,8 +17,8 @@ using namespace Sikozu;
 using namespace std;
 using namespace boost;
 
-Contact::Mapping Contact::s_instances;
-boost::mutex Contact::instance_mutex;
+ContactRegistry::Mapping ContactRegistry::s_instances;
+boost::mutex ContactRegistry::instance_mutex;
 
 static void make_key(struct sockaddr_in6& address, vector<char>& key)
 {
@@ -26,13 +26,13 @@ static void make_key(struct sockaddr_in6& address, vector<char>& key)
   memcpy(&key[16], &address.sin6_port, 2);
 }
 
-ContactPtr Contact::get(struct sockaddr_in6& address)
+ContactPtr ContactRegistry::get(struct sockaddr_in6& address)
 {
   vector<char> key(16 + 2);
   make_key(address, key);
   {
     mutex::scoped_lock l(instance_mutex);
-    Contact::Mapping::iterator i = s_instances.find(key);
+    ContactRegistry::Mapping::iterator i = s_instances.find(key);
     if (i != s_instances.end())
     {
       if (ContactPtr contact_p = i->second.lock())
@@ -48,10 +48,16 @@ ContactPtr Contact::get(struct sockaddr_in6& address)
   }
 }
 
-ContactPtr Contact::create_new(NodeId& nodeid) 
+ContactPtr ContactRegistry::create_new(const NodeId& nodeid) 
 {
   Contact* object_p = new Contact(nodeid);
   return ContactPtr(object_p);
+}
+
+void ContactRegistry::remove(const vector<char>& key)
+{
+  mutex::scoped_lock l(instance_mutex);
+  s_instances.erase(key);
 }
 
 Contact::~Contact() 
@@ -61,6 +67,6 @@ Contact::~Contact()
     // Also remove it from the table of all instances
     vector<char> key(16 + 2);
     make_key(this->m_caddr, key);
-    s_instances.erase(key);
+    ContactRegistry::remove(key);
   }
 }
