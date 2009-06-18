@@ -60,9 +60,18 @@ Server::~Server()
   }
 }
 
-void Server::send_udp(const struct sockaddr_in6& addr, vector<char>& buffer)
+void Server::send_udp(ContactPtr contact_p, std::auto_ptr<vector<char> > buffer_p)
 {
-  sendto(m_udp_socket, &buffer[0], buffer.size(), 0, (struct sockaddr*)&addr, sizeof(struct sockaddr_in6));  
+  PacketToSend packet;
+  packet.contact_p = contact_p;
+  packet.data_p = buffer_p.release();
+  {
+    boost::mutex::scoped_lock l(packet_mutex);
+    m_packets.push(packet);
+  }
+  // Ask ourselves (well, the main thread) to add the timer.
+  char buf[1] = {'U'};
+  write(m_write_pipe, buf, 1);
 }
 
 void got_packet(int fd, short event, void* arg) 
@@ -143,7 +152,16 @@ void Server::on_ipc(int fd)
       }
     }
   }
-  cout << "GOT: " << buf << endl;
+  else if (buf[0] == 'U')
+  {
+    PacketToSend packet;
+    {
+      boost::mutex::scoped_lock l(packet_mutex);
+      packet = m_packets.front();
+      m_packets.pop();
+    }
+    sendto(m_udp_socket, &(*packet.data_p)[0], packet.data_p->size(), 0, (struct sockaddr*)&packet.contact_p->get_address(), sizeof(struct sockaddr_in6));  
+  } 
 }
 
 void Server::schedule(auto_ptr<Task> task_p)

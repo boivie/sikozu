@@ -16,7 +16,7 @@ namespace Sikozu {
 
   class CoreService : public BaseService {
   public:
-    CoreService(NodeId& mynid); 
+    CoreService(const NodeId& mynid); 
     const std::string& get_name() const;
     void on_transaction(std::auto_ptr<InboundTransaction> transaction_p);
   protected:

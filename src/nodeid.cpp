@@ -52,7 +52,7 @@ const static uint8_t lookup[256] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 
-int NodeId::get_log_distance(NodeId& other) const
+int NodeId::get_log_distance(const NodeId& other) const
 {
   int distance = NID_SIZE_BITS;
   

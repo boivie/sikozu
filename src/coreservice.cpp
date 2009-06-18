@@ -209,7 +209,7 @@ void CoreServiceThread::thread_main()
 #endif
 }
 */
-CoreService::CoreService(NodeId& mynid)
+CoreService::CoreService(const NodeId& mynid)
   : BaseService(mynid) 
 {
 }

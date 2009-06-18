@@ -43,18 +43,18 @@ bool OutboundTransaction::is_pending() const
 void OutboundTransaction::send_request(Command_t command, const std::vector<char>& payload) 
 {
   Server* server_p = Server::get_instance();
-  vector<char> buffer(payload.size() + PACKET_HEADER_SIZE);
+  std::auto_ptr<vector<char> > buffer_p(new vector<char>(payload.size() + PACKET_HEADER_SIZE));
   PacketHeader ph;
   ph.set_channel(m_service.get_channel());
   ph.set_command(command);
   ph.set_sid(m_sid);
-  ph.serialize(&buffer[0], PACKET_HEADER_SIZE);
+  ph.serialize(&(*buffer_p)[0], PACKET_HEADER_SIZE);
   
   if (payload.size() > 0)
   {
-    memcpy(&buffer[PACKET_HEADER_SIZE], &payload[0], payload.size());
+    memcpy(&(*buffer_p)[PACKET_HEADER_SIZE], &payload[0], payload.size());
   }
-  server_p->send_udp(m_contact_p->get_address(), buffer); 
+  server_p->send_udp(m_contact_p, buffer_p); 
   
   // Start timer, if any
   if (m_timeout_ms > 0)
@@ -120,18 +120,18 @@ InboundTransaction::InboundTransaction(ContactPtr contact_p, uint32_t sid, auto_
 void InboundTransaction::send_response(const std::vector<char>& payload)
 {
   Server* server_p = Server::get_instance();
-  vector<char> buffer(payload.size() + PACKET_HEADER_SIZE);
+  auto_ptr<vector<char> > buffer_p(new vector<char>(payload.size() + PACKET_HEADER_SIZE));
   PacketHeader ph;
   ph.set_channel(0xFFFF);
   ph.set_command(0xFFFF);
   ph.set_sid(m_sid);
-  ph.serialize(&buffer[0], PACKET_HEADER_SIZE);
+  ph.serialize(&(*buffer_p)[0], PACKET_HEADER_SIZE);
   
   if (payload.size() > 0)
   {
-    memcpy(&buffer[PACKET_HEADER_SIZE], &payload[0], payload.size());
+    memcpy(&(*buffer_p)[PACKET_HEADER_SIZE], &payload[0], payload.size());
   }
-  server_p->send_udp(m_contact_p->get_address(), buffer);
+  server_p->send_udp(m_contact_p, buffer_p);
 
 }
 

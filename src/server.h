@@ -34,15 +34,20 @@ namespace Sikozu {
     bool is_new;
     Server* server_p;
   };
+  
+  struct PacketToSend {
+    ContactPtr contact_p;
+    std::vector<char>* data_p;
+  };
 
   class Server {
     public:
       Server(int workers = 4);
       ~Server();
       static Server* get_instance() { return m_instance; };
-      NodeId& get_nid() { return nid; }
+      const NodeId& get_nid() const { return nid; }
       ServiceRegistry& get_service_registry() { return m_serviceregistry; };
-      void send_udp(const struct sockaddr_in6& addr, std::vector<char>& buffer);
+      void send_udp(ContactPtr contact_p, std::auto_ptr<std::vector<char> > buffer_p);
       int listen_udp(uint16_t port);
       void on_packet(int fd);
       void on_ipc(int fd);
@@ -53,9 +58,11 @@ namespace Sikozu {
             
     protected:
       boost::mutex timer_mutex;
-
+      boost::mutex packet_mutex;
+      
       int m_write_pipe;
       std::list<ScheduledTask*> m_timers;
+      std::queue<PacketToSend> m_packets;
       boost::threadpool::pool m_thread_pool;
       static Server* m_instance;
       ServiceRegistry m_serviceregistry;
