@@ -160,7 +160,8 @@ void Server::on_ipc(int fd)
       packet = m_packets.front();
       m_packets.pop();
     }
-    sendto(m_udp_socket, &(*packet.data_p)[0], packet.data_p->size(), 0, (struct sockaddr*)&packet.contact_p->get_address(), sizeof(struct sockaddr_in6));  
+    auto_ptr<std::vector<char> > data_p(packet.data_p);
+    sendto(m_udp_socket, &(*data_p)[0], data_p->size(), 0, (struct sockaddr*)&packet.contact_p->get_address(), sizeof(struct sockaddr_in6));  
   } 
 }
 
