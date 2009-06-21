@@ -13,6 +13,14 @@ message PingRequest {
 message PingResponse {
 }
 
+message HelloRequest {
+  optional bytes nid = 1;
+}
+
+message HelloResponse {
+  optional bytes nid = 1;
+}
+
 message FindNodeRequest {
   required bytes nid = 1;
   optional string service = 2;

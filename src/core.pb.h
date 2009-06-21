@@ -33,6 +33,8 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
 class Contact;
 class PingRequest;
 class PingResponse;
+class HelloRequest;
+class HelloResponse;
 class FindNodeRequest;
 class FindNodeResponse;
 class GetServicesRequest;
@@ -267,6 +269,154 @@ class PingResponse : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static PingResponse* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class HelloRequest : public ::google::protobuf::Message {
+ public:
+  HelloRequest();
+  virtual ~HelloRequest();
+  
+  HelloRequest(const HelloRequest& from);
+  
+  inline HelloRequest& operator=(const HelloRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const HelloRequest& default_instance();
+  void Swap(HelloRequest* other);
+  
+  // implements Message ----------------------------------------------
+  
+  HelloRequest* New() const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  const ::google::protobuf::Descriptor* GetDescriptor() const;
+  const ::google::protobuf::Reflection* GetReflection() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional bytes nid = 1;
+  inline bool has_nid() const;
+  inline void clear_nid();
+  inline const ::std::string& nid() const;
+  inline void set_nid(const ::std::string& value);
+  inline void set_nid(const char* value);
+  inline void set_nid(const void* value, size_t size);
+  inline ::std::string* mutable_nid();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* nid_;
+  static const ::std::string _default_nid_;
+  friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
+      const ::google::protobuf::FileDescriptor* file);
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static HelloRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class HelloResponse : public ::google::protobuf::Message {
+ public:
+  HelloResponse();
+  virtual ~HelloResponse();
+  
+  HelloResponse(const HelloResponse& from);
+  
+  inline HelloResponse& operator=(const HelloResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const HelloResponse& default_instance();
+  void Swap(HelloResponse* other);
+  
+  // implements Message ----------------------------------------------
+  
+  HelloResponse* New() const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  const ::google::protobuf::Descriptor* GetDescriptor() const;
+  const ::google::protobuf::Reflection* GetReflection() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional bytes nid = 1;
+  inline bool has_nid() const;
+  inline void clear_nid();
+  inline const ::std::string& nid() const;
+  inline void set_nid(const ::std::string& value);
+  inline void set_nid(const char* value);
+  inline void set_nid(const void* value, size_t size);
+  inline ::std::string* mutable_nid();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* nid_;
+  static const ::std::string _default_nid_;
+  friend void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(
+      const ::google::protobuf::FileDescriptor* file);
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static HelloResponse* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1070,6 +1220,98 @@ inline void Contact::set_port(::google::protobuf::uint32 value) {
 // -------------------------------------------------------------------
 
 // PingResponse
+
+// -------------------------------------------------------------------
+
+// HelloRequest
+
+// optional bytes nid = 1;
+inline bool HelloRequest::has_nid() const {
+  return _has_bit(0);
+}
+inline void HelloRequest::clear_nid() {
+  if (nid_ != &_default_nid_) {
+    nid_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& HelloRequest::nid() const {
+  return *nid_;
+}
+inline void HelloRequest::set_nid(const ::std::string& value) {
+  _set_bit(0);
+  if (nid_ == &_default_nid_) {
+    nid_ = new ::std::string;
+  }
+  nid_->assign(value);
+}
+inline void HelloRequest::set_nid(const char* value) {
+  _set_bit(0);
+  if (nid_ == &_default_nid_) {
+    nid_ = new ::std::string;
+  }
+  nid_->assign(value);
+}
+inline void HelloRequest::set_nid(const void* value, size_t size) {
+  _set_bit(0);
+  if (nid_ == &_default_nid_) {
+    nid_ = new ::std::string;
+  }
+  nid_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* HelloRequest::mutable_nid() {
+  _set_bit(0);
+  if (nid_ == &_default_nid_) {
+    nid_ = new ::std::string;
+  }
+  return nid_;
+}
+
+// -------------------------------------------------------------------
+
+// HelloResponse
+
+// optional bytes nid = 1;
+inline bool HelloResponse::has_nid() const {
+  return _has_bit(0);
+}
+inline void HelloResponse::clear_nid() {
+  if (nid_ != &_default_nid_) {
+    nid_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& HelloResponse::nid() const {
+  return *nid_;
+}
+inline void HelloResponse::set_nid(const ::std::string& value) {
+  _set_bit(0);
+  if (nid_ == &_default_nid_) {
+    nid_ = new ::std::string;
+  }
+  nid_->assign(value);
+}
+inline void HelloResponse::set_nid(const char* value) {
+  _set_bit(0);
+  if (nid_ == &_default_nid_) {
+    nid_ = new ::std::string;
+  }
+  nid_->assign(value);
+}
+inline void HelloResponse::set_nid(const void* value, size_t size) {
+  _set_bit(0);
+  if (nid_ == &_default_nid_) {
+    nid_ = new ::std::string;
+  }
+  nid_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* HelloResponse::mutable_nid() {
+  _set_bit(0);
+  if (nid_ == &_default_nid_) {
+    nid_ = new ::std::string;
+  }
+  return nid_;
+}
 
 // -------------------------------------------------------------------
 

@@ -83,6 +83,50 @@ _PINGRESPONSE = descriptor.Descriptor(
   options=None)
 
 
+_HELLOREQUEST = descriptor.Descriptor(
+  name='HelloRequest',
+  full_name='Sikozu.Messages.HelloRequest',
+  filename='core.proto',
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='nid', full_name='Sikozu.Messages.HelloRequest.nid', index=0,
+      number=1, type=12, cpp_type=9, label=1,
+      default_value="",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],  # TODO(robinson): Implement.
+  enum_types=[
+  ],
+  options=None)
+
+
+_HELLORESPONSE = descriptor.Descriptor(
+  name='HelloResponse',
+  full_name='Sikozu.Messages.HelloResponse',
+  filename='core.proto',
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='nid', full_name='Sikozu.Messages.HelloResponse.nid', index=0,
+      number=1, type=12, cpp_type=9, label=1,
+      default_value="",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],  # TODO(robinson): Implement.
+  enum_types=[
+  ],
+  options=None)
+
+
 _FINDNODEREQUEST = descriptor.Descriptor(
   name='FindNodeRequest',
   full_name='Sikozu.Messages.FindNodeRequest',
@@ -301,6 +345,14 @@ class PingRequest(message.Message):
 class PingResponse(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _PINGRESPONSE
+
+class HelloRequest(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _HELLOREQUEST
+
+class HelloResponse(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _HELLORESPONSE
 
 class FindNodeRequest(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType

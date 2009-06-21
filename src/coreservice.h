@@ -25,6 +25,7 @@ namespace Sikozu {
     void handle_find_node(InboundTransaction& transaction);
     void handle_announce_service(InboundTransaction& transaction);
     void handle_get_channel(InboundTransaction& transaction);
+    void handle_hello(InboundTransaction& transaction);
   };
 }
 

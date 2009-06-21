@@ -85,7 +85,7 @@ int NodeId::closest(const NodeId& left, const NodeId& right) const
   return 0;
 }
 
-std::vector<uint8_t> NodeId::get_nid() const
+std::vector<uint8_t> NodeId::get_bytes() const
 {
   std::vector<uint8_t> output(NID_SIZE_BYTES);
   memcpy(&output[0], m_nid, NID_SIZE_BYTES);

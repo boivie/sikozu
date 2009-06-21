@@ -24,6 +24,7 @@ class Contact {
 
   const NodeId& get_nodeid() const { return m_nodeid; }
   void set_nodeid(const NodeId& nid) { m_has_nid = true; m_nodeid = nid; }
+  bool has_nodeid() const { return m_has_nid; }
 
   const struct sockaddr_in6& get_address() const { return m_caddr; }
   void set_address(const struct sockaddr_in6& addr) { m_has_addr = true; m_caddr = addr; }

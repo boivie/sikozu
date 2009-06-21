@@ -26,6 +26,7 @@ enum CommandIdentifier {
   GET_SERVICES_REQUEST,
   ANNOUNCE_SERVICE_REQUEST,
   GET_CHANNEL_REQUEST,
+  HELLO_REQUEST,
   LAST
 };
 
@@ -94,7 +95,7 @@ void CoreService::handle_find_node(InboundTransaction& transaction)
   {    
     Messages::Contact* outmsg_contact_p = outmsg.add_contacts();
     ContactPtr contact_p = *i;
-    const std::vector<uint8_t> nid = contact_p->get_nodeid().get_nid();
+    const std::vector<uint8_t> nid = contact_p->get_nodeid().get_bytes();
     outmsg_contact_p->set_nid(&nid[0], nid.size());
     const struct sockaddr_in6& addr = contact_p->get_address();
     outmsg_contact_p->set_port(addr.sin6_port);
@@ -155,6 +156,30 @@ void CoreService::handle_get_channel(InboundTransaction& transaction)
   send_reply(transaction, outmsg);
 }
 
+void CoreService::handle_hello(InboundTransaction& transaction)
+{
+  Messages::HelloRequest inmsg;
+
+  parse_request(transaction, inmsg);
+
+  if (inmsg.has_nid())
+  {
+    string client_nid = inmsg.nid();
+    if ((client_nid.size() == NID_SIZE_BYTES) && !transaction.get_sender()->has_nodeid())
+    {
+      // TODO: Verify!
+      NodeId nid(client_nid);
+      transaction.get_sender()->set_nodeid(nid);
+    }
+  }
+
+  Messages::HelloResponse outmsg;  
+  const std::vector<uint8_t> nid = Server::get_instance()->get_nodeid().get_bytes();
+  outmsg.set_nid(&nid[0], nid.size());
+
+  send_reply(transaction, outmsg);
+}
+
 void CoreService::on_transaction(std::auto_ptr<InboundTransaction> transaction_p)
 {
   switch (transaction_p->get_request().get_command())
@@ -179,36 +204,16 @@ void CoreService::on_transaction(std::auto_ptr<InboundTransaction> transaction_p
     cout << "GET_CHANNEL_REQUEST" << endl;  
     handle_get_channel(*transaction_p);
     break;
+  case HELLO_REQUEST:
+    cout << "HELLO_REQUEST" << endl;  
+    handle_hello(*transaction_p);
+    break;
   default:
     cerr << "Got an unknown command: " << transaction_p->get_request().get_command() << endl; 
     break;
   }
 }
-/*
-void CoreServiceThread::thread_main() 
-{
-#if 0
-  OutboundTransactionPtr transaction_p[3];
-  int i;
-  
-  for (i = 0; i < 3; i++)
-  {
-    ContactPtr contact_p;
-    RemoteService service;
-    transaction_p[i] = OutboundTransaction::create(contact_p, service);
-    transaction_p[i]->set_timeout(3000);
-  }
-  
-  while (transaction_p[0]->is_pending() || 
-         transaction_p[1]->is_pending() || 
-         transaction_p[2]->is_pending())
-  {
-    Thread::receive();
-  }
-  
-#endif
-}
-*/
+
 CoreService::CoreService(const NodeId& mynid)
   : BaseService(mynid) 
 {

@@ -69,7 +69,7 @@ int main(int argc, char **argv)
   
   // Register services - core and external
   ServiceRegistry& sr = server_p->get_service_registry();
-  sr.register_service(new CoreService(server_p->get_nid()));
+  sr.register_service(new CoreService(server_p->get_nodeid()));
   
   if (vm.count("external") > 0)
   {

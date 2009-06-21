@@ -45,7 +45,7 @@ namespace Sikozu {
       Server(int workers = 4);
       ~Server();
       static Server* get_instance() { return m_instance; };
-      const NodeId& get_nid() const { return nid; }
+      const NodeId& get_nodeid() const { return nid; }
       ServiceRegistry& get_service_registry() { return m_serviceregistry; };
       void send_udp(ContactPtr contact_p, std::auto_ptr<std::vector<char> > buffer_p);
       int listen_udp(uint16_t port);

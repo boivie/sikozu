@@ -20,7 +20,7 @@ namespace Sikozu {
     NodeId();
     NodeId(const std::string& bytes);
     size_t size() const { return NID_SIZE_BYTES; }
-    std::vector<uint8_t> get_nid() const;
+    std::vector<uint8_t> get_bytes() const;
     int closest(const NodeId& left, const NodeId& right) const;
     int get_log_distance(const NodeId& other) const;
     friend std::ostream& operator << (std::ostream& os, NodeId& N);

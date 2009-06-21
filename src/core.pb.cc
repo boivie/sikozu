@@ -20,6 +20,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* PingResponse_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   PingResponse_reflection_ = NULL;
+const ::google::protobuf::Descriptor* HelloRequest_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  HelloRequest_reflection_ = NULL;
+const ::google::protobuf::Descriptor* HelloResponse_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  HelloResponse_reflection_ = NULL;
 const ::google::protobuf::Descriptor* FindNodeRequest_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   FindNodeRequest_reflection_ = NULL;
@@ -104,7 +110,41 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
       sizeof(PingResponse));
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     PingResponse_descriptor_, PingResponse::default_instance_);
-  FindNodeRequest_descriptor_ = file->message_type(3);
+  HelloRequest_descriptor_ = file->message_type(3);
+  HelloRequest::default_instance_ = new HelloRequest();
+  static const int HelloRequest_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HelloRequest, nid_),
+  };
+  HelloRequest_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      HelloRequest_descriptor_,
+      HelloRequest::default_instance_,
+      HelloRequest_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HelloRequest, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HelloRequest, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      sizeof(HelloRequest));
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    HelloRequest_descriptor_, HelloRequest::default_instance_);
+  HelloResponse_descriptor_ = file->message_type(4);
+  HelloResponse::default_instance_ = new HelloResponse();
+  static const int HelloResponse_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HelloResponse, nid_),
+  };
+  HelloResponse_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      HelloResponse_descriptor_,
+      HelloResponse::default_instance_,
+      HelloResponse_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HelloResponse, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(HelloResponse, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      sizeof(HelloResponse));
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    HelloResponse_descriptor_, HelloResponse::default_instance_);
+  FindNodeRequest_descriptor_ = file->message_type(5);
   FindNodeRequest::default_instance_ = new FindNodeRequest();
   static const int FindNodeRequest_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FindNodeRequest, nid_),
@@ -122,7 +162,7 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
       sizeof(FindNodeRequest));
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     FindNodeRequest_descriptor_, FindNodeRequest::default_instance_);
-  FindNodeResponse_descriptor_ = file->message_type(4);
+  FindNodeResponse_descriptor_ = file->message_type(6);
   FindNodeResponse::default_instance_ = new FindNodeResponse();
   static const int FindNodeResponse_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FindNodeResponse, contacts_),
@@ -139,7 +179,7 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
       sizeof(FindNodeResponse));
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     FindNodeResponse_descriptor_, FindNodeResponse::default_instance_);
-  GetServicesRequest_descriptor_ = file->message_type(5);
+  GetServicesRequest_descriptor_ = file->message_type(7);
   GetServicesRequest::default_instance_ = new GetServicesRequest();
   static const int GetServicesRequest_offsets_[1] = {
   };
@@ -155,7 +195,7 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
       sizeof(GetServicesRequest));
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GetServicesRequest_descriptor_, GetServicesRequest::default_instance_);
-  GetServicesResponse_descriptor_ = file->message_type(6);
+  GetServicesResponse_descriptor_ = file->message_type(8);
   GetServicesResponse::default_instance_ = new GetServicesResponse();
   static const int GetServicesResponse_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetServicesResponse, services_),
@@ -190,7 +230,7 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
     GetServicesResponse_Result_descriptor_, GetServicesResponse_Result::default_instance_);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GetServicesResponse_descriptor_, GetServicesResponse::default_instance_);
-  GetChannelRequest_descriptor_ = file->message_type(7);
+  GetChannelRequest_descriptor_ = file->message_type(9);
   GetChannelRequest::default_instance_ = new GetChannelRequest();
   static const int GetChannelRequest_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetChannelRequest, name_),
@@ -207,7 +247,7 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
       sizeof(GetChannelRequest));
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GetChannelRequest_descriptor_, GetChannelRequest::default_instance_);
-  GetChannelResponse_descriptor_ = file->message_type(8);
+  GetChannelResponse_descriptor_ = file->message_type(10);
   GetChannelResponse::default_instance_ = new GetChannelResponse();
   static const int GetChannelResponse_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(GetChannelResponse, channel_),
@@ -224,7 +264,7 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
       sizeof(GetChannelResponse));
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     GetChannelResponse_descriptor_, GetChannelResponse::default_instance_);
-  AnnounceServiceRequest_descriptor_ = file->message_type(9);
+  AnnounceServiceRequest_descriptor_ = file->message_type(11);
   AnnounceServiceRequest::default_instance_ = new AnnounceServiceRequest();
   static const int AnnounceServiceRequest_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(AnnounceServiceRequest, nid_),
@@ -242,7 +282,7 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
       sizeof(AnnounceServiceRequest));
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     AnnounceServiceRequest_descriptor_, AnnounceServiceRequest::default_instance_);
-  AnnounceServiceResponse_descriptor_ = file->message_type(10);
+  AnnounceServiceResponse_descriptor_ = file->message_type(12);
   AnnounceServiceResponse::default_instance_ = new AnnounceServiceResponse();
   static const int AnnounceServiceResponse_offsets_[1] = {
   };
@@ -261,6 +301,8 @@ void protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors(const ::google::pro
   Contact::default_instance_->InitAsDefaultInstance();
   PingRequest::default_instance_->InitAsDefaultInstance();
   PingResponse::default_instance_->InitAsDefaultInstance();
+  HelloRequest::default_instance_->InitAsDefaultInstance();
+  HelloResponse::default_instance_->InitAsDefaultInstance();
   FindNodeRequest::default_instance_->InitAsDefaultInstance();
   FindNodeResponse::default_instance_->InitAsDefaultInstance();
   GetServicesRequest::default_instance_->InitAsDefaultInstance();
@@ -284,17 +326,19 @@ void protobuf_BuildDesc_core_2eproto() {
     "\n\ncore.proto\022\017Sikozu.Messages\"@\n\007Contact"
     "\022\013\n\003nid\030\001 \002(\014\022\014\n\004ipv4\030\002 \001(\r\022\014\n\004ipv6\030\003 \001("
     "\014\022\014\n\004port\030\004 \002(\r\"\r\n\013PingRequest\"\016\n\014PingRe"
-    "sponse\"/\n\017FindNodeRequest\022\013\n\003nid\030\001 \002(\014\022\017"
-    "\n\007service\030\002 \001(\t\">\n\020FindNodeResponse\022*\n\010c"
-    "ontacts\030\001 \003(\0132\030.Sikozu.Messages.Contact\""
-    "\024\n\022GetServicesRequest\"}\n\023GetServicesResp"
-    "onse\022=\n\010services\030\001 \003(\0132+.Sikozu.Messages"
-    ".GetServicesResponse.Result\032\'\n\006Result\022\017\n"
-    "\007channel\030\001 \002(\r\022\014\n\004name\030\002 \002(\t\"!\n\021GetChann"
-    "elRequest\022\014\n\004name\030\001 \002(\t\"%\n\022GetChannelRes"
-    "ponse\022\017\n\007channel\030\001 \002(\r\"6\n\026AnnounceServic"
-    "eRequest\022\013\n\003nid\030\001 \002(\014\022\017\n\007service\030\002 \003(\t\"\031"
-    "\n\027AnnounceServiceResponse", 545,
+    "sponse\"\033\n\014HelloRequest\022\013\n\003nid\030\001 \001(\014\"\034\n\rH"
+    "elloResponse\022\013\n\003nid\030\001 \001(\014\"/\n\017FindNodeReq"
+    "uest\022\013\n\003nid\030\001 \002(\014\022\017\n\007service\030\002 \001(\t\">\n\020Fi"
+    "ndNodeResponse\022*\n\010contacts\030\001 \003(\0132\030.Sikoz"
+    "u.Messages.Contact\"\024\n\022GetServicesRequest"
+    "\"}\n\023GetServicesResponse\022=\n\010services\030\001 \003("
+    "\0132+.Sikozu.Messages.GetServicesResponse."
+    "Result\032\'\n\006Result\022\017\n\007channel\030\001 \002(\r\022\014\n\004nam"
+    "e\030\002 \002(\t\"!\n\021GetChannelRequest\022\014\n\004name\030\001 \002"
+    "(\t\"%\n\022GetChannelResponse\022\017\n\007channel\030\001 \002("
+    "\r\"6\n\026AnnounceServiceRequest\022\013\n\003nid\030\001 \002(\014"
+    "\022\017\n\007service\030\002 \003(\t\"\031\n\027AnnounceServiceResp"
+    "onse", 604,
   &protobuf_BuildDesc_core_2eproto_AssignGlobalDescriptors);
 }
 
@@ -463,6 +507,112 @@ const ::google::protobuf::Descriptor* PingResponse::GetDescriptor() const {
 const ::google::protobuf::Reflection* PingResponse::GetReflection() const {
   if (PingResponse_reflection_ == NULL) protobuf_BuildDesc_core_2eproto();
   return PingResponse_reflection_;
+}
+
+// ===================================================================
+
+const ::std::string HelloRequest::_default_nid_;
+HelloRequest::HelloRequest()
+  : ::google::protobuf::Message(),
+    _cached_size_(0),
+    nid_(const_cast< ::std::string*>(&_default_nid_)) {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+void HelloRequest::InitAsDefaultInstance() {}
+
+HelloRequest::HelloRequest(const HelloRequest& from)
+  : ::google::protobuf::Message(),
+    _cached_size_(0),
+    nid_(const_cast< ::std::string*>(&_default_nid_)) {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  MergeFrom(from);
+}
+
+HelloRequest::~HelloRequest() {
+  if (nid_ != &_default_nid_) {
+    delete nid_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* HelloRequest::descriptor() {
+  if (HelloRequest_descriptor_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return HelloRequest_descriptor_;
+}
+
+const HelloRequest& HelloRequest::default_instance() {
+  if (default_instance_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return *default_instance_;
+}
+
+HelloRequest* HelloRequest::default_instance_ = NULL;
+
+HelloRequest* HelloRequest::New() const {
+  return new HelloRequest;
+}
+
+const ::google::protobuf::Descriptor* HelloRequest::GetDescriptor() const {
+  return descriptor();
+}
+
+const ::google::protobuf::Reflection* HelloRequest::GetReflection() const {
+  if (HelloRequest_reflection_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return HelloRequest_reflection_;
+}
+
+// ===================================================================
+
+const ::std::string HelloResponse::_default_nid_;
+HelloResponse::HelloResponse()
+  : ::google::protobuf::Message(),
+    _cached_size_(0),
+    nid_(const_cast< ::std::string*>(&_default_nid_)) {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+void HelloResponse::InitAsDefaultInstance() {}
+
+HelloResponse::HelloResponse(const HelloResponse& from)
+  : ::google::protobuf::Message(),
+    _cached_size_(0),
+    nid_(const_cast< ::std::string*>(&_default_nid_)) {
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  MergeFrom(from);
+}
+
+HelloResponse::~HelloResponse() {
+  if (nid_ != &_default_nid_) {
+    delete nid_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* HelloResponse::descriptor() {
+  if (HelloResponse_descriptor_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return HelloResponse_descriptor_;
+}
+
+const HelloResponse& HelloResponse::default_instance() {
+  if (default_instance_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return *default_instance_;
+}
+
+HelloResponse* HelloResponse::default_instance_ = NULL;
+
+HelloResponse* HelloResponse::New() const {
+  return new HelloResponse;
+}
+
+const ::google::protobuf::Descriptor* HelloResponse::GetDescriptor() const {
+  return descriptor();
+}
+
+const ::google::protobuf::Reflection* HelloResponse::GetReflection() const {
+  if (HelloResponse_reflection_ == NULL) protobuf_BuildDesc_core_2eproto();
+  return HelloResponse_reflection_;
 }
 
 // ===================================================================
