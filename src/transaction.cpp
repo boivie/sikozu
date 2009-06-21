@@ -21,7 +21,8 @@ uint32_t ActiveOutboundTransactions::s_last_used_sid = 0;
 ActiveOutboundTransactions::TransactionMapping ActiveOutboundTransactions::s_transactions;
 
 OutboundTransaction::OutboundTransaction(ContactPtr contact_p, const RemoteService& remote_service, uint32_t sid)
-  : m_timeout_ms(0), m_task_p(Task::current()), m_contact_p(contact_p), m_service(remote_service), m_sid(sid)
+  : m_timeout_ms(0), m_task_p(Task::current()), m_contact_p(contact_p), m_service(remote_service), m_sid(sid),
+    m_callback_p(0)
 {
 }
 

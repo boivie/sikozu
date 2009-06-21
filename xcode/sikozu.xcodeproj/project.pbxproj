@@ -20,6 +20,7 @@
 		578210650FDC033900EAE28F /* remoteservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 578210640FDC033900EAE28F /* remoteservice.cpp */; };
 		578211780FE047FB00EAE28F /* rawpackethandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 578211770FE047FB00EAE28F /* rawpackethandler.cpp */; };
 		5782127D0FE2B7E000EAE28F /* task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5782127C0FE2B7E000EAE28F /* task.cpp */; };
+		5782194A0FEC4B7100EAE28F /* finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 578219480FEC4B7100EAE28F /* finder.cpp */; };
 		5797C5530FC9CFFA00A901F6 /* simpledb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5797C54F0FC9CFFA00A901F6 /* simpledb.cpp */; };
 		5797C5540FC9CFFA00A901F6 /* simpledb.h in Headers */ = {isa = PBXBuildFile; fileRef = 5797C5500FC9CFFA00A901F6 /* simpledb.h */; };
 		5797C5550FC9CFFA00A901F6 /* simpledb.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5797C5510FC9CFFA00A901F6 /* simpledb.pb.cc */; };
@@ -68,6 +69,8 @@
 		578211770FE047FB00EAE28F /* rawpackethandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rawpackethandler.cpp; path = ../src/rawpackethandler.cpp; sourceTree = SOURCE_ROOT; };
 		578212590FE190A700EAE28F /* task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = task.h; path = ../src/task.h; sourceTree = SOURCE_ROOT; };
 		5782127C0FE2B7E000EAE28F /* task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = task.cpp; path = ../src/task.cpp; sourceTree = SOURCE_ROOT; };
+		578219480FEC4B7100EAE28F /* finder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = finder.cpp; path = ../src/finder.cpp; sourceTree = SOURCE_ROOT; };
+		578219490FEC4B7100EAE28F /* finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = finder.h; path = ../src/finder.h; sourceTree = SOURCE_ROOT; };
 		5797C54A0FC9CF7E00A901F6 /* libsimpledb.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libsimpledb.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		5797C54F0FC9CFFA00A901F6 /* simpledb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = simpledb.cpp; path = ../examples/simpledb.cpp; sourceTree = SOURCE_ROOT; };
 		5797C5500FC9CFFA00A901F6 /* simpledb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = simpledb.h; path = ../examples/simpledb.h; sourceTree = SOURCE_ROOT; };
@@ -115,6 +118,8 @@
 		08FB7795FE84155DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				578219480FEC4B7100EAE28F /* finder.cpp */,
+				578219490FEC4B7100EAE28F /* finder.h */,
 				5797C5450FC9CF5A00A901F6 /* Example-SimpleDB */,
 				57D483630FC5B9090080E0CE /* Interfaces */,
 				57D483640FC5B9140080E0CE /* Base implementations  */,
@@ -301,6 +306,7 @@
 				578210650FDC033900EAE28F /* remoteservice.cpp in Sources */,
 				578211780FE047FB00EAE28F /* rawpackethandler.cpp in Sources */,
 				5782127D0FE2B7E000EAE28F /* task.cpp in Sources */,
+				5782194A0FEC4B7100EAE28F /* finder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

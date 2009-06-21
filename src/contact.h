@@ -13,6 +13,7 @@
 #include <netinet/in.h>
 #include <map>
 #include "nodeid.h"
+#include "core.pb.h"
 #include <boost/smart_ptr.hpp>
 #include <boost/thread/mutex.hpp>
 
@@ -57,6 +58,7 @@ friend class Contact;
 public:
   static boost::shared_ptr<Contact> get(const struct sockaddr_in6& address);
   static boost::shared_ptr<Contact> create_new(const NodeId& nid);
+  static boost::shared_ptr<Contact> get_from_msg();
 protected:
   static void remove(const struct sockaddr_in6& address);
   static boost::mutex instance_mutex;

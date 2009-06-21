@@ -28,6 +28,7 @@ namespace Sikozu {
     void run(boost::shared_ptr<Task> me_p);
     Task();
     virtual ~Task() {}
+    virtual void wait() { throw TaskNotBlockable(); }
     virtual void post_event(std::auto_ptr<TransactionReply> event_p) { throw TaskNotBlockable(); }
     virtual ActiveOutboundTransactions& get_transactions() { throw TaskNotBlockable(); }
     static boost::shared_ptr<Task> current();

@@ -16,6 +16,15 @@ namespace Sikozu {
 
   class CoreService : public BaseService {
   public:
+    enum CommandIdentifier {
+      PING_REQUEST,
+      FIND_NODE_REQUEST,
+      GET_SERVICES_REQUEST,
+      ANNOUNCE_SERVICE_REQUEST,
+      GET_CHANNEL_REQUEST,
+      HELLO_REQUEST,
+      LAST
+    };  
     CoreService(const NodeId& mynid); 
     const std::string& get_name() const;
     void on_transaction(std::auto_ptr<InboundTransaction> transaction_p);

@@ -20,16 +20,6 @@ using namespace Sikozu;
 
 #include "core.pb.h"
 
-enum CommandIdentifier {
-  PING_REQUEST,
-  FIND_NODE_REQUEST,
-  GET_SERVICES_REQUEST,
-  ANNOUNCE_SERVICE_REQUEST,
-  GET_CHANNEL_REQUEST,
-  HELLO_REQUEST,
-  LAST
-};
-
 const string& CoreService::get_name() const {
   static const string name = "core";
   return name;

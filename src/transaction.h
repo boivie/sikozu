@@ -28,12 +28,19 @@ class Transaction {
 
 };
 
+class OutboundTransactionCallback {
+ public:
+  virtual void on_response(Request& response) = 0;
+  virtual void on_timeout() = 0;
+};
+
 class OutboundTransaction : public Transaction {
  public:
   friend class ActiveOutboundTransactions;
   friend class TransactionTimeComparator;
   ~OutboundTransaction();
   static boost::shared_ptr<OutboundTransaction> create(ContactPtr contact_p, const RemoteService& destination_service);
+  void set_callback(OutboundTransactionCallback* callback_p) { m_callback_p = callback_p; }
   void set_timeout(const int timeout_ms);
   bool has_timed_out() const;
   bool is_pending() const;
@@ -47,6 +54,7 @@ class OutboundTransaction : public Transaction {
   OutboundTransaction(ContactPtr contact_p, const RemoteService& destination_service, uint32_t sid);
   void set_response(std::auto_ptr<Request> response_p) { m_response_p = response_p; }
   uint32_t m_sid;
+  OutboundTransactionCallback* m_callback_p;
   RemoteService m_service;
   ContactPtr m_contact_p;
   std::auto_ptr<Request> m_response_p;
