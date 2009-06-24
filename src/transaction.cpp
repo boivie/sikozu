@@ -74,6 +74,12 @@ void OutboundTransaction::send_request(Command_t command, const std::vector<char
   }
 }
 
+void OutboundTransaction::set_response(std::auto_ptr<Request> response_p)
+{ 
+  m_response_p = response_p; 
+  if (m_callback_p) m_callback_p->on_response(*response_p);
+}
+
 Request& OutboundTransaction::get_response()
 {
   return *m_response_p;
@@ -106,9 +112,10 @@ OutboundTransaction::~OutboundTransaction()
 void OutboundTransaction::timeout()
 {
   // Only timeout if we have not already received a response.
-  if (m_response_p.get() != NULL)
+  if (m_response_p.get() == NULL)
   {
     m_has_timed_out = true;
+    if (m_callback_p) m_callback_p->on_timeout();
   }
 }
 
@@ -211,7 +218,6 @@ void ActiveOutboundTransactions::wake_up(std::auto_ptr<TransactionReply> reply_p
     ActiveOutboundTransactions::s_transactions.erase(reply_p->get_sid());
   }
 
-  transaction_p->set_response(reply_p->get_request());
   // Remove timeout, if any.
   for (Timeout_Transactions_t::iterator it = m_timeout_transactions.begin(); it != m_timeout_transactions.end(); it++)
   {
@@ -222,6 +228,9 @@ void ActiveOutboundTransactions::wake_up(std::auto_ptr<TransactionReply> reply_p
       break;
     }
   }
+
+  // This will also call any callback, if present
+  transaction_p->set_response(reply_p->get_request());
 }
 
 void ActiveOutboundTransactions::remove(uint32_t sid)

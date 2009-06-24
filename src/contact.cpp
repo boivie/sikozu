@@ -47,6 +47,51 @@ ContactPtr ContactRegistry::create_new(const NodeId& nodeid)
   return ContactPtr(object_p);
 }
 
+ContactPtr ContactRegistry::get_from_msg(const Messages::Contact& contact_msg)
+{
+  struct sockaddr_in6 address;
+  memset(&address, 0, sizeof(address));
+  if (contact_msg.has_ipv4())
+  {
+    uint32_t ip = contact_msg.ipv4();
+    // Use ipv4 mapped ipv6 addresses.
+    address.sin6_addr.s6_addr[10] = 0xFF;
+    address.sin6_addr.s6_addr[11] = 0xFF;
+    address.sin6_addr.s6_addr[12] = (ip >> 24) & 0xFF;
+    address.sin6_addr.s6_addr[13] = (ip >> 16) & 0xFF;
+    address.sin6_addr.s6_addr[14] = (ip >> 8) & 0xFF;
+    address.sin6_addr.s6_addr[15] = ip & 0xFF;
+  }
+  else if (contact_msg.has_ipv6() && contact_msg.ipv6().size() == sizeof(address.sin6_addr))
+  {
+    const string& ip = contact_msg.ipv6();
+    memcpy(&address.sin6_addr, ip.c_str(), sizeof(address.sin6_addr));
+  }
+  else
+  {
+    // Neither specified, or invalid ipv6 address. This is an error.
+    throw ContactNotValidException();
+  }
+
+  address.sin6_port = contact_msg.port();
+  ContactPtr contact_p = ContactRegistry::get(address);
+
+  if (contact_msg.nid().size() != NID_SIZE_BYTES)
+  {
+    throw ContactNotValidException();
+  }
+
+  // TODO: We should perhaps verify the nodeid?
+  if (!contact_p->has_nodeid())
+  {
+    NodeId nid(contact_msg.nid());
+    contact_p->set_nodeid(nid);
+  }
+
+  return contact_p;
+}
+
+
 void ContactRegistry::remove(const struct sockaddr_in6& address)
 {
   ContactRegistryKey key(address);

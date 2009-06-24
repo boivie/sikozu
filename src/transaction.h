@@ -52,7 +52,7 @@ class OutboundTransaction : public Transaction {
   uint32_t get_sid() const { return m_sid; } 
   void timeout();
   OutboundTransaction(ContactPtr contact_p, const RemoteService& destination_service, uint32_t sid);
-  void set_response(std::auto_ptr<Request> response_p) { m_response_p = response_p; }
+  void set_response(std::auto_ptr<Request> response_p);
   uint32_t m_sid;
   OutboundTransactionCallback* m_callback_p;
   RemoteService m_service;

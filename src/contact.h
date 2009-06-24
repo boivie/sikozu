@@ -19,6 +19,8 @@
 
 namespace Sikozu {
 
+class ContactNotValidException : public std::exception {};
+
 class Contact {
  friend class ContactRegistry;
  public:
@@ -58,7 +60,7 @@ friend class Contact;
 public:
   static boost::shared_ptr<Contact> get(const struct sockaddr_in6& address);
   static boost::shared_ptr<Contact> create_new(const NodeId& nid);
-  static boost::shared_ptr<Contact> get_from_msg();
+  static boost::shared_ptr<Contact> get_from_msg(const Messages::Contact& contact_msg);
 protected:
   static void remove(const struct sockaddr_in6& address);
   static boost::mutex instance_mutex;

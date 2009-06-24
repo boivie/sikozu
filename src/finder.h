@@ -47,11 +47,11 @@ class FinderWorker : public OutboundTransactionCallback {
   FinderWorker(Finder* parent_p) : finder_p(parent_p) {}
   virtual void send_request() = 0;  
  protected:
-  ContactPtr get_best_unvisited();
-  void add_contacts(std::vector<ContactPtr>& contacts);
+  ContactPtr get_best_unvisited() const;
+  void add_contact(ContactPtr contact_p) const;
   Finder* finder_p;
   OutboundTransactionPtr m_transaction_p;
-  void on_response(Request& response);
+  virtual void on_response(Request& response) = 0;
   void on_timeout();
 };
 
@@ -66,11 +66,11 @@ friend class FinderWorker;
   
   typedef std::set<ContactPtr, FinderDistanceComparator> BestSoFar_t;
   typedef std::map<ContactPtr, FinderProgress_t, FinderNodeIdComparator> VisitedNodes_t;
-  bool m_finished;
 
   virtual FinderWorker& get_worker(int worker) = 0;
   ContactPtr get_best_unvisited();
-  bool is_finished() const { return m_finished; }
+  void add_contact(ContactPtr contact_p);
+  bool is_finished() const;
   BestSoFar_t m_best_so_far;
   VisitedNodes_t m_visited_nodes;
 
@@ -84,6 +84,7 @@ class NodeFinderWorker : public FinderWorker {
  public:
   NodeFinderWorker(Finder* finder_p) : FinderWorker(finder_p) {}
   virtual void send_request();
+  virtual void on_response(Request& response);  
 };
 
 class NodeFinder : public Finder

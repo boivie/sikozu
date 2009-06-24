@@ -7,12 +7,15 @@ message Contact {
   required uint32 port = 4;
 }
 
+// PING. Is mostly used for checking that a host is alive.
 message PingRequest {
 }
 
 message PingResponse {
 }
 
+// HELLO. Used for identifying a client or server and get information needed to continue 
+// the conversation.
 message HelloRequest {
   optional bytes nid = 1;
 }
@@ -21,6 +24,7 @@ message HelloResponse {
   optional bytes nid = 1;
 }
 
+// FIND_NODE. Used for finding a certain server that optionally provides a certain service.
 message FindNodeRequest {
   required bytes nid = 1;
   optional string service = 2;
@@ -30,6 +34,7 @@ message FindNodeResponse {
   repeated Contact contacts = 1;
 }
 
+// GET_SERVICES. Returns a list of services that the server provide.
 message GetServicesRequest {
 }
 
@@ -41,6 +46,8 @@ message GetServicesResponse {
   repeated Result services = 1;
 }
 
+// GET_CHANNEL. Given a service name, it returns the dynamic channel to which this service
+// is bound, or 0xFFFF if this service is not provided by the server.
 message GetChannelRequest {
   required string name = 1;
 }
@@ -49,6 +56,8 @@ message GetChannelResponse {
   required uint32 channel = 1;
 }
 
+
+// ANNOUNCE_SERVICE. Used by a client to inform a server that it provides a number of services.
 message AnnounceServiceRequest {
 	required bytes nid = 1;
 	repeated string service = 2;

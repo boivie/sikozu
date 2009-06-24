@@ -19,7 +19,7 @@ using namespace Sikozu;
 using namespace std;
 
 Finder::Finder(int k, int alpha) 
-  : m_k(k), m_alpha(alpha), m_finished(false)
+  : m_k(k), m_alpha(alpha) 
 {
 }
 
@@ -51,16 +51,62 @@ ContactPtr Finder::get_best_unvisited()
   throw NoMoreContacts();
 }
 
-ContactPtr FinderWorker::get_best_unvisited()
+void Finder::add_contact(ContactPtr contact_p)
 {
-  return finder_p->get_best_unvisited();
+  VisitedNodes_t::iterator it = m_visited_nodes.find(contact_p);
+  
+  if ((it != m_visited_nodes.end()) && (it->second == FINDER_PROGRESS_GOT_TIMEOUT))
+  {
+    // We have bad experience from this one. Don't add it.
+  }
+  else
+  {
+    // Either unknown, one we have contacted or are in the progress of contacting. Good either way.
+    m_best_so_far.insert(contact_p);
+  }
+}
+
+ContactPtr FinderWorker::get_best_unvisited() const
+{
+  return finder_p->get_best_unvisited(); 
+}
+
+void FinderWorker::add_contact(ContactPtr contact_p) const 
+{ 
+  finder_p->add_contact(contact_p); 
+}
+
+bool Finder::is_finished() const 
+{
+  int nodes_to_verify = 3;
+  // Abort when we have contacted all nodes in our list, or at least a number of nodes.
+  VisitedNodes_t::const_iterator visited_it;
+  BestSoFar_t::const_iterator best_it = m_best_so_far.begin();
+
+  while ((nodes_to_verify--) && (best_it != m_best_so_far.end()))
+  {
+    const ContactPtr contact_p = *best_it;
+    visited_it = m_visited_nodes.find(contact_p);
+    if (visited_it == m_visited_nodes.end()) 
+    {
+      // One of the top ones have not yet been visited. This is not good enough
+      return false;
+    }
+    if (visited_it->second != FINDER_PROGRESS_GOT_RESPONSE)
+    {
+      // We have not yet received a response from the top ones. 
+      return false;
+    }
+  }
+  
+  return true;
 }
 
 void FinderWorker::on_timeout()
 {
   // Mark this contact as "bad", remove it from the list and move on.
   finder_p->m_visited_nodes[m_transaction_p->get_contact()] = FINDER_PROGRESS_GOT_TIMEOUT;
-  finder_p->m_best_so_far.remove(m_transaction_p->get_contact());
+  finder_p->m_best_so_far.erase(m_transaction_p->get_contact());
   /* TODO: Tell the bucket stores that this contact should be supervised. */
   send_request();
 }
@@ -76,7 +122,7 @@ void NodeFinderWorker::send_request()
     m_transaction_p->set_callback(this);
 
     Messages::FindNodeRequest outmsg;
-    const vector<uint8_t>& nid = contact_p->get_nodeid().get_nid();
+    const vector<uint8_t>& nid = contact_p->get_nodeid().get_bytes();
     outmsg.set_nid(&nid[0], nid.size());
     if (((NodeFinder*)finder_p)->m_service_p->size() > 0)
       outmsg.set_service(*((NodeFinder*)finder_p)->m_service_p);
@@ -107,7 +153,15 @@ void NodeFinderWorker::on_response(Request& response)
   {
     for (int i = 0; i < inmsg.contacts_size(); i++)
     {
-      add_contact(Contact::parse_from_msg(inmsg.contacts(i)));
+      try 
+      {
+        add_contact(ContactRegistry::get_from_msg(inmsg.contacts(i)));
+      }
+      catch (ContactNotValidException& ex)
+      {
+        // Bad data in message. We will continue with the rest of the contacts, but maybe we shouldn't?
+        cerr << "Invalid contact in message" << endl;
+      }
     }
   }
 }
